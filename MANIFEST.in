@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include sf_custom_changes *.css
+recursive-include sf_custom_changes *.csv
+recursive-include sf_custom_changes *.html
+recursive-include sf_custom_changes *.ico
+recursive-include sf_custom_changes *.js
+recursive-include sf_custom_changes *.json
+recursive-include sf_custom_changes *.md
+recursive-include sf_custom_changes *.png
+recursive-include sf_custom_changes *.py
+recursive-include sf_custom_changes *.svg
+recursive-include sf_custom_changes *.txt
+recursive-exclude sf_custom_changes *.pyc
