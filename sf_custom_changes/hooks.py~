@@ -8,7 +8,8 @@ app_email = "info@systematrix.co.in"
 app_url = "https://github.com/Systematrix/SF_Custom_Changes"
 app_version = "0.0.1"
 fixtures = ["Custom Field",
-"Property Setter"]
+"Property Setter",
+"Print Format"]
 
 # Includes in <head>
 # ------------------

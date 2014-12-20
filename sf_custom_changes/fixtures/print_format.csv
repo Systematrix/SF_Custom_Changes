@@ -1,0 +1,572 @@
+"Data Import Template"
+"Table:","Print Format"
+""
+""
+"Notes:"
+"Please do not change the template headings."
+"First data column must be blank."
+"If you are uploading new records, leave the ""name"" (ID) column blank."
+"If you are uploading new records, ""Naming Series"" becomes mandatory, if present."
+"Only mandatory fields are necessary for new records. You can delete non-mandatory columns if you wish."
+"For updating, you can update only selective columns."
+"You can only upload upto 5000 records in one go. (may be less in some cases)"
+""
+"DocType:","Print Format","","","","","",""
+"Column Labels:","ID","DocType","Module","Standard","Print Format Type","Disabled","HTML"
+"Column Name:","name","doc_type","module","standard","print_format_type","disabled","html"
+"Mandatory:","Yes","Yes","Yes","Yes","No","No","No"
+"Type:","Data (text)","Link","Link","Select","Select","Check","Code"
+"Info:","","Valid DocType","Valid Module Def","One of: No, Yes","One of: Server, Client","0 or 1",""
+"Start entering data below this line"
+"","""Delivery Note""","Delivery Note","Stock","Yes","Server",0,"
+{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+    {% if letter_head and not no_letterhead %}
+    <div class=""letter-head"">{{ letter_head }}</div>
+    {% endif %}
+    {%- if doc.meta.is_submittable and doc.docstatus==0-%}
+    <div class=""alert alert-info text-center"">
+        <h4 style=""margin: 0px;"">{{ _(""DRAFT"") }}</h4></div>
+    {%- endif -%}
+    {%- if doc.meta.is_submittable and doc.docstatus==2-%}
+    <div class=""alert alert-danger text-center"">
+        <h4 style=""margin: 0px;"">{{ _(""CANCELLED"") }}</h4></div>
+    {%- endif -%}
+    {% if max_pages > 1 %}
+    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
+    {% endif %}
+{%- endmacro -%}
+
+<style>
+    .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+    background-color: #B7CCF2;
+    color:#000000;
+    font-size:16px;
+    }
+    .print-format table, .print-format tr, 
+    .print-format td, .print-format div, .print-format p {
+        font-family: sans-serif;
+        line-height: 90%;
+        vertical-align: middle;
+    }
+    @media screen {
+        .print-format {
+            width: 210mm;
+            padding: 10mm;
+            min-height: 297mm;
+            footer {page-break-after: always;}
+        }
+    }
+</style>
+
+<small>
+{{ add_header(0,1,doc,letter_head, no_letterhead) }}
+
+
+<table class = ""table table-condensed table-bordered"">
+  <tr>
+    
+    <td style=""width: 60%;"">
+        <b>{{ _(""Ship To"") }}:</b> {{ doc.shipping_address_name }}<br>
+        <b>{{ _(""Address"") }}:</b> {{ doc.shipping_address }}
+    </td>
+    <td style=""width: 40%;"">
+
+         <b>{{ _(""SF-Number"") }}:</b> {{ doc.name }}<br>
+        <b>{{ _(""Date"") }}:</b> {{ doc.get_formatted(""posting_date"") }}<br>
+    </td>
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
+        <b>{{ _(""ATTN"") }}:</b><br>{{ doc.contact_display }}<br>
+        
+    </td>
+    <td style=""width: 40%;"">
+        <b>{{ _(""SHIPPED VIA"") }}:</b> 
+    </td>
+    
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
+        <b>{{ _(""PHONE"") }}:</b><br>{{ doc.contact_mobile }}<br> 
+    </td>
+    <td style=""width: 40%;"">
+         <b>{{ _(""TRACKING#"") }}:</b> 
+    </td>
+    
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
+
+    </td>
+    <td style=""width: 40%;"">
+        <b>{{ _(""Sales REP"") }}:</b><br>
+    </td>
+    
+  </tr>
+</table>
+
+<table class=""table table-condensed table-hover table-bordered"">
+        <tr>
+            <th>Sr</th>
+            <th class=""text-right"">Qty</th>
+            <th>Description</th>
+        </tr>
+        {%- for row in doc.delivery_note_details -%}
+        <tr>
+            <td style=""width: 3%;"">{{ row.idx }}</td>
+            <td style=""width: 10%; text-align: right;"">{{ row.qty }} {{ row.uom or row.stock_uom }}</td>
+            <td style=""width: 57%;""> {{ row.item_name }}</td>
+        </tr>
+        {%- endfor -%}
+    </tbody>
+</table>
+
+
+<hr>
+SAMPLES FOR LAB ANALYSIS ONLY:
+</small>"
+"","""Sales Order""","Sales Order","Selling","No","Server",0,"
+{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+	{% if letter_head and not no_letterhead %}
+	<div class=""letter-head"">{{ letter_head }}</div>
+	{% endif %}
+	{%- if doc.meta.is_submittable and doc.docstatus==0-%}
+	<div class=""alert alert-info text-center"">
+		<h4 style=""margin: 0px;"">{{ _(""DRAFT"") }}</h4></div>
+	{%- endif -%}
+	{%- if doc.meta.is_submittable and doc.docstatus==2-%}
+	<div class=""alert alert-danger text-center"">
+		<h4 style=""margin: 0px;"">{{ _(""CANCELLED"") }}</h4></div>
+	{%- endif -%}
+	{% if max_pages > 1 %}
+	<p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
+	{% endif %}
+{%- endmacro -%}
+
+<style>
+	.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+	background-color: #B7CCF2;
+	color:#000000;
+	font-size:16px;
+	}
+	.print-format table, .print-format tr, 
+	.print-format td, .print-format div, .print-format p {
+		font-family: sans-serif;
+		line-height: 90%;
+		vertical-align: middle;
+	}
+	@media screen {
+		.print-format {
+			width: 210mm;
+			padding: 10mm;
+			min-height: 297mm;
+			footer {page-break-after: always;}
+		}
+	}
+</style>
+
+<small>
+{{ add_header(0,1,doc,letter_head, no_letterhead) }}
+<table class=""table table-condensed table-bordered"">
+  <tr>
+    <td colspan=""2"">
+    	<b style=""font-size:16px;"">{{ doc.select_print_heading or (doc.print_heading if doc.print_heading != None
+			else _(doc.doctype)) }}</b>  
+    </td>
+    <td style=""width:34%"">    		
+    	<b style=""font-size:16px; text-align:left; vertical-align:middle;"">{{ _(""#"") }}{{ doc.name }}</b><br>
+    </td>
+  </tr>
+</table>
+
+<table class = ""table table-condensed table-bordered"">
+  <tr>
+    
+    <td style=""width: 60%;"">
+    	<b>{{ _(""Ship To"") }}:</b> {{ doc.shipping_address_title }}<br>
+        <b>{{ _(""Address"") }}:</b> {{ doc.shipping_address }}
+    </td>
+    <td style=""width: 40%;"">
+        <b>{{ _(""Date"") }}:</b> {{ doc.get_formatted(""transaction_date"") }}<br>
+        <b>{{ _(""PO #"") }}:</b> {{ doc.po_no }} <br>
+        <b>{{ _(""PO Date"") }}:</b> {{ doc.get_formatted(""po_date"") }}
+    </td>
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
+        <b>{{ _(""ATTN"") }}:</b><br>
+        
+    </td>
+    <td style=""width: 40%;"">
+        <b>{{ _(""SHIPPED VIA"") }}:</b> 
+    </td>
+    
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
+        <b>{{ _(""PHONE"") }}:</b> {{ contact.phone }} <br>   
+    </td>
+    <td style=""width: 40%;"">
+         <b>{{ _(""TRACKING#"") }}:</b> 
+    </td>
+    
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
+
+    </td>
+    <td style=""width: 40%;"">
+        <b>{{ _(""Sales REP"") }}:</b> {{ doc.customer_name }}<br>
+    </td>
+    
+  </tr>
+</table>
+
+<table class=""table table-condensed table-hover table-bordered"">
+		<tr>
+			<th>Sr</th>
+			<th>Description</th>
+			<th class=""text-right"">Qty</th>
+			<th class=""text-right"">Rate</th>
+			<th class=""text-right"">Amount</th>
+		</tr>
+		{%- for row in doc.sales_order_details -%}
+		<tr>
+			<td style=""width: 3%;"">{{ row.idx }}</td>
+			<td style=""width: 57%;"">{{ row.description }}</td>
+			<td style=""width: 10%; text-align: right;"">{{ row.qty }} {{ row.uom or row.stock_uom }}</td>
+			<td style=""width: 15%; text-align: right;"">{{
+				row.get_formatted(""rate"", doc) }}</td>
+			<td style=""width: 15%; text-align: right;"">{{
+				row.get_formatted(""amount"", doc) }}</td>
+		</tr>
+		{%- endfor -%}
+	</tbody>
+</table>
+<table class=""table table-condensed table-bordered"">
+  <tr>
+    <td width=""50%"">
+    	<p>{% if doc.terms %} <b>{{ _(""Auxiliary Information"") }}: </b>{{ doc.terms or """" }}
+        {%- endif -%}
+    </p>
+   	<p style=""font-size:12px"">{% if doc.in_words_export %}
+    	<b>{{ _(""Total Amount (In Words)"") }}: </b><br>
+        	{{ doc.in_words_export }}
+        {%- endif -%}
+    </p><br><br>
+    <table class=""table table-condensed"">
+      <tr>
+        <td height=""100px""; valign=""top"">
+        	<b>{{ _(""Received By:"") }}</b>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        	<b>{{ _(""Customer Sign"") }}</b>
+        </td>
+      </tr>
+    </table>
+
+    </td>
+<td>
+        <table class=""table table-condensed"">
+            <tr>
+                <td class=""text-right"" style=""width: 30%"">
+                    {{ _(""Net Total"") }}
+                </td>
+                <td class=""text-right"">
+                    {{ doc.get_formatted(""net_total_export"") }}
+                </td>
+            </tr>
+            {%- for row in doc.other_charges -%}
+            {%- if not row.included_in_print_rate -%}
+            {%- if row.tax_amount -%}
+            <tr height:100%>
+                <td class=""text-right"" style=""width: 70%"">
+                    {{ row.description }}
+                </td>
+                <td class=""text-right"">
+                    {{ row.get_formatted(""tax_amount"", doc) }}
+                </td>
+            </tr>
+            {%- endif -%}
+            {%- endif -%}
+            {%- endfor -%}
+            {%- if doc.discount_amount -%}
+            <tr>
+                <td class=""text-right"" style=""width: 70%"">
+                    {{ _(""Discount"") }}
+                </td>
+                <td class=""text-right"">
+                    {{ doc.get_formatted(""discount_amount"") }}
+                </td>
+            </tr>
+            {%- endif -%}
+            <tr>
+                <td class=""text-right"" style=""width: 70%"">
+                    <big><b>{{ _(""Grand Total"") }}</b></big>
+                </td>
+                <td class=""text-right"">
+                    <big><b>{{ doc.get_formatted(""grand_total_export"") }}</b></big>
+                </td>
+            </tr>
+        </td>
+
+        </table>
+
+    </td>
+  </tr>
+</table>
+{% if doc.get(""other_charges"", filters={""included_in_print_rate"": 1}) %}
+<hr>
+<p><b>Taxes Included:</b></p>
+<table class=""table table-condensed no-border"">
+	<tbody>
+		{%- for row in doc.other_charges -%}
+		{%- if row.included_in_print_rate -%}
+		<tr>
+			<td class=""text-right"" style=""width: 70%"">
+
+				{{ row.description }}
+			</td>
+			<td class=""text-right"">
+				{{ row.get_formatted(""tax_amount"", doc) }}
+			</td>
+		<tr>
+		{%- endif -%}
+		{%- endfor -%}
+	</tbody>
+</table>
+{%- endif -%}
+<hr>
+</small>"
+"","""POS Invoice""","Sales Invoice","Accounts","Yes","Server","","<style>
+	.print-format table, .print-format tr, 
+	.print-format td, .print-format div, .print-format p {
+		font-family: Monospace;
+		line-height: 200%;
+		vertical-align: middle;
+	}
+	@media screen {
+		.print-format {
+			width: 4in;
+			padding: 0.25in;
+			min-height: 8in;
+		}
+	}
+</style>
+
+<p class=""text-center"">
+	{{ doc.company }}<br>
+	{{ doc.select_print_heading or _(""Invoice"") }}<br>
+</p>
+<p>
+	<b>{{ _(""Receipt No"") }}:</b> {{ doc.name }}<br>
+	<b>{{ _(""Date"") }}:</b> {{ doc.get_formatted(""posting_date"") }}<br>
+	<b>{{ _(""Customer"") }}:</b> {{ doc.customer_name }}
+</p>
+
+<hr>
+<table class=""table table-condensed cart no-border"">
+	<thead>
+		<tr>
+			<th width=""60%"">{{ _(""Item"") }}</b></th>
+			<th width=""10%"" class=""text-right"">{{ _(""Qty"") }}</th>
+			<th width=""30%"" class=""text-right"">{{ _(""Rate"") }}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{%- for item in doc.entries -%}
+		<tr>
+			<td>
+				{{ item.item_code }}
+				{%- if item.item_name != item.item_code -%}
+					<br>{{ item.item_name }}{%- endif -%}
+			</td>
+			<td class=""text-right"">{{ item.qty }}</td>
+			<td class=""text-right"">{{ item.amount }}</td>
+		</tr>
+		{%- endfor -%}
+	</tbody>
+</table>
+<table class=""table table-condensed no-border"">
+	<tbody>
+		<tr>
+			<td class=""text-right"" style=""width: 70%"">
+				{{ _(""Net Total"") }}
+			</td>
+			<td class=""text-right"">
+				{{ doc.get_formatted(""net_total_export"") }}
+			</td>
+		</tr>
+		{%- for row in doc.other_charges -%}
+		{%- if not row.included_in_print_rate -%}
+		<tr>
+			<td class=""text-right"" style=""width: 70%"">
+				{{ row.description }}
+			</td>
+			<td class=""text-right"">
+				{{ row.get_formatted(""tax_amount"", doc) }}
+			</td>
+		</tr>
+		{%- endif -%}
+		{%- endfor -%}
+		{%- if doc.discount_amount -%}
+		<tr>
+			<td class=""text-right"" style=""width: 70%"">
+				{{ _(""Discount"") }}
+			</td>
+			<td class=""text-right"">
+				{{ doc.get_formatted(""discount_amount"") }}
+			</td>
+		</tr>
+		{%- endif -%}
+		<tr>
+			<td class=""text-right"" style=""width: 70%"">
+				<b>{{ _(""Grand Total"") }}</b>
+			</td>
+			<td class=""text-right"">
+				{{ doc.get_formatted(""grand_total_export"") }}
+			</td>
+		</tr>
+	</tbody>
+</table>
+{% if doc.get(""other_charges"", filters={""included_in_print_rate"": 1}) %}
+<hr>
+<p><b>Taxes Included:</b></p>
+<table class=""table table-condensed no-border"">
+	<tbody>
+		{%- for row in doc.other_charges -%}
+		{%- if row.included_in_print_rate -%}
+		<tr>
+			<td class=""text-right"" style=""width: 70%"">
+				{{ row.description }}
+			</td>
+			<td class=""text-right"">
+				{{ row.get_formatted(""tax_amount_after_discount_amount"", doc) }}
+			</td>
+		<tr>
+		{%- endif -%}
+		{%- endfor -%}
+	</tbody>
+</table>
+{%- endif -%}
+<hr>
+<p>{{ doc.terms or """" }}</p>
+<p class=""text-center"">{{ _(""Thank you, please visit again."") }}</p>"
+"","""Payment Receipt Voucher""","Journal Voucher","Accounts","Yes","Server","","{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Payment Receipt Note"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+
+    {%- for label, value in (
+        (_(""Received On""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Received From""), doc.pay_to_recd_from),
+        (_(""Amount""), ""<strong>"" + doc.total_amount or 0 + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""Remarks""), doc.remark)
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-9"">{{ value }}</div>
+    </div>
+
+    {%- endfor -%}
+
+    <hr>
+    <br>
+    <p class=""strong"">
+        {{ _(""For"") }} {{ doc.company }},<br>
+        <br>
+        <br>
+        <br>
+        {{ _(""Authorized Signatory"") }}
+    </p>
+</div>
+
+"
+"","""Credit Note""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Credit Note"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+
+    {%- for label, value in (
+        (_(""Credit To""), doc.pay_to_recd_from),
+        (_(""Date""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Amount""), ""<strong>"" + frappe.utils.cstr(doc.total_amount) + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""Remarks""), doc.remark)
+    ) -%}
+
+    <div class=""row"">
+        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-9"">{{ value }}</div>
+    </div>
+
+    {%- endfor -%}
+
+    <hr>
+    <br>
+    <p class=""strong"">
+        {{ _(""For"") }} {{ doc.company }},<br>
+        <br>
+        <br>
+        <br>
+        {{ _(""Authorized Signatory"") }}
+    </p>
+</div>
+
+
+"
+"","""Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server","","<div style=""position: relative"">
+
+	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Payment Advice"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+
+{%- for label, value in (
+        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Reference / Cheque No.""), doc.cheque_no),
+        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-8"">{{ value }}</div>
+    </div>
+{%- endfor -%}
+	<hr>
+	<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
+{%- for label, value in (
+         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""References""), doc.remark)
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-8"">{{ value }}</div>
+    </div>
+    {%- endfor -%}
+    <hr>
+	<div style=""position: absolute; top: 14cm; left: 0cm;"">
+		Prepared By</div>
+	<div style=""position: absolute; top: 14cm; left: 5.5cm;"">
+		Authorised Signatory</div>
+	<div style=""position: absolute; top: 14cm; left: 11cm;"">
+		Received Payment as Above</div>
+	<div style=""position: absolute; top: 16.4cm; left: 5.9cm;"">
+		<strong>_____________</strong></div>
+	<div style=""position: absolute; top: 16.7cm; left: 6cm;"">
+		<strong>A/C Payee</strong></div>
+	<div style=""position: absolute; top: 16.7cm; left: 5.9cm;"">
+		<strong>_____________</strong></div>
+	<div style=""position: absolute; top: 16.9cm; left: 12cm;"">
+		{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
+	<div style=""position: absolute; top: 17.9cm; left: 1cm;"">
+		{{ doc.pay_to_recd_from }}</div>
+	<div style=""position: absolute; top: 18.6cm; left: 1cm; width: 7cm;"">
+		{{ doc.total_amount_in_words }}</div>
+	<div style=""position: absolute; top: 19.7cm; left: 12cm;"">
+		{{ doc.total_amount }}</div>
+</div>"
