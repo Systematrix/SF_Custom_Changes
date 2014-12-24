@@ -66,8 +66,7 @@
   <tr>
     
     <td style=""width: 60%;"">
-        <b>{{ _(""Ship To"") }}:</b> {{ doc.shipping_address_name }}<br>
-        <b>{{ _(""Address"") }}:</b> {{ doc.shipping_address }}
+        <b>{{ _(""Shipping Address"") }}:</b> <br> {{ doc.shipping_address }}
     </td>
     <td style=""width: 40%;"">
 
