@@ -20,7 +20,9 @@
 "Start entering data below this line"
 "","""Sales Invoice-Client""","Sales Invoice","cur_frm.add_fetch('customer','credit_days','credit_days')
 
-cur_frm.cscript.custom_posting_date = function(doc){
+cur_frm.cscript.posting_date = function(doc){
       //  msgprint(doc.due_date + doc.credit_days)
         cur_frm.set_value(""due_date"", frappe.datetime.add_days(doc.posting_date, doc.credit_days));
-}"
+}
+
+"
