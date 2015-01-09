@@ -18,111 +18,117 @@
 "Type:","Data (text)","Link","Link","Select","Select","Check","Code"
 "Info:","","Valid DocType","Valid Module Def","One of: No, Yes","One of: Server, Client","0 or 1",""
 "Start entering data below this line"
-"","""Delivery Note""","Delivery Note","Stock","Yes","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
-    {% if letter_head and not no_letterhead %}
-    <div class=""letter-head"">{{ letter_head }}</div>
-    {% endif %}
-    {%- if doc.meta.is_submittable and doc.docstatus==0-%}
-    <div class=""alert alert-info text-center"">
-        <h4 style=""margin: 0px;"">{{ _(""DRAFT"") }}</h4></div>
-    {%- endif -%}
-    {%- if doc.meta.is_submittable and doc.docstatus==2-%}
-    <div class=""alert alert-danger text-center"">
-        <h4 style=""margin: 0px;"">{{ _(""CANCELLED"") }}</h4></div>
-    {%- endif -%}
-    {% if max_pages > 1 %}
-    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
-    {% endif %}
-{%- endmacro -%}
+"","""Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<div style=""position: relative"">
 
-<style>
-    .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
-    background-color: #B7CCF2;
-    color:#000000;
-    font-size:16px;
-    }
-    .print-format table, .print-format tr, 
-    .print-format td, .print-format div, .print-format p {
-        font-family: sans-serif;
-        line-height: 90%;
-        vertical-align: middle;
-    }
-    @media screen {
-        .print-format {
-            width: 210mm;
-            padding: 10mm;
-            min-height: 297mm;
-            footer {page-break-after: always;}
-        }
-    }
-</style>
+	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Payment Advice"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
 
-<small>
-{{ add_header(0,1,doc,letter_head, no_letterhead) }}
+{%- for label, value in (
+        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Reference / Cheque No.""), doc.cheque_no),
+        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-8"">{{ value }}</div>
+    </div>
+{%- endfor -%}
+	<hr>
+	<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
+{%- for label, value in (
+         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""References""), doc.remark)
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-8"">{{ value }}</div>
+    </div>
+    {%- endfor -%}
+    <hr>
+	<div style=""position: absolute; top: 14cm; left: 0cm;"">
+		Prepared By</div>
+	<div style=""position: absolute; top: 14cm; left: 5.5cm;"">
+		Authorised Signatory</div>
+	<div style=""position: absolute; top: 14cm; left: 11cm;"">
+		Received Payment as Above</div>
+	<div style=""position: absolute; top: 16.4cm; left: 5.9cm;"">
+		<strong>_____________</strong></div>
+	<div style=""position: absolute; top: 16.7cm; left: 6cm;"">
+		<strong>A/C Payee</strong></div>
+	<div style=""position: absolute; top: 16.7cm; left: 5.9cm;"">
+		<strong>_____________</strong></div>
+	<div style=""position: absolute; top: 16.9cm; left: 12cm;"">
+		{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
+	<div style=""position: absolute; top: 17.9cm; left: 1cm;"">
+		{{ doc.pay_to_recd_from }}</div>
+	<div style=""position: absolute; top: 18.6cm; left: 1cm; width: 7cm;"">
+		{{ doc.total_amount_in_words }}</div>
+	<div style=""position: absolute; top: 19.7cm; left: 12cm;"">
+		{{ doc.total_amount }}</div>
+</div>"
+"","""Credit Note""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
 
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Credit Note"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
 
-<table class = ""table table-condensed table-bordered"">
-  <tr>
-    
-    <td style=""width: 60%;"">
-        <b>{{ _(""Shipping Address"") }}:</b> <br> {{ doc.shipping_address }}
-    </td>
-    <td style=""width: 40%;"">
+    {%- for label, value in (
+        (_(""Credit To""), doc.pay_to_recd_from),
+        (_(""Date""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Amount""), ""<strong>"" + frappe.utils.cstr(doc.total_amount) + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""Remarks""), doc.remark)
+    ) -%}
 
-         <b>{{ _(""SF-Number"") }}:</b> {{ doc.name }}<br>
-        <b>{{ _(""Date"") }}:</b> {{ doc.get_formatted(""posting_date"") }}<br>
-    </td>
-  </tr>
-  <tr>
-     <td style=""width: 60%;"">
-        <b>{{ _(""ATTN"") }}:</b><br>{{ doc.contact_display }}<br>
-        
-    </td>
-    <td style=""width: 40%;"">
-        <b>{{ _(""SHIPPED VIA"") }}:</b> 
-    </td>
-    
-  </tr>
-  <tr>
-     <td style=""width: 60%;"">
-        <b>{{ _(""PHONE"") }}:</b><br>{{ doc.contact_mobile }}<br> 
-    </td>
-    <td style=""width: 40%;"">
-         <b>{{ _(""TRACKING#"") }}:</b> 
-    </td>
-    
-  </tr>
-  <tr>
-     <td style=""width: 60%;"">
+    <div class=""row"">
+        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-9"">{{ value }}</div>
+    </div>
 
-    </td>
-    <td style=""width: 40%;"">
-        <b>{{ _(""Sales REP"") }}:</b><br>
-    </td>
-    
-  </tr>
-</table>
+    {%- endfor -%}
 
-<table class=""table table-condensed table-hover table-bordered"">
-        <tr>
-            <th>Sr</th>
-            <th class=""text-right"">Qty</th>
-            <th>Description</th>
-        </tr>
-        {%- for row in doc.delivery_note_details -%}
-        <tr>
-            <td style=""width: 3%;"">{{ row.idx }}</td>
-            <td style=""width: 10%; text-align: right;"">{{ row.qty }} {{ row.uom or row.stock_uom }}</td>
-            <td style=""width: 57%;""> {{ row.item_name }}</td>
-        </tr>
-        {%- endfor -%}
-    </tbody>
-</table>
+    <hr>
+    <br>
+    <p class=""strong"">
+        {{ _(""For"") }} {{ doc.company }},<br>
+        <br>
+        <br>
+        <br>
+        {{ _(""Authorized Signatory"") }}
+    </p>
+</div>"
+"","""Payment Receipt Voucher""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Payment Receipt Note"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
 
+    {%- for label, value in (
+        (_(""Received On""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Received From""), doc.pay_to_recd_from),
+        (_(""Amount""), ""<strong>"" + doc.total_amount or 0 + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""Remarks""), doc.remark)
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-9"">{{ value }}</div>
+    </div>
 
-<hr>
-SAMPLES FOR LAB ANALYSIS ONLY:
-</small>"
+    {%- endfor -%}
+
+    <hr>
+    <br>
+    <p class=""strong"">
+        {{ _(""For"") }} {{ doc.company }},<br>
+        <br>
+        <br>
+        <br>
+        {{ _(""Authorized Signatory"") }}
+    </p>
+</div>"
 "","""POS Invoice""","Sales Invoice","Accounts","Yes","Server",0,"<style>
 	.print-format table, .print-format tr, 
 	.print-format td, .print-format div, .print-format p {
@@ -237,114 +243,108 @@ SAMPLES FOR LAB ANALYSIS ONLY:
 <hr>
 <p>{{ doc.terms or """" }}</p>
 <p class=""text-center"">{{ _(""Thank you, please visit again."") }}</p>"
-"","""Payment Receipt Voucher""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
-<div class=""page-break"">
-    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
-        and doc.set(""select_print_heading"", _(""Payment Receipt Note"")) -%}{%- endif -%}
-    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+"","""Delivery Note""","Delivery Note","Stock","Yes","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+    {% if letter_head and not no_letterhead %}
+    <div class=""letter-head"">{{ letter_head }}</div>
+    {% endif %}
+    {%- if doc.meta.is_submittable and doc.docstatus==0-%}
+    <div class=""alert alert-info text-center"">
+        <h4 style=""margin: 0px;"">{{ _(""DRAFT"") }}</h4></div>
+    {%- endif -%}
+    {%- if doc.meta.is_submittable and doc.docstatus==2-%}
+    <div class=""alert alert-danger text-center"">
+        <h4 style=""margin: 0px;"">{{ _(""CANCELLED"") }}</h4></div>
+    {%- endif -%}
+    {% if max_pages > 1 %}
+    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
+    {% endif %}
+{%- endmacro -%}
 
-    {%- for label, value in (
-        (_(""Received On""), frappe.utils.formatdate(doc.voucher_date)),
-        (_(""Received From""), doc.pay_to_recd_from),
-        (_(""Amount""), ""<strong>"" + doc.total_amount or 0 + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-        (_(""Remarks""), doc.remark)
-    ) -%}
-    <div class=""row"">
-        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-9"">{{ value }}</div>
-    </div>
+<style>
+    .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+    background-color: #B7CCF2;
+    color:#000000;
+    font-size:16px;
+    }
+    .print-format table, .print-format tr, 
+    .print-format td, .print-format div, .print-format p {
+        font-family: sans-serif;
+        line-height: 90%;
+        vertical-align: middle;
+    }
+    @media screen {
+        .print-format {
+            width: 210mm;
+            padding: 10mm;
+            min-height: 297mm;
+            footer {page-break-after: always;}
+        }
+    }
+</style>
 
-    {%- endfor -%}
+<small>
+{{ add_header(0,1,doc,letter_head, no_letterhead) }}
 
-    <hr>
-    <br>
-    <p class=""strong"">
-        {{ _(""For"") }} {{ doc.company }},<br>
-        <br>
-        <br>
-        <br>
-        {{ _(""Authorized Signatory"") }}
-    </p>
-</div>"
-"","""Credit Note""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
 
-<div class=""page-break"">
-    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
-        and doc.set(""select_print_heading"", _(""Credit Note"")) -%}{%- endif -%}
-    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+<table class = ""table table-condensed table-bordered"">
+  <tr>
+    
+    <td style=""width: 60%;"">
+        <b>{{ _(""Shipping Address"") }}:</b> <br> {{ doc.shipping_address }}
+    </td>
+    <td style=""width: 40%;"">
 
-    {%- for label, value in (
-        (_(""Credit To""), doc.pay_to_recd_from),
-        (_(""Date""), frappe.utils.formatdate(doc.voucher_date)),
-        (_(""Amount""), ""<strong>"" + frappe.utils.cstr(doc.total_amount) + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-        (_(""Remarks""), doc.remark)
-    ) -%}
+         <b>{{ _(""SF-Number"") }}:</b> {{ doc.name }}<br>
+        <b>{{ _(""Date"") }}:</b> {{ doc.get_formatted(""posting_date"") }}<br>
+    </td>
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
+        <b>{{ _(""ATTN"") }}:</b><br>{{ doc.contact_display }}<br>
+        
+    </td>
+    <td style=""width: 40%;"">
+        <b>{{ _(""SHIPPED VIA"") }}:</b> 
+    </td>
+    
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
+        <b>{{ _(""PHONE"") }}:</b><br>{{ doc.contact_mobile }}<br> 
+    </td>
+    <td style=""width: 40%;"">
+         <b>{{ _(""TRACKING#"") }}:</b> 
+    </td>
+    
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
 
-    <div class=""row"">
-        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-9"">{{ value }}</div>
-    </div>
+    </td>
+    <td style=""width: 40%;"">
+        <b>{{ _(""Sales REP"") }}:</b><br>
+    </td>
+    
+  </tr>
+</table>
 
-    {%- endfor -%}
+<table class=""table table-condensed table-hover table-bordered"">
+        <tr>
+            <th>Sr</th>
+            <th class=""text-right"">Qty</th>
+            <th>Description</th>
+        </tr>
+        {%- for row in doc.delivery_note_details -%}
+        <tr>
+            <td style=""width: 3%;"">{{ row.idx }}</td>
+            <td style=""width: 10%; text-align: right;"">{{ row.qty }} {{ row.uom or row.stock_uom }}</td>
+            <td style=""width: 57%;""> {{ row.item_name }}</td>
+        </tr>
+        {%- endfor -%}
+    </tbody>
+</table>
 
-    <hr>
-    <br>
-    <p class=""strong"">
-        {{ _(""For"") }} {{ doc.company }},<br>
-        <br>
-        <br>
-        <br>
-        {{ _(""Authorized Signatory"") }}
-    </p>
-</div>"
-"","""Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<div style=""position: relative"">
 
-	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
-<div class=""page-break"">
-    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
-        and doc.set(""select_print_heading"", _(""Payment Advice"")) -%}{%- endif -%}
-    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
-
-{%- for label, value in (
-        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
-        (_(""Reference / Cheque No.""), doc.cheque_no),
-        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
-    ) -%}
-    <div class=""row"">
-        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-8"">{{ value }}</div>
-    </div>
-{%- endfor -%}
-	<hr>
-	<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
-{%- for label, value in (
-         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-        (_(""References""), doc.remark)
-    ) -%}
-    <div class=""row"">
-        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-8"">{{ value }}</div>
-    </div>
-    {%- endfor -%}
-    <hr>
-	<div style=""position: absolute; top: 14cm; left: 0cm;"">
-		Prepared By</div>
-	<div style=""position: absolute; top: 14cm; left: 5.5cm;"">
-		Authorised Signatory</div>
-	<div style=""position: absolute; top: 14cm; left: 11cm;"">
-		Received Payment as Above</div>
-	<div style=""position: absolute; top: 16.4cm; left: 5.9cm;"">
-		<strong>_____________</strong></div>
-	<div style=""position: absolute; top: 16.7cm; left: 6cm;"">
-		<strong>A/C Payee</strong></div>
-	<div style=""position: absolute; top: 16.7cm; left: 5.9cm;"">
-		<strong>_____________</strong></div>
-	<div style=""position: absolute; top: 16.9cm; left: 12cm;"">
-		{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
-	<div style=""position: absolute; top: 17.9cm; left: 1cm;"">
-		{{ doc.pay_to_recd_from }}</div>
-	<div style=""position: absolute; top: 18.6cm; left: 1cm; width: 7cm;"">
-		{{ doc.total_amount_in_words }}</div>
-	<div style=""position: absolute; top: 19.7cm; left: 12cm;"">
-		{{ doc.total_amount }}</div>
-</div>"
+<hr>
+SAMPLES FOR LAB ANALYSIS ONLY:
+</small>"
