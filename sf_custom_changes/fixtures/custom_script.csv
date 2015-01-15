@@ -19,9 +19,8 @@
 "Info:","","Valid DocType",""
 "Start entering data below this line"
 "","""Sales Invoice-Client""","Sales Invoice","cur_frm.add_fetch('customer','credit_days','credit_days')
+cur_frm.add_fetch('item_code','net_weight','net_weight');
 cur_frm.add_fetch('item_code','weight_uom','weight_uom');
-cur_frm.add_fetch('item_code','total_quantity','total_quantity');
-
 cur_frm.cscript.posting_date = function(doc){
         cur_frm.set_value(""due_date"", frappe.datetime.add_days(doc.posting_date,doc.credit_days));
 }
@@ -30,16 +29,22 @@ cur_frm.cscript.qty = function(doc, cdt, cdn) {
     item.total_quantity = item.qty * item.net_weight;
     refresh_field(""total_quantity"", item.name, item.parentfield);
 }"
-"","""Sales Order-Client""","Sales Order","cur_frm.add_fetch('item_code','net_weight','net_weight');
+"","""Delivery Note-Client""","Delivery Note","cur_frm.add_fetch('item_code','net_weight','net_weight');
 cur_frm.add_fetch('item_code','weight_uom','weight_uom');
 cur_frm.cscript.qty = function(doc, cdt, cdn) {
     var item = frappe.get_doc(cdt, cdn);
     item.total_quantity = item.qty * item.net_weight;
     refresh_field(""total_quantity"", item.name, item.parentfield);
 }"
-"","""Delivery Note-Client""","Delivery Note","cur_frm.add_fetch('item_code','net_weight','net_weight');
+"","""Item-Client""","Item","cur_frm.cscript.net_weight = function(doc, cdt, cdn) {
+ msgprint(""Please add UOM conversion details:\n UOM: ""+ doc.weight_uom
++""\n Conversion Factor: "" +(1/doc.net_weight));
+}"
+"","""Purchase Receipt-Client""","Purchase Receipt","cur_frm.add_fetch('item_code','net_weight','net_weight');"
+"","""Purchase Invoice-Client""","Purchase Invoice","cur_frm.add_fetch('item_code','net_weight','net_weight');"
+"","""Purchase Order-Client""","Purchase Order","cur_frm.add_fetch('item_code','net_weight','net_weight');"
+"","""Sales Order-Client""","Sales Order","cur_frm.add_fetch('item_code','net_weight','net_weight');
 cur_frm.add_fetch('item_code','weight_uom','weight_uom');
-cur_frm.add_fetch('item_code','total_quantity','total_quantity');
 cur_frm.cscript.qty = function(doc, cdt, cdn) {
     var item = frappe.get_doc(cdt, cdn);
     item.total_quantity = item.qty * item.net_weight;
