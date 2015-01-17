@@ -18,111 +18,117 @@
 "Type:","Data (text)","Link","Link","Select","Select","Check","Code"
 "Info:","","Valid DocType","Valid Module Def","One of: No, Yes","One of: Server, Client","0 or 1",""
 "Start entering data below this line"
-"","""Delivery Note""","Delivery Note","Stock","Yes","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
-    {% if letter_head and not no_letterhead %}
-    <div class=""letter-head"">{{ letter_head }}</div>
-    {% endif %}
-    {%- if doc.meta.is_submittable and doc.docstatus==0-%}
-    <div class=""alert alert-info text-center"">
-        <h4 style=""margin: 0px;"">{{ _(""DRAFT"") }}</h4></div>
-    {%- endif -%}
-    {%- if doc.meta.is_submittable and doc.docstatus==2-%}
-    <div class=""alert alert-danger text-center"">
-        <h4 style=""margin: 0px;"">{{ _(""CANCELLED"") }}</h4></div>
-    {%- endif -%}
-    {% if max_pages > 1 %}
-    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
-    {% endif %}
-{%- endmacro -%}
+"","""Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<div style=""position: relative"">
 
-<style>
-    .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
-    background-color: #B7CCF2;
-    color:#000000;
-    font-size:16px;
-    }
-    .print-format table, .print-format tr, 
-    .print-format td, .print-format div, .print-format p {
-        font-family: sans-serif;
-        line-height: 90%;
-        vertical-align: middle;
-    }
-    @media screen {
-        .print-format {
-            width: 210mm;
-            padding: 10mm;
-            min-height: 297mm;
-            footer {page-break-after: always;}
-        }
-    }
-</style>
+	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Payment Advice"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
 
-<small>
-{{ add_header(0,1,doc,letter_head, no_letterhead) }}
+{%- for label, value in (
+        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Reference / Cheque No.""), doc.cheque_no),
+        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-8"">{{ value }}</div>
+    </div>
+{%- endfor -%}
+	<hr>
+	<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
+{%- for label, value in (
+         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""References""), doc.remark)
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-8"">{{ value }}</div>
+    </div>
+    {%- endfor -%}
+    <hr>
+	<div style=""position: absolute; top: 14cm; left: 0cm;"">
+		Prepared By</div>
+	<div style=""position: absolute; top: 14cm; left: 5.5cm;"">
+		Authorised Signatory</div>
+	<div style=""position: absolute; top: 14cm; left: 11cm;"">
+		Received Payment as Above</div>
+	<div style=""position: absolute; top: 16.4cm; left: 5.9cm;"">
+		<strong>_____________</strong></div>
+	<div style=""position: absolute; top: 16.7cm; left: 6cm;"">
+		<strong>A/C Payee</strong></div>
+	<div style=""position: absolute; top: 16.7cm; left: 5.9cm;"">
+		<strong>_____________</strong></div>
+	<div style=""position: absolute; top: 16.9cm; left: 12cm;"">
+		{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
+	<div style=""position: absolute; top: 17.9cm; left: 1cm;"">
+		{{ doc.pay_to_recd_from }}</div>
+	<div style=""position: absolute; top: 18.6cm; left: 1cm; width: 7cm;"">
+		{{ doc.total_amount_in_words }}</div>
+	<div style=""position: absolute; top: 19.7cm; left: 12cm;"">
+		{{ doc.total_amount }}</div>
+</div>"
+"","""Credit Note""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
 
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Credit Note"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
 
-<table class = ""table table-condensed table-bordered"">
-  <tr>
-    
-    <td style=""width: 60%;"">
-        <b>{{ _(""Shipping Address"") }}:</b> <br> {{ doc.shipping_address }}
-    </td>
-    <td style=""width: 40%;"">
+    {%- for label, value in (
+        (_(""Credit To""), doc.pay_to_recd_from),
+        (_(""Date""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Amount""), ""<strong>"" + frappe.utils.cstr(doc.total_amount) + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""Remarks""), doc.remark)
+    ) -%}
 
-         <b>{{ _(""SF-Number"") }}:</b> {{ doc.name }}<br>
-        <b>{{ _(""Date"") }}:</b> {{ doc.get_formatted(""posting_date"") }}<br>
-    </td>
-  </tr>
-  <tr>
-     <td style=""width: 60%;"">
-        <b>{{ _(""ATTN"") }}:</b><br>{{ doc.contact_display }}<br>
-        
-    </td>
-    <td style=""width: 40%;"">
-        <b>{{ _(""SHIPPED VIA"") }}:</b> 
-    </td>
-    
-  </tr>
-  <tr>
-     <td style=""width: 60%;"">
-        <b>{{ _(""PHONE"") }}:</b><br>{{ doc.contact_mobile }}<br> 
-    </td>
-    <td style=""width: 40%;"">
-         <b>{{ _(""TRACKING#"") }}:</b> 
-    </td>
-    
-  </tr>
-  <tr>
-     <td style=""width: 60%;"">
+    <div class=""row"">
+        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-9"">{{ value }}</div>
+    </div>
 
-    </td>
-    <td style=""width: 40%;"">
-        <b>{{ _(""Sales REP"") }}:</b><br>
-    </td>
-    
-  </tr>
-</table>
+    {%- endfor -%}
 
-<table class=""table table-condensed table-hover table-bordered"">
-        <tr>
-            <th>Sr</th>
-            <th class=""text-right"">Qty</th>
-            <th>Description</th>
-        </tr>
-        {%- for row in doc.delivery_note_details -%}
-        <tr>
-            <td style=""width: 3%;"">{{ row.idx }}</td>
-            <td style=""width: 10%; text-align: right;"">{{ row.qty }} {{ row.uom or row.stock_uom }}</td>
-            <td style=""width: 57%;""> {{ row.item_name }}</td>
-        </tr>
-        {%- endfor -%}
-    </tbody>
-</table>
+    <hr>
+    <br>
+    <p class=""strong"">
+        {{ _(""For"") }} {{ doc.company }},<br>
+        <br>
+        <br>
+        <br>
+        {{ _(""Authorized Signatory"") }}
+    </p>
+</div>"
+"","""Payment Receipt Voucher""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Payment Receipt Note"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
 
+    {%- for label, value in (
+        (_(""Received On""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Received From""), doc.pay_to_recd_from),
+        (_(""Amount""), ""<strong>"" + doc.total_amount or 0 + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""Remarks""), doc.remark)
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-9"">{{ value }}</div>
+    </div>
 
-<hr>
-SAMPLES FOR LAB ANALYSIS ONLY:
-</small>"
+    {%- endfor -%}
+
+    <hr>
+    <br>
+    <p class=""strong"">
+        {{ _(""For"") }} {{ doc.company }},<br>
+        <br>
+        <br>
+        <br>
+        {{ _(""Authorized Signatory"") }}
+    </p>
+</div>"
 "","""POS Invoice""","Sales Invoice","Accounts","Yes","Server",0,"<style>
 	.print-format table, .print-format tr, 
 	.print-format td, .print-format div, .print-format p {
@@ -237,114 +243,524 @@ SAMPLES FOR LAB ANALYSIS ONLY:
 <hr>
 <p>{{ doc.terms or """" }}</p>
 <p class=""text-center"">{{ _(""Thank you, please visit again."") }}</p>"
-"","""Payment Receipt Voucher""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
-<div class=""page-break"">
-    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
-        and doc.set(""select_print_heading"", _(""Payment Receipt Note"")) -%}{%- endif -%}
-    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+"","""Delivery Note""","Delivery Note","Stock","Yes","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+    {% if letter_head and not no_letterhead %}
+    <div class=""letter-head"">{{ letter_head }}</div>
+    {% endif %}
+    {%- if doc.meta.is_submittable and doc.docstatus==0-%}
+    <div class=""alert alert-info text-center"">
+        <h4 style=""margin: 0px;"">{{ _(""DRAFT"") }}</h4></div>
+    {%- endif -%}
+    {%- if doc.meta.is_submittable and doc.docstatus==2-%}
+    <div class=""alert alert-danger text-center"">
+        <h4 style=""margin: 0px;"">{{ _(""CANCELLED"") }}</h4></div>
+    {%- endif -%}
+    {% if max_pages > 1 %}
+    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
+    {% endif %}
+{%- endmacro -%}
 
-    {%- for label, value in (
-        (_(""Received On""), frappe.utils.formatdate(doc.voucher_date)),
-        (_(""Received From""), doc.pay_to_recd_from),
-        (_(""Amount""), ""<strong>"" + doc.total_amount or 0 + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-        (_(""Remarks""), doc.remark)
-    ) -%}
-    <div class=""row"">
-        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-9"">{{ value }}</div>
-    </div>
+<style>
+    .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+    background-color: #B7CCF2;
+    color:#000000;
+    font-size:16px;
+    }
+    .print-format table, .print-format tr, 
+    .print-format td, .print-format div, .print-format p {
+        font-family: sans-serif;
+        line-height: 90%;
+        vertical-align: middle;
+    }
+    @media screen {
+        .print-format {
+            width: 210mm;
+            padding: 10mm;
+            min-height: 297mm;
+            footer {page-break-after: always;}
+        }
+    }
+</style>
 
-    {%- endfor -%}
+<small>
+{{ add_header(0,1,doc,letter_head, no_letterhead) }}
 
-    <hr>
-    <br>
-    <p class=""strong"">
-        {{ _(""For"") }} {{ doc.company }},<br>
-        <br>
-        <br>
-        <br>
-        {{ _(""Authorized Signatory"") }}
-    </p>
-</div>"
-"","""Credit Note""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
 
-<div class=""page-break"">
-    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
-        and doc.set(""select_print_heading"", _(""Credit Note"")) -%}{%- endif -%}
-    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+<table class = ""table table-condensed table-bordered"">
+  <tr>
+    
+    <td style=""width: 60%;"">
+        <b>{{ _(""Shipping Address"") }}:</b> <br> {{ doc.shipping_address }}
+    </td>
+    <td style=""width: 40%;"">
 
-    {%- for label, value in (
-        (_(""Credit To""), doc.pay_to_recd_from),
-        (_(""Date""), frappe.utils.formatdate(doc.voucher_date)),
-        (_(""Amount""), ""<strong>"" + frappe.utils.cstr(doc.total_amount) + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-        (_(""Remarks""), doc.remark)
-    ) -%}
+         <b>{{ _(""SF-Number"") }}:</b> {{ doc.name }}<br>
+        <b>{{ _(""Date"") }}:</b> {{ doc.get_formatted(""posting_date"") }}<br>
+    </td>
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
+        <b>{{ _(""ATTN"") }}:</b><br>{{ doc.contact_display }}<br>
+        
+    </td>
+    <td style=""width: 40%;"">
+        <b>{{ _(""SHIPPED VIA"") }}:</b> 
+    </td>
+    
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
+        <b>{{ _(""PHONE"") }}:</b><br>{{ doc.contact_mobile }}<br> 
+    </td>
+    <td style=""width: 40%;"">
+         <b>{{ _(""TRACKING#"") }}:</b> 
+    </td>
+    
+  </tr>
+  <tr>
+     <td style=""width: 60%;"">
 
-    <div class=""row"">
-        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-9"">{{ value }}</div>
-    </div>
+    </td>
+    <td style=""width: 40%;"">
+        <b>{{ _(""Sales REP"") }}:</b><br>
+    </td>
+    
+  </tr>
+</table>
 
-    {%- endfor -%}
+<table class=""table table-condensed table-hover table-bordered"">
+        <tr>
+            <th>Sr</th>
+            <th class=""text-right"">Qty</th>
+            <th>Description</th>
+        </tr>
+        {%- for row in doc.delivery_note_details -%}
+        <tr>
+            <td style=""width: 3%;"">{{ row.idx }}</td>
+            <td style=""width: 10%; text-align: right;"">{{ row.qty }} {{ row.uom or row.stock_uom }}</td>
+            <td style=""width: 57%;""> {{ row.item_name }}</td>
+        </tr>
+        {%- endfor -%}
+    </tbody>
+</table>
 
-    <hr>
-    <br>
-    <p class=""strong"">
-        {{ _(""For"") }} {{ doc.company }},<br>
-        <br>
-        <br>
-        <br>
-        {{ _(""Authorized Signatory"") }}
-    </p>
-</div>"
-"","""Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<div style=""position: relative"">
 
-	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
-<div class=""page-break"">
-    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
-        and doc.set(""select_print_heading"", _(""Payment Advice"")) -%}{%- endif -%}
-    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+<hr>
+SAMPLES FOR LAB ANALYSIS ONLY:
+</small>"
+"","""GMO DECLARATION""","GMO DECLARATION","Selling","Yes","Server",0,"<p class=""text-center""><b>{{ _(""GMO DECLARATION"") }}</b></p>
 
-{%- for label, value in (
-        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
-        (_(""Reference / Cheque No.""), doc.cheque_no),
-        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
-    ) -%}
-    <div class=""row"">
-        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-8"">{{ value }}</div>
-    </div>
-{%- endfor -%}
-	<hr>
-	<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
-{%- for label, value in (
-         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-        (_(""References""), doc.remark)
-    ) -%}
-    <div class=""row"">
-        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-8"">{{ value }}</div>
-    </div>
-    {%- endfor -%}
-    <hr>
-	<div style=""position: absolute; top: 14cm; left: 0cm;"">
-		Prepared By</div>
-	<div style=""position: absolute; top: 14cm; left: 5.5cm;"">
-		Authorised Signatory</div>
-	<div style=""position: absolute; top: 14cm; left: 11cm;"">
-		Received Payment as Above</div>
-	<div style=""position: absolute; top: 16.4cm; left: 5.9cm;"">
-		<strong>_____________</strong></div>
-	<div style=""position: absolute; top: 16.7cm; left: 6cm;"">
-		<strong>A/C Payee</strong></div>
-	<div style=""position: absolute; top: 16.7cm; left: 5.9cm;"">
-		<strong>_____________</strong></div>
-	<div style=""position: absolute; top: 16.9cm; left: 12cm;"">
-		{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
-	<div style=""position: absolute; top: 17.9cm; left: 1cm;"">
-		{{ doc.pay_to_recd_from }}</div>
-	<div style=""position: absolute; top: 18.6cm; left: 1cm; width: 7cm;"">
-		{{ doc.total_amount_in_words }}</div>
-	<div style=""position: absolute; top: 19.7cm; left: 12cm;"">
-		{{ doc.total_amount }}</div>
-</div>"
+<br>
+<table class=""table table-bordered"">
+	<tbody>	
+		<tr>	<td style=""width: 3%;"">
+OUR REF:</td>
+			<td style=""width: 20%;""> Invoice No. {{ doc.sales_order }} dt: {{ doc.get_formatted(""delivery_date"") }}</td>
+		</tr>
+               <tr>
+			<td style=""width: 3%;"">PRODUCT :  </td>
+			<td style=""width: 20%;""> {{ doc.product }} </td>
+		</tr>
+
+	</tbody>
+</table>
+<br>
+
+<p>We hereby declare that the product named above, as supplied to client M/s {{ doc.customer_name }}  << CLIENT ADDRESS >> is not derived from or produced using GMO's or their derivates and all reasonable precautions have been taken to prevent contamination free genetically modified ingredients where used this also applies to Food Additions and Processing aids.</p>
+
+<br>
+<br>
+<br>
+<p><b>For EXOTIC FRUITS PVT. LTD </b></p>
+<br><br>
+<p><b>AUTHORISED SIGNATORY </b></p><br>"
+"","""Bank Set Doc""","Bank Set Of Documents","Selling","Yes","Server",0,"<p class=""text-center""><b>{{ _(""Bank Set Of Documents"") }}</b></p>
+
+<p>Date:</p><br>
+
+<p>The Chief Manager</p>
+<p>Andhra Bank,</p>
+<p>Opera House Branch,</p>
+<p>Mumbai - 400 004.</p><br>
+
+<p class=""text-center"">Sub: Submission of Bank Set of documents against Advance Remittance of USD {{ doc.rounded_total }} dt: {{ doc.get_formatted(""delivery_date"") }} from our client {{ doc.customer_name }}
+</p>
+<p>Dear sir,</p>
+<p>With reference to the above,enclosing herewith set of documents including Original Exchange Central copy of
+shoping bill against below shipment:</p><br>
+<p>Invoice No. {{ doc.sales_order }} </p><br>
+<p>Date: {{ doc.get_formatted(""delivery_date"") }}</p><br>
+<p>Amount:  {{ doc.rounded_total }}</p><br>
+<p>Consignee: {{ doc.customer_name }} </p><br>
+<p>Payment Terms: {{ doc.payment_terms }} </p><br>
+<p>We have dispatched the original set of documents directly to the above consignee as usual today, after receipt of
+payment from them.</p><br>
+<p>Kindly acknowledge the receipt of above documents & oblige.</p>
+
+<br>
+<br>
+<br>
+<p><b>YOURS FAITHFULLY,</b></p><br>
+<p><b>For EXOTIC FRUITS PVT. LTD.</b></p>"
+"","""Nutrition Certificate""","Nutrition Certificate","Selling","Yes","Server",0,"<p class=""text-center""><b>{{ _(""NUTRITION CERTIFICATE"") }}</b></p>
+
+<br><br>
+
+<p><b>REFERENCE: OUR INVOICE NUMBER {{ doc.sales_order }} </b></p>
+
+<br><br>
+<p><b>PRODUCT : {{ doc.product }}</b></p>
+<br>
+<table class=""table table-bordered"">
+	<tbody>	
+		<tr>	<td style=""width: 3%;"">
+WATER:</td>
+			<td style=""width: 20%;""> {{ doc.water }}</td>
+		</tr>
+               <tr>
+			<td style=""width: 3%;"">CALORIES: </td>
+			<td style=""width: 20%;""> {{ doc.calories }} </td>
+		</tr>
+<tr>
+			<td style=""width: 3%;"">PROTEIN:  </td>
+			<td style=""width: 20%;"">{{ doc.protein }} </td>
+		</tr>
+<tr>
+  <td style=""width: 3%;""> FAT:</td>
+  <td style=""width: 20%;""> {{ doc.fat }} </td>
+</tr>
+<tr>
+  <td style=""width: 3%;""> CARBOHYDRATE TOTAL:</td>
+  <td style=""width: 20%;""> {{ doc.carbohydrate_total }} </td>
+</tr>
+<tr>
+  <td style=""width: 3%;""> ASH:</td>
+  <td style=""width: 20%;"">  {{ doc.ash }}</td>
+</tr>
+<tr>
+  <td style=""width: 3%;""> CALCIUM: </td>
+  <td style=""width: 20%;""> {{ doc.calcium }}</td>
+</tr>
+<tr>
+  <td style=""width: 3%;"">PHOSPHORUS: </td>
+  <td style=""width: 20%;""> {{ doc.phosphorus }} </td>
+</tr>
+<tr>
+  <td style=""width: 3%;""> IRON: </td>
+  <td style=""width: 20%;"">{{ doc.iron }} </td>
+</tr>
+<tr>
+  <td style=""width: 3%;"">SODIUM:  </td>
+  <td style=""width: 20%;"">{{ doc.sodium }} </td>
+</tr>
+<tr>
+  <td style=""width: 3%;"">POTASSIUM:  </td>
+  <td style=""width: 20%;""> {{ doc.potassium }}</td>
+</tr>
+<tr>
+  <td style=""width: 3%;"">VITAMIN A: </td>
+  <td style=""width: 20%;"">{{ doc.vitamin_a }}  </td>
+</tr>
+<tr>
+  <td style=""width: 3%;""> THIAMINE:</td>
+  <td style=""width: 20%;""> {{ doc.thiamine }}</td>
+</tr>
+<tr>
+  <td style=""width: 3%;"">RIBOFLAVIN: </td>
+  <td style=""width: 20%;"">{{ doc.riboflavin }}</td>
+</tr>
+<tr>
+  <td style=""width: 3%;""> NIACIN:</td>
+  <td style=""width: 20%;"">  {{ doc.niacin }}</td>
+</tr>
+<tr>
+  <td style=""width: 3%;""> ASCORBIC ACID:</td>
+  <td style=""width: 20%;""> {{ doc.ascorbic_acid }} </td>
+</tr>
+<tr>
+  <td style=""width: 3%;""> </td>
+  <td style=""width: 20%;""> COMPOSITION OF FOODS PER 100 GMS, EDIBLE PORTION - PULP</td>
+</tr>
+	
+	</tbody>
+</table>
+
+<br><br><br>
+<p><b>For EXOTIC FRUITS PVT.LTD.,</b></p>
+<br><br>
+<p><b>MANAGER (Q.A.)</b></p>"
+"","""test""","Bank Set Of Documents","Selling","Yes","Server",0,"test"
+"","""Certificate Of Naturalness""","Certificate Of Naturalness","Selling","Yes","Server",0,"<p class=""text-center""><b>{{ _(""CERTIFICATE OF NATURALNESS"") }}</b></p><br>
+<p class=""text-center""><b>{{ _(""GUARANTEE OF PURITY AS PER USDA STANDERDS"") }}</b></p>
+
+<br>
+<table class=""table table-bordered"">
+	<tbody>	
+		<tr>	<td style=""width: 3%;"">
+OUR REF:</td>
+			<td style=""width: 20%;""> Invoice No. {{ doc.sales_order }} dt: {{ doc.get_formatted(""delivery_date"") }}</td>
+		</tr>
+               <tr>
+			<td style=""width: 3%;"">PRODUCT :  </td>
+			<td style=""width: 20%;""> {{ doc.product }} </td>
+		</tr>
+
+	</tbody>
+</table>
+<br><br>
+
+<p>We hereby guarantee that the above product comply in all respect to the Indian food laws i.e. Prevention of Food Adulteration Act (1954) and Fruit Products Order (1965) and all acts, amending or supplementing the same </p>
+<br>
+<p>We further certify and guarantee that the product is 100% natural and is not adulterated or misbranded within the meaning of aforementioned act.  </p>
+<br>
+<p>This certificate shall also constitute a Continuing Guarantee of the matters started above.</p>
+<br>
+<br>
+<br>
+<p><b>For EXOTIC FRUITS PRIVATE LIMITED</b></p>
+<br><br>
+<p><b>AUTHORISED SIGNATORY </b></p><br>"
+"","""Shelf Life Certificate""","Shelf Life Certificate","Selling","Yes","Server",0,"<p class=""text-center""><b>{{ _(""SHELF LIFE CERTIFICATE"") }}</b></p>
+
+<br>
+<table class=""table table-bordered"">
+	<tbody>	
+		<tr>	<td style=""width: 3%;"">
+OUR REF:</td>
+			<td style=""width: 20%;""> Invoice No. {{ doc.sales_order }} dt: {{ doc.get_formatted(""delivery_date"") }}</td>
+		</tr>
+               <tr>
+			<td style=""width: 3%;"">PRODUCT :  </td>
+			<td style=""width: 20%;""> {{ doc.product }} </td>
+		</tr>
+
+	</tbody>
+</table>
+<br>
+
+<p>This is to certify that shelf life of the product shipped with reference to the above mentioned invoice is <b> 12 months </b> from the date of production, if kept under ideal storage conditions.</p>
+
+<br>
+<br>
+<br>
+<p><b>For EXOTIC FRUITS PVT. LTD </b></p>
+<br><br>
+<p><b>AUTHORISED SIGNATORY </b></p><br>"
+"","""DRUM MANIFEST""","DRUM MANIFEST","Selling","Yes","Server",0,"<p class=""text-center""><b>{{ _(""DRUM MANIFEST"") }}</b></p>
+
+<br><br>
+<p class=""text-center""><b>REF: Our Invoice Number {{ doc.sales_order }} dt: {{ doc.get_formatted(""delivery_date"") }} </b></p><br>
+
+<br><br>
+<p>Container No :  {{ doc.container_no }} </p><br>
+
+<p>Batch # :  {{ doc.batch }}  </p><br>
+
+<p>Prod. Date :  {{ doc.prod_date }}</p><br>
+
+<p>DRM Nos : {{ doc.drm_nos }} </p><br>
+
+<p>No Of DRMS : {{ doc.no_of_drms }} </p><br>
+
+<br>
+
+<p>NET WEIGHT PER DRUM: 220 KGS,      GROSS WEIGHT PER DRUM: 240 KGS, <br> TOTAL NET WEIGHT: 17000.00 KGS,
+     TOTAL GROSS WEIGHT 19200.00 KGS</p>
+
+<br>
+<br>
+<br>
+<p><b>For EXOTIC FRUITS PVT. LTD., </b></p>
+<br><br>
+<p><b> MANAGER (Q.A.) </b></p><br>"
+"","""CARTON MANIFEST""","CARTON MANIFEST","Selling","Yes","Server",0,"<p class=""text-center""><b>{{ _(""CARTON MANIFEST"") }}</b></p>
+
+
+<br>
+<p class=""text-center""><b>REF: Our Invoice Number {{ doc.sales_order }} dt: {{ doc.get_formatted(""delivery_date"") }} </b></p><br>
+<br>
+
+
+<p>Container No : {{ doc.container_no }} </p><br>
+
+<p>Batch No. : {{ doc.batch }}  </p><br>
+
+<p>Prod. Date : {{ doc.prod_date }} </p><br>
+
+<p>Carton Nos : {{ doc.carton_nos }} </p><br>
+
+<p>No Of Cartons : {{ doc.no_of_cartons }}  </p><br>
+
+<br>
+
+<p>NET WEIGHT PER CARTON: 20 KGS,      GROSS WEIGHT PER CARTON: 21.50 KGS, <br> TOTAL NET WEIGHT: 18480.00 KGS,
+     TOTAL GROSS WEIGHT 19866.00 KGS</p>
+
+<br>
+<br>
+<br>
+<p><b>For EXOTIC FRUITS PVT. LTD., </b></p>
+<br><br>
+<p><b> MANAGER (Q.A.) </b></p><br>"
+"","""Bill Of exchange""","Bill Of exchange","Selling","Yes","Server",0,"<p class=""text-center"">{{ _(""DRAWN ON 75 DAYS AFTER DATE OF INVOICE THROUGH RABOBANK NEDERLAND OBS TRADE SERVICES GLIDENKWARTIER 199 3511 DH UTERECHT THE NETHERLANDS."") }}</p>
+
+<br><br>
+<p> Invoice No. {{ doc.sales_order }} dt: {{ doc.get_formatted(""delivery_date"") }} </p><br>
+<p>EXCHANGE FOR << USE 84,240 >> </p><br>
+
+<p>At  << 75>> days after << INVOICE >> date of this FIRST of exchange (Second of the same tenure date being unpaid) pay to the order of << ANDHRA BANK, 9/15, MAMA PARAMANAND MARG, QUEENS ROAD, OPERA HOUSE MUMBAI - 400 004, MAHARASHTRA INDIA - A/C NO. 0402111000001945 >> the sum of << US DOLLARS EIGHTY FOUR THOUSAND TWO HUNDREAD FOURTY ONLY >> value received and charge the same to the account of << 240 Drums >> shipped per vessel << CMA CGM BELLINI V- EPA14W >>  </p><br>
+
+
+<p>INVOICE NO<< INVOICE NO >> B/L No.  <<  >>  </p><br>
+
+<p>TO <<  >> </p><br>
+
+<p>M/s <<FRIESLANDCAMPINA RIEDL B.V. <br>
+FRANKENENG 12, <br>
+THE NETHERLANDS >> </p><br>
+
+
+<br>
+<p class=""text-right""><b>For EXOTIC FRUITS PVT. LTD.</b></p>
+<br><br>
+<p class=""text-right""><b> AUTHORISED SIGNATORY </b></p><br>"
+"","""Certificate Of Authenticity And Conformity""","Certificate Of Authenticity And Conformity","Selling","Yes","Server",0,"<p class=""text-center""><b>{{ _(""CERTIFICATE OF AUTHENTICITY AND CONFORMITY"") }}</b></p>
+
+<br><br>
+<table class=""table table-bordered"">
+	<tbody>	
+		<tr>	<td style=""width: 3%;"">
+OUR REF:</td>
+			<td style=""width: 20%;""> Invoice No. {{ doc.sales_order }} dt: {{ doc.get_formatted(""delivery_date"") }}</td>
+		</tr>
+               <tr>
+			<td style=""width: 3%;"">PRODUCT :  </td>
+			<td style=""width: 20%;""> {{ doc.product }} </td>
+		</tr>
+
+	</tbody>
+</table>
+
+<br>
+<br>
+
+<p>The undersigned guarantees that the product supplied to < CLIENT NAME > < CLIENT ADDRESS > and delivered in one Or more deliveries, is made from 100% sound, mature & wholesome fruit is authentic & is free from any dyestuff and preservatives & is not modified and/or adulterated and/or misbranded and/or enriched in anyway by addition of natural or artificial substances and/or sugars and/or stabilizing agents(Like E.C. Emulsifiers, jellying agents etc), within the meaning of the European Food legislation with special reference to the E.C Flavouring directive and/or E.C. Directive for food additives. </p>
+<br>
+<p>The product is manufactured under highly qualified & sanitary conditions corresponding to International Good Manufacturing Standards and is in conformity with the specifications. As agreed in purchase order, and is suitable for it's intended application in Fruit juice and/or Fruit Nectars in the meaning of E.C. Fruit Juice directive. </p>
+<br>
+
+<p>The undersigned guarantees that these products do not contain any additives or components of which the use is prohibited or restricted by European Food Laws.</p>
+<br>
+
+<p>The producer and/or seller warrants that the product also fully corresponds to the AIJN Code of Practice for the Arsenic and Heavy Metals.</p>
+<br>
+<br>
+<br>
+<p><b>For EXOTIC FRUITS PRIVATE LIMITED</b></p>
+<br><br>
+<p><b>AUTHORISED SIGNATORY </b></p><br>"
+"","""Health Certificate""","Health Certificate","Selling","Yes","Server",0,"<p class=""text-center""><b>{{ _(""HEALTH CERTIFICATE"") }}</b></p>
+
+<br><br>
+<table class=""table table-bordered"">
+	<tbody>	
+		<tr>	<td style=""width: 3%;"">
+OUR REF:</td>
+			<td style=""width: 20%;""> Invoice No. {{ doc.sales_order }} dt: {{ doc.get_formatted(""delivery_date"") }}</td>
+		</tr>
+               <tr>
+			<td style=""width: 3%;"">PRODUCT :  </td>
+			<td style=""width: 20%;""> {{ doc.product }} </td>
+		</tr>
+ <tr>
+			<td style=""width: 3%;"">NO OF PACKAGES :  </td>
+			<td style=""width: 20%;""> {{ doc.no_of_packages }} </td>
+		</tr>
+ <tr>
+			<td style=""width: 3%;"">PROCESS :  </td>
+			<td style=""width: 20%;""> {{ doc.process }} </td>
+		</tr>
+ <tr>
+			<td style=""width: 3%;"">TOTAL NET WEIGHT :  </td>
+			<td style=""width: 20%;""> {{ doc.total_net_weight }} </td>
+		</tr>
+ <tr>
+			<td style=""width: 3%;"">CONTAINER NO. :  </td>
+			<td style=""width: 20%;""> {{ doc.container_no }} </td>
+		</tr>
+
+	</tbody>
+</table>
+
+<br>
+
+<p>This is to certify that above product packed in Aseptic bag in a drum has undergone sufficient sterilization process and that the product is safe for human consumption.</p>
+
+<br>
+<br>
+<br>
+<p><b>For EXOTIC FRUITS PVT. LTD.</b></p>
+<br><br>
+<p><b> AUTHORISED SIGNATORY </b></p><br>"
+"","""Shipment Advice""","Shipment Advice","Selling","Yes","Server",0,"<p class=""text-center""><b>{{ _(""SHIPMENT ADVICE"") }}</b></p>
+
+<br><br>
+<p>SHIPMENT ADVICE- CONTRACT NO-  {{ doc.contract_no }} DATE {{ doc.get_formatted(""contract_date"") }}  </p><br>
+<p>DOHLER HOLLAND BV- Invoice No. {{ doc.sales_order }} dt: {{ doc.get_formatted(""delivery_date"") }} </p><br>
+
+
+<table class=""table table-bordered"">
+	<tbody>	
+		<tr>	<td style=""width: 3%;"">
+PRODUCT </td>
+			<td style=""width: 20%;"">{{ doc.product }} </td>
+		</tr>
+               <tr>
+			<td style=""width: 3%;"">QUANTITY :  </td>
+			<td style=""width: 20%;""> {{ doc.quantity }} </td>
+		</tr>
+<tr>
+			<td style=""width: 3%;"">VALUE :  </td>
+			<td style=""width: 20%;""> {{ doc.value }} </td>
+		</tr>
+<tr>
+			<td style=""width: 3%;"">PORT OF DISCHARGE :  </td>
+			<td style=""width: 20%;""> {{ doc.port_of_discharge }} </td>
+		</tr>
+<tr>
+			<td style=""width: 3%;"">VESSEL NAME :  </td>
+			<td style=""width: 20%;""> {{ doc.vessel_name }} </td>
+		</tr>
+<tr>
+			<td style=""width: 3%;"">B/L NO. & DATE :  </td>
+			<td style=""width: 20%;""> {{ doc.bl_no_and_date }} </td>
+		</tr>
+<tr>
+			<td style=""width: 3%;"">Container No :  </td>
+			<td style=""width: 20%;""> {{ doc.container_no }} </td>
+		</tr>
+
+<tr>
+			<td style=""width: 3%;"">NET WEIGHT :  </td>
+			<td style=""width: 20%;""> {{ doc.net_weight }} </td>
+		</tr>
+<tr>
+			<td style=""width: 3%;"">GROSS WEIGHT :  </td>
+			<td style=""width: 20%;""> {{ doc.gross_weight }} </td>
+		</tr>
+
+	</tbody>
+</table>
+
+
+<br>
+
+<p>This is to certify that above product packed in Aseptic bag in a drum has undergone sufficient sterilization process and that the product is safe for human consumption.</p>
+
+<br>
+<br>
+<br>
+<p><b>YOURS FAITHFULLY,</b></p><br>
+<p><b>For EXOTIC FRUITS PVT. LTD.</b></p>
+<br><br>
+<p><b> AUTHORISED SIGNATORY </b></p><br>"
