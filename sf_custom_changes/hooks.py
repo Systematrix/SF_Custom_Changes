@@ -13,6 +13,11 @@ fixtures = ["Custom Field",
 "Print Format",
 "Report"]
 
+doc_events = {
+	"Purchase Invoice": {
+		"before_save": "sf_custom_changes.sf_acc.purchase.validate_server_vat"
+	}
+}
 
 # Includes in <head>
 # ------------------
