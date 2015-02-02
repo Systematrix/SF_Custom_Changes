@@ -15,7 +15,7 @@ fixtures = ["Custom Field",
 
 doc_events = {
 	"Purchase Invoice": {
-		"before_save": "sf_custom_changes.sf_acc.purchase.validate_server_vat"
+		"before_save": "sf_custom_changes.sf_acc.purchase.validate_bill_no"
 	}
 }
 

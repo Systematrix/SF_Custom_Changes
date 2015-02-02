@@ -15,7 +15,7 @@ _logger = logging.getLogger(frappe.__name__)
 
 @frappe.whitelist(allow_guest=True)
 
-def validate_server_vat(self, method):
+def validate_bill_no(self, method):
 		if self.bill_no:
 			# validate email is unique
 			bill_list = frappe.db.sql("""select name from `tabPurchase Invoice` where bill_no=%s""",
@@ -23,4 +23,4 @@ def validate_server_vat(self, method):
 			_logger.info("doc validate server vat is {0}".format(self.bill_no))
 			if len(bill_list) > 1:
 				items = [e[0] for e in bill_list if e[0]!=self.name]
-				frappe.msgprint(_("Supplier Invoice Number must be unique. Current Supplier Invoice Number alreadgit y exists for {0}").format(comma_and(items)))
+				frappe.msgprint(_("Supplier Invoice Number must be unique. Current Supplier Invoice Number already exists for {0}").format(comma_and(items)))
