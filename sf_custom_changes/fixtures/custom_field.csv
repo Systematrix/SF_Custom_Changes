@@ -18,6 +18,10 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Sales Invoice-lr_date""","Sales Invoice","Date","Ship Date (DN)","","","","","lr_date",0,0,0,0,"","",1,"",1,0,0,0,0,0
+"","""Sales Invoice-tracking_code""","Sales Invoice","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-shipping_terms""","Sales Invoice","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-po_no""","Sales Invoice","Data","PO No","","","","","po_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note-delivery_date""","Delivery Note","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"160px","",1,"",1,0,0,1,0,0
 "","""Delivery Note-tracking_code""","Delivery Note","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note-shipping_terms""","Delivery Note","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -47,8 +51,6 @@
 "","""Delivery Note Item-rate_per_weight_unit""","Delivery Note Item","Currency","Rate per Weight Unit","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note Item-net_weight""","Delivery Note Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note Item-weight_uom""","Delivery Note Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-tracking_code""","Sales Invoice","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-shipping_terms""","Sales Invoice","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-quantity_in_weight""","Purchase Order Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-rate_per_weight_unit""","Purchase Order Item","Currency","Rate per Weight Unit","","3","","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-net_weight""","Purchase Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
@@ -66,5 +68,3 @@
 "","""Sales Invoice Item-weight_uom""","Sales Invoice Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-credit_days""","Sales Invoice","Read Only","Credit Days","","","customer.credit_days","","credit_days",0,0,0,0,"58","",0,"",1,0,0,0,0,0
 "","""Sales Invoice-sales_rep_sm""","Sales Invoice","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"105","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-delivery_date""","Sales Invoice","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"81","",1,"",1,0,0,1,0,0
-"","""Sales Invoice-po_no""","Sales Invoice","Data","PO No","","","","","po_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
