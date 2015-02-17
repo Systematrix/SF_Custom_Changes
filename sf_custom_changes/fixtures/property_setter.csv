@@ -18,6 +18,7 @@
 "Type:","Data (text)","Select","Link","Data","Text","Data","Data","Data"
 "Info:","","One of: DocField, DocType","Valid DocType","","","","",""
 "Start entering data below this line"
+"","""Batch-batch_id-label""","DocField","Batch","label","Product Code","batch_id","Data",""
 "","""Delivery Note Item-batch_no-label""","DocField","Delivery Note Item","label","Product Code","batch_no","Data",""
 "","""Purchase Receipt Item-batch_no-label""","DocField","Purchase Receipt Item","label","Product Code","batch_no","Data",""
 "","""Sales Invoice-shipping_address_name-print_hide""","DocField","Sales Invoice","print_hide","0","shipping_address_name","Check",""
