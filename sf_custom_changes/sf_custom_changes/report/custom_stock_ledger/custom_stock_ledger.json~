@@ -1,0 +1,16 @@
+{
+ "apply_user_permissions": 1, 
+ "creation": "2015-02-19 17:08:23", 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 1, 
+ "is_standard": "Yes", 
+ "modified": "2015-02-19 07:18:17.343291", 
+ "modified_by": "Administrator", 
+ "module": "Stock", 
+ "name": "Custom Stock Ledger", 
+ "owner": "Administrator", 
+ "ref_doctype": "Stock Ledger Entry", 
+ "report_name": "Custom Stock Ledger", 
+ "report_type": "Script Report"
+}
