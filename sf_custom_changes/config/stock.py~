@@ -1,0 +1,24 @@
+from frappe import _
+
+def get_data():
+	return [
+		{
+			"label": _("Main Reports"),
+			"icon": "icon-table",
+			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Custom Stock Ledger",
+					"doctype": "Item",
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Custom Stock Balance",
+					"doctype": "Warehouse"
+				},
+				
+			]
+		},
+	]

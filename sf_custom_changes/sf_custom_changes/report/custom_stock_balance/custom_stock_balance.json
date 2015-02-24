@@ -6,12 +6,12 @@
  "docstatus": 0, 
  "doctype": "Report", 
  "is_standard": "Yes", 
- "modified": "2015-02-19 15:16:06.169147", 
+ "modified": "2015-02-24 14:17:14.486979", 
  "modified_by": "Administrator", 
  "module": "SF Custom Changes", 
  "name": "Custom Stock Balance", 
  "owner": "Administrator", 
- "ref_doctype": "Stock Entry Detail", 
- "report_name": "Custom Stock Balance", 
+ "ref_doctype": "Stock Ledger Entry", 
+ "report_name": "Stock Balance", 
  "report_type": "Script Report"
 }
