@@ -18,6 +18,8 @@
 "Type:","Data (text)","Select","Link","Data","Text","Data","Data","Data"
 "Info:","","One of: DocField, DocType","Valid DocType","","","","",""
 "Start entering data below this line"
+"","""Warehouse-mobile_no-options""","DocField","Warehouse","options","","mobile_no","Text",""
+"","""Warehouse-phone_no-options""","DocField","Warehouse","options","","phone_no","Text",""
 "","""Sales Invoice-delivery_date-width""","DocField","Sales Invoice","width","81","delivery_date","",""
 "","""Sales Order-transaction_date-width""","DocField","Sales Order","width","95","transaction_date","",""
 "","""Sales Order-delivery_date-width""","DocField","Sales Order","width","101","delivery_date","",""
