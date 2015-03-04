@@ -18,6 +18,7 @@
 "Type:","Data (text)","Select","Link","Data","Text","Data","Data","Data"
 "Info:","","One of: DocField, DocType","Valid DocType","","","","",""
 "Start entering data below this line"
+"","""Item-valuation_method-default""","DocField","Item","default","FIFO","valuation_method","Text",""
 "","""Sales Invoice-address_display-label""","DocField","Sales Invoice","label","To","address_display","Data",""
 "","""Sales Invoice-read_only_onload""","DocType","Sales Invoice","read_only_onload","","","Check",""
 "","""Sales Invoice-customer_name-print_hide""","DocField","Sales Invoice","print_hide","1","customer_name","Check",""
