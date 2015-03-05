@@ -35,8 +35,8 @@ def get_columns(filters):
 
 	columns = ["Item:Link/Item:100", "Item Name::150", "Warehouse:Link/Warehouse:100", "Stock UOM:Link/UOM:90", "Fill:Link/UOM:90", \
         "Opening Qty:Float:100", "In Qty:Float:80", "Out Qty:Float:80", "Balance Qty:Float:100", \
-        "Fill Unit Rate:Float:90","Valuation Rate:Float:90", "Opening Value:Float:110", "In Value:Float:80", \
-	"Out Value:Float:80",  "Balance Value:Float:100",]
+        "Fill Unit Rate:Currency:90","Valuation Rate:Currency:90", "Opening Value:Currency:110", "In Value:Currency:80", \
+	"Out Value:Currency:80",  "Balance Value:Currency:100",]
 
 	return columns
 

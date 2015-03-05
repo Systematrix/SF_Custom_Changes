@@ -16,7 +16,7 @@ def execute(filters=None):
 
 		data.append([sle.date, sle.item_code, item_detail.item_name,
 			sle.warehouse,
-			item_detail.stock_uom, sle.actual_qty, sle.qty_after_transaction,
+			item_detail.stock_uom, item_detail.weight_uom, sle.actual_qty, sle.qty_after_transaction,
 			(sle.incoming_rate if sle.actual_qty > 0 else 0.0),
 			sle.valuation_rate, sle.stock_value, sle.voucher_type, sle.voucher_no,
 			sle.batch_no])
@@ -26,7 +26,7 @@ def execute(filters=None):
 def get_columns():
 	return [_("Date") + ":Date:95", _("Item") + ":Link/Item:130", _("Item Name") + "::100",
 	        _("Warehouse") + ":Link/Warehouse:100",
-		_("Stock UOM") + ":Link/UOM:100", _("Qty") + ":Float:50", _("Balance Qty") + ":Float:100",
+		_("Stock UOM") + ":Link/UOM:100",_("Fill UOM") + ":Link/UOM:100", _("Qty") + ":Float:50", _("Balance Qty") + ":Float:100",
 		_("Incoming Rate") + ":Currency:110", _("Valuation Rate") + ":Currency:110", _("Balance Value") + ":Currency:110",
 	        _("Voucher Type") + "::110",_("Voucher #") + ":Dynamic Link/Voucher Type:100", _("Batch") + ":Link/Batch:100"]
 
@@ -44,7 +44,7 @@ def get_stock_ledger_entries(filters):
 def get_item_details(filters):
 	item_details = {}
 	for item in frappe.db.sql("""select name, item_name, description, item_group,
-			brand, stock_uom from `tabItem` {item_conditions}"""\
+			brand, stock_uom, weight_uom from `tabItem` {item_conditions}"""\
 			.format(item_conditions=get_item_conditions(filters)), filters, as_dict=1):
 		item_details.setdefault(item.name, item)
 
