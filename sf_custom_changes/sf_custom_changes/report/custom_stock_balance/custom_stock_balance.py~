@@ -18,8 +18,8 @@ def execute(filters=None):
 		for item in sorted(iwb_map[company]):
 			for wh in sorted(iwb_map[company][item]):
 				qty_dict = iwb_map[company][item][wh]
-				data.append([item, item_map[item]["item_name"],wh,
-					item_map[item]["stock_uom"],item_map[item]["weight_uom"],qty_dict.opening_qty,
+				data.append([item, item_map[item]["item_name"], item_map[item]["net_weight"],
+					item_map[item]["stock_uom"],item_map[item]["weight_uom"],wh,qty_dict.opening_qty,
                                         qty_dict.in_qty,qty_dict.out_qty,
                                         qty_dict.bal_qty,item_map[item]["last_purchase_rate"],qty_dict.val_rate,
 					qty_dict.opening_val, 
@@ -33,8 +33,8 @@ def execute(filters=None):
 def get_columns(filters):
 	"""return columns based on filters"""
 
-	columns = ["Item:Link/Item:100", "Item Name::150", "Warehouse:Link/Warehouse:100", "Stock UOM:Link/UOM:90", "Fill:Link/UOM:90", \
-        "Opening Qty:Float:100", "In Qty:Float:80", "Out Qty:Float:80", "Balance Qty:Float:100", \
+	columns = ["Item:Link/Item:100", "Item Name::150", "Net Weight:Float:80", "Stock UOM:Link/UOM:90", "Fill:Link/UOM:90", \
+        "Warehouse:Link/Warehouse:100", "Opening Qty:Float:100", "In Qty:Float:80", "Out Qty:Float:80", "Balance Qty:Float:100", \
         "Fill Unit Rate:Currency:90","Valuation Rate:Currency:90", "Opening Value:Currency:110", "In Value:Currency:80", \
 	"Out Value:Currency:80",  "Balance Value:Currency:100",]
 
@@ -103,7 +103,7 @@ def get_item_warehouse_map(filters):
 
 def get_item_details(filters):
 	item_map = {}
-	for d in frappe.db.sql("select name, item_name, stock_uom, weight_uom, last_purchase_rate, item_group, brand, \
+	for d in frappe.db.sql("select name, item_name, net_weight, stock_uom, weight_uom, last_purchase_rate, item_group, brand, \
 		description from tabItem", as_dict=1):
 		item_map.setdefault(d.name, d)
 
