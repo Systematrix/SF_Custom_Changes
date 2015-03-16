@@ -18,6 +18,49 @@
 "Type:","Data (text)","Link","Link","Select","Select","Check","Code"
 "Info:","","Valid DocType","Valid Module Def","One of: No, Yes","One of: Server, Client","0 or 1",""
 "Start entering data below this line"
+"","""Custom Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<div style=""position: relative"">
+
+	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+<div class=""page-break"">
+
+	<div style=""position: absolute; top: 0.1cm; right: 1cm;"">
+		{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
+	<div style=""position: absolute; top: 1.6cm; left: 1cm;"">
+		{{ doc.pay_to_recd_from }}</div>
+	<div style=""position: absolute; top: 2.8cm; left: 1cm; width: 7cm;"">
+		{{ doc.total_amount_in_words }}</div>
+	<div style=""position: absolute; top: 2.0cm; right: 1cm;"">
+		{{ doc.total_amount }}</div>
+
+	<div style=""position: relative; top: 8.05cm; left: 1cm;"">
+		{%- for label, value in (
+		        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
+		        (_(""Reference / Cheque No.""), doc.cheque_no),
+		        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
+		    ) -%}
+		    
+		      <div class=""row"">
+		        <div class=""col-xs-6""><label class=""text-right"">{{ label }}</label></div>
+		        <div class=""col-xs-6"">{{ value }}</div>
+		    </div>
+		   {%- endfor -%}
+
+		<hr>
+		<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
+		{%- for label, value in (
+	         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+	        (_(""References""), doc.remark)
+	    ) -%}
+	    <div class=""row"">
+	        <div class=""col-xs-4""><label class=""text-right"">{{ label }}</label></div>
+	        <div class=""col-xs-8"">{{ value }}</div>
+	    </div>
+	    {%- endfor -%}
+    	<hr>
+        </div>
+</div>
+</div>
+"
 "","""Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<div style=""position: relative"">
 
 	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}

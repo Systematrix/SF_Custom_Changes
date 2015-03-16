@@ -19,6 +19,7 @@
 "Info:","","One of: DocField, DocType","Valid DocType","","","","",""
 "Start entering data below this line"
 "","""Sales Invoice-read_only_onload""","DocType","Sales Invoice","read_only_onload","","","Check",""
+"","""Journal Voucher-read_only_onload""","DocType","Journal Voucher","read_only_onload","","","Check",""
 "","""Delivery Note-rounded_total_export-print_hide""","DocField","Delivery Note","print_hide","0","rounded_total_export","Check",""
 "","""Delivery Note-rounded_total_export-hidden""","DocField","Delivery Note","hidden","0","rounded_total_export","Check",""
 "","""Delivery Note-rounded_total-print_hide""","DocField","Delivery Note","print_hide","1","rounded_total","Check",""
