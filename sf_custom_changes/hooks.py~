@@ -19,6 +19,8 @@ doc_events = {
 	}
 }
 
+update_website_context = "sf_custom_changes.sf_acc.purchase.update_website_context"
+
 # Includes in <head>
 # ------------------
 
