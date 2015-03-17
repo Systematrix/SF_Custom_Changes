@@ -11,6 +11,7 @@ def get_data():
 					"is_query_report": True,
 					"name": "Custom Sales Partners Commission",
 					"doctype": "Sales Invoice",
+                                        "description": _("Sales Commission Report"),
 				},
 				
 			]
