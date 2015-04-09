@@ -18,6 +18,8 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Sales Invoice-lr_date""","Sales Invoice","Date","Ship Date (DN)","","","","","lr_date",0,0,1,0,"","",0,"",1,0,0,0,0,0
+"","""Sales Invoice-po_no""","Sales Invoice","Data","PO No","","","","","po_no",0,0,0,0,"82","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-delivery_date""","Sales Invoice","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"81","",1,"",1,0,0,1,0,0
 "","""Sales Invoice-sp_outstanding_amount""","Sales Invoice","Currency","Outstanding Amount","","","currency","","sp_outstanding_amount",0,0,1,0,"","",0,"",0,0,1,0,0,0
 "","""Sales Invoice-payment_details""","Sales Invoice","Link","Payment Details","","","Journal Voucher","","payment_details",0,0,0,0,"","",0,"",0,0,1,0,0,0
@@ -60,8 +62,6 @@
 "","""Warehouse-contact_name""","Warehouse","Data","Contact Name","","","","","contact_name",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Warehouse-fax_number""","Warehouse","Data","Fax Number","","","","","fax_number",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-sales_rep_sm""","Sales Invoice","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"105","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-po_no""","Sales Invoice","Data","PO No","","","","","po_no",0,0,0,0,"82","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-lr_date""","Sales Invoice","Date","Ship Date (DN)","","","","","lr_date",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Sales Invoice-credit_days""","Sales Invoice","Int","Credit Days","","","customer.credit_days","","credit_days",0,0,0,0,"58","",0,"",1,0,0,0,0,0
 "","""Purchase Invoice-credit_days""","Purchase Invoice","Int","Credit Days","","","supplier.credit_days","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Purchase Order-credit_days""","Purchase Order","Int","Payment Terms (Days)","","","","","credit_days",0,0,0,0,"","",0,"",0,0,0,0,0,1
