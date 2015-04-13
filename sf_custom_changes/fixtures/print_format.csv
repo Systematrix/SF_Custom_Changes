@@ -96,7 +96,7 @@
 <div class=""row"">
     <div class=""col-xs-6 text-right""></div>
     <div class=""col-xs-4 text-right""> <label><b>{{ _(""Net Total"") }}</b></label></div>
-    <div class=""col-xs-2 "">{{ doc.get_formatted(""net_total_import"") or '' }}</div>
+    <div class=""col-xs-2 text-right"">{{ doc.get_formatted(""net_total_import"") or '' }}</div>
 </div>  
 	{%- for row in doc.other_charges -%}
     {%- if not row.included_in_print_rate -%}
@@ -104,7 +104,7 @@
 <div class=""row"">
     <div class=""col-xs-6 text-right""></div>
     <div class=""col-xs-4 text-right""> <label><b> {{ row.description }}</b></label></div>
-    <div class=""col-xs-2 ""> {{ row.get_formatted(""tax_amount"", doc) }} </div>
+    <div class=""col-xs-2 text-right""> {{ row.get_formatted(""tax_amount"", doc) }} </div>
 </div> 
     {%- endif -%}
     {%- endif -%}
@@ -113,13 +113,13 @@
     <div class=""row"">
          <div class=""col-xs-6 text-right""></div>
          <div class=""col-xs-4 text-right""> <label><b>{{ _(""Discount"") }}</b></label></div>
-         <div class=""col-xs-2 ""> {{ doc.get_formatted(""discount_amount"") }} </div>
+         <div class=""col-xs-2 text-right""> {{ doc.get_formatted(""discount_amount"") }} </div>
     </div> 
  {%- endif -%}          
 <div class=""row"">
     <div class=""col-xs-6 text-right""></div>
     <div class=""col-xs-4 text-right""><label><b>{{ _(""Grand Total"") }}</b></label></div>
-    <div class=""col-xs-2 "">{{ doc.get_formatted(""grand_total_import"") }} </div>
+    <div class=""col-xs-2 text-right"">{{ doc.get_formatted(""grand_total_import"") }} </div>
 </div>
 <div class=""row"">
  <div class=""col-xs-12 text-left"">{{ doc.terms or '' }}</div>
@@ -131,6 +131,144 @@
 <div class=""row"">
 <div class=""col-xs-6 text-left""><b>For {{doc.supplier_name}}</b><br>Authorized Signatory</div>
 <div class=""col-xs-6 text-right""><b>For Spectrum Fruits</b><br>Authorized Signatory</div>
+</div>"
+"","""Custom SI""","Sales Invoice","Accounts","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+    {%- if trigger_print -%}
+    <script>
+    window.print();
+    window.close();
+    </script>
+    {%- endif -%}
+    {% if letter_head and not no_letterhead %}
+    <div class=""letter-head"">{{ letter_head }}</div>
+    {% endif %}
+    {%- if doc.meta.is_submittable and doc.docstatus==0-%}
+    <div class=""alert alert-info text-center"">
+        <h4 style=""margin: 0px;"">{{ _(""PROFORMA"") }}</h4></div>
+    {%- endif -%}
+    {%- if doc.meta.is_submittable and doc.docstatus==2-%}
+    <div class=""alert alert-danger text-center"">
+        <h4 style=""margin: 0px;"">{{ _(""CANCELLED"") }}</h4></div>
+    {%- endif -%}
+    {% if max_pages > 1 %}
+    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
+    {% endif %}
+{%- endmacro -%}
+
+{{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+<label><h4><p class=""text-center""><b>{{ _(""Sales Invoice"") }}</b></p></h4></label>
+<br>
+<div class=""row"">        
+     <div class=""col-xs-6"">            
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label><b>Bill To</b></label> </div>
+            <div class=""col-xs-7 "">{{ doc.address_display or '' }}</div>
+        </div>
+        <br>
+        {%- if doc.shipping_address -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label><b>Ship To</b></label> </div>
+            <div class=""col-xs-7 "">{{ doc.shipping_address or '' }}</div>
+        </div>  
+        {%- endif -%}              
+    </div>
+    <div class=""col-xs-6"">
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label><b>Invoice No</b></label> </div>
+            <div class=""col-xs-7 "">{{ doc.name or '' }}  </div>
+        </div>
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""> <label><b>Invoice Date</b></label>  </div>
+            <div class=""col-xs-7 "">{{ doc.get_formatted(""posting_date"") or '' }} </div>
+        </div> 
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label><b>Payment Due Date</b></label> </div>
+            <div class=""col-xs-7 "">{{ doc.get_formatted(""due_date"") or '' }} </div>
+        </div>
+        {%- if doc.credit_days -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label><b>Payment Terms</b></label> </div>
+            <div class=""col-xs-7 "">{{ doc.credit_days or '' }} days</div>
+        </div>  
+        {%- endif -%}
+        {%- if doc.lr_date -%}
+         <div class=""row"">
+            <div class=""col-xs-5 text-right""><label><b>Ship Date</b></label> </div>
+            <div class=""col-xs-7 "">{{ doc.get_formatted(""lr_date"") or '' }} </div>
+        </div>    
+        {%- endif -%}
+         {%- if doc.po_no -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label><b>PO No</b></label> </div>
+            <div class=""col-xs-7 "">{{ doc.po_no or ''}} </div>
+        </div>
+         {%- endif -%}
+         {%- if doc.sales_rep_sm -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label><b>Sales Rep SM</b></label> </div>
+            <div class=""col-xs-7 "">{{ doc.sales_rep_sm or '' }}</div>
+        </div>
+         {%- endif -%}
+    </div>
+</div>
+<br>
+<table class=""table table-condensed table-hover table-bordered"">
+        <tr>
+            <th>Sr</th>
+            <th>Item</th>
+            <th>Product Description</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Amount</th>
+        </tr>
+        {%- for row in doc.entries -%}
+        <tr>
+            <td style=""width: 3%;"">{{ row.idx }}</td>
+            <td style=""width: 15%;""><b>{{ row.item_code or '' }}</b></td>
+            <td style=""width: 37%;"">{%- if row.batch_no -%}<b>Product Code: </b>{{ row.batch_no or '' }}<br>{%- endif -%}{%- if row.serial_no -%}<b> Serial No: </b>{{ row.serial_no or '' }}<br>{%- endif -%}{{ row.description or '' }}<br>{{ row.qty }} {{ row.stock_uom or '' }} @ {{ row.net_weight }} {{ row.weight_uom }}/{{ row.stock_uom or '' }}</td>
+            <td style=""width: 15%; text-align: right;"">{{ row.quantity_in_weight }} {{ row.weight_uom or '' }}</td>
+            <td style=""width: 15%; text-align: right;"">{{ row.get_formatted(""rate_per_weight_unit"", doc) or ''}}</td>
+            <td style=""width: 15%; text-align: right;"">{{ row.get_formatted(""amount"", doc) or ''}}</td>
+        </tr>
+        {%- endfor -%}
+    </tbody>
+</table>
+<br>
+    
+<div class=""row"">
+    <div class=""col-xs-6 text-right""></div>
+    <div class=""col-xs-4 text-right""><label><b>{{ _(""Net Total"") }}</b></label> </div>
+    <div class=""col-xs-2 text-right"">{{ doc.get_formatted(""net_total_export"") or '' }}</div>
+</div>  
+
+	{%- for row in doc.other_charges -%}
+    {%- if not row.included_in_print_rate -%}
+    {%- if row.tax_amount -%}      
+<div class=""row"">
+    <div class=""col-xs-6 text-right""></div>
+    <div class=""col-xs-4 text-right""><label><b>{{ row.description }}</b></label></div>
+    <div class=""col-xs-2 text-right"">{{ row.get_formatted(""tax_amount"", doc) }}</div>
+</div> 
+    {%- endif -%}
+    {%- endif -%}
+	{%- endfor -%}
+
+	{%- if doc.discount_amount -%}
+<div class=""row"">
+	 <div class=""col-xs-6 text-right""></div>
+	 <div class=""col-xs-4 text-right""><label><b>{{ _(""Discount"") }}</b></label> </div>
+	 <div class=""col-xs-2 text-right"">{{ doc.get_formatted(""discount_amount"") }}</div>
+</div> 
+	{%- endif -%}         
+           
+<div class=""row"">
+    <div class=""col-xs-6 text-right""></div>
+    <div class=""col-xs-4 text-right""><label><b>{{ _(""Grand Total"") }}</b></label></div>
+    <div class=""col-xs-2 text-right"">{{ doc.get_formatted(""grand_total_export"") }}</div>
+</div>
+
+<div class=""row"">
+ <div class=""col-xs-12 text-left"">{{ doc.terms_and_conditions or '' }}</div>
 </div>"
 "","""Custom SO""","Sales Order","Selling","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
         {%- if trigger_print -%}
@@ -217,16 +355,16 @@
 <br>
 <div class=""row"">
 	<div class=""col-xs-6 text-right""></div>
-	<div class=""col-xs-4 text-right""> <label><b>{{ _(""Net Total"") }}</b></label></div>
-	<div class=""col-xs-2 ""><label>{{ doc.get_formatted(""net_total_export"") or '' }}</label></div>
+	<div class=""col-xs-4 text-right""><label><b>{{ _(""Net Total"") }}</b></label></div>
+	<div class=""col-xs-2 text-right"">{{ doc.get_formatted(""net_total_export"") or '' }}</div>
 </div>
 	{%- for row in doc.other_charges -%}
 	{%- if not row.included_in_print_rate -%}
 	{%- if row.tax_amount -%}      
 <div class=""row"">
 	<div class=""col-xs-6 text-right""></div>
-	<div class=""col-xs-4 text-right""> <label><b> {{ row.description }}</b></label></div>
-	<div class=""col-xs-2 ""><label>{{ row.get_formatted(""tax_amount"", doc) }}</label></div>
+	<div class=""col-xs-4 text-right""><label><b>{{ row.description }}</b></label></div>
+	<div class=""col-xs-2 text-right"">{{ row.get_formatted(""tax_amount"", doc) or '' }}</div>
 </div> 
 	{%- endif -%}
 	{%- endif -%}
@@ -234,15 +372,130 @@
 	{%- if doc.discount_amount -%}
 <div class=""row"">
 	<div class=""col-xs-6 text-right""></div>
-	<div class=""col-xs-4 text-right""> <label><b>{{ _(""Discount"") }}</b></label></div>
-	<div class=""col-xs-2 ""><label>{{ doc.get_formatted(""discount_amount"") }}</label></div>
+	<div class=""col-xs-4 text-right""><label><b>{{ _(""Discount"") }}</b></label></div>
+	<div class=""col-xs-2 text-right"">{{ doc.get_formatted(""discount_amount"") }}</div>
 </div> 
  {%- endif -%}         
 <div class=""row"">
 	<div class=""col-xs-6 text-right""></div>
 	<div class=""col-xs-4 text-right""><label><b>{{ _(""Grand Total"") }}</b></label></div>
-	<div class=""col-xs-2 ""><label>{{ doc.get_formatted(""grand_total_export"") }}</label></div>
+	<div class=""col-xs-2 text-right"">{{ doc.get_formatted(""grand_total_export"") }}</div>
 </div>
+<div class=""row"">
+	<div class=""col-xs-12 text-left"">{{ doc.terms or '' }}</div>
+</div>"
+"","""Custom PI""","Purchase Invoice","Accounts","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+    {%- if trigger_print -%}
+    <script>
+    window.print();
+    window.close();
+    </script>
+    {%- endif -%}
+    {% if letter_head and not no_letterhead %}
+    <div class=""letter-head"">{{ letter_head }}</div>
+    {% endif %}
+    {%- if doc.meta.is_submittable and doc.docstatus==0-%}
+    <div class=""alert alert-info text-center"">
+        <h4 style=""margin: 0px;"">{{ _(""DRAFT"") }}</h4></div>
+    {%- endif -%}
+    {%- if doc.meta.is_submittable and doc.docstatus==2-%}
+    <div class=""alert alert-danger text-center"">
+        <h4 style=""margin: 0px;"">{{ _(""CANCELLED"") }}</h4></div>
+    {%- endif -%}
+    {% if max_pages > 1 %}
+    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
+    {% endif %}
+{%- endmacro -%}
+
+{{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+<label><h4><p class=""text-center""><b>{{ _(""Purchase Invoice"") }}</b></p></h4></label>
+<br>
+<div class=""row"">        
+    <div class=""col-xs-6"">            
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label><b>To</b></label></div>
+            <div class=""col-xs-7 "">{{ doc.address_display or '' }}</div>
+        </div>                 
+	</div>
+    <div class=""col-xs-6"">
+        <div class=""row"">
+            <div class=""col-xs-6 text-right""><label><b>Invoice No</b></label></div>
+            <div class=""col-xs-6 "">{{ doc.name or '' }} </div>
+        </div>
+        <div class=""row"">
+            <div class=""col-xs-6 text-right""> <label><b>Date</b></label> </div>
+            <div class=""col-xs-6 "">{{ doc.get_formatted(""posting_date"") or '' }}</div>
+        </div> 
+         {%- if doc.bill_no -%}
+        <div class=""row"">
+            <div class=""col-xs-6 text-right"">
+               <label><b>Supplier Invoice No</b></label>
+            </div>
+            <div class=""col-xs-6 "">{{ doc.bill_no or ''}} </div>
+        </div>
+         {%- endif -%}
+         {%- if doc.bill_date -%}
+        <div class=""row"">
+            <div class=""col-xs-6 text-right""> <label><b>Supplier Invoice Date</b></label> </div>
+            <div class=""col-xs-6 "">{{ doc.get_formatted(""bill_date"") or ''}}</div>
+        </div>
+         {%- endif -%}
+    </div>
+</div>
+</div>
+<br>
+<table class=""table table-condensed table-hover table-bordered"">
+	<tbody>
+        <tr>
+            <th>Sr</th>
+            <th>Item</th>
+            <th>Product Description</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Amount</th>
+        </tr>
+        {%- for row in doc.entries -%}
+        <tr>
+			<td style=""width: 3%;"">{{ row.idx }}</td>
+			<td style=""width: 15%;""><b>{{ row.item_code or '' }}</b></td>
+			<td style=""width: 37%;"">{{ row.description or '' }}<br>{{ row.qty }} {{ row.stock_uom or '' }} @ {{ row.net_weight }} {{ row.weight_uom }}/{{ row.stock_uom or '' }}</td>
+			<td style=""width: 15%; text-align: right;"">{{ row.quantity_in_weight }}{{ row.weight_uom or '' }}</td>
+			<td style=""width: 15%; text-align: right;"">{{ row.get_formatted(""rate_per_weight_unit"", doc) or ''}}</td>
+			<td style=""width: 15%; text-align: right;"">{{ row.get_formatted(""amount"", doc) or ''}}</td>
+        </tr>
+        {%- endfor -%}
+    </tbody>
+</table>
+<br>
+<div class=""row"">
+	<div class=""col-xs-6 text-right""></div>
+	<div class=""col-xs-4 text-right""><label><b>{{ _(""Net Total"") }}</b></label></div>
+	<div class=""col-xs-2 text-right"">{{ doc.get_formatted(""net_total"") or '' }}</div>
+</div>
+	{%- for row in doc.other_charges -%}
+    {%- if not row.included_in_print_rate -%}
+    {%- if row.tax_amount -%}      
+<div class=""row"">
+    <div class=""col-xs-6 text-right""></div>
+    <div class=""col-xs-4 text-right""><label><b>{{ row.description }}</b></label></div>
+    <div class=""col-xs-2 text-right"">{{ row.get_formatted(""tax_amount"", doc) }}</div>
+</div> 
+    {%- endif -%}
+    {%- endif -%}
+	{%- endfor -%}
+	{%- if doc.discount_amount -%}
+<div class=""row"">
+	<div class=""col-xs-6 text-right""></div>
+	<div class=""col-xs-4 text-right""><label><b>{{ _(""Discount"") }}</b></label></div>
+	<div class=""col-xs-2 text-right"">{{ doc.get_formatted(""discount_amount"") }}</div>
+</div> 
+	{%- endif -%}
+<div class=""row"">
+    <div class=""col-xs-6 text-right""></div>
+    <div class=""col-xs-4 text-right""><label><b>{{ _(""Grand Total"") }}</b></label></div>
+    <div class=""col-xs-2 text-right"">{{ doc.get_formatted(""grand_total"") }}</div>
+</div>
+<br>
 <div class=""row"">
 	<div class=""col-xs-12 text-left"">{{ doc.terms or '' }}</div>
 </div>"
@@ -359,7 +612,7 @@
 <div class=""row"">
     <div class=""col-xs-6 text-right""></div>
     <div class=""col-xs-4 text-right""> <label><b>{{ _(""Net Total"") }}</b></label></div>
-    <div class=""col-xs-2 "">{{ doc.get_formatted(""net_total_import"") or '' }}</div>
+    <div class=""col-xs-2 text-right"">{{ doc.get_formatted(""net_total_import"") or '' }}</div>
 </div>  
 
 	{%- for row in doc.other_charges -%}
@@ -368,7 +621,7 @@
 <div class=""row"">
     <div class=""col-xs-6 text-right""></div>
     <div class=""col-xs-4 text-right""> <label><b> {{ row.description }}</b></label></div>
-    <div class=""col-xs-2 ""> {{ row.get_formatted(""tax_amount"", doc) }} </div>
+    <div class=""col-xs-2 text-right""> {{ row.get_formatted(""tax_amount"", doc) }} </div>
 </div> 
     {%- endif -%}
     {%- endif -%}
@@ -378,657 +631,18 @@
     <div class=""row"">
          <div class=""col-xs-6 text-right""></div>
          <div class=""col-xs-4 text-right""> <label><b>{{ _(""Discount"") }}</b></label></div>
-         <div class=""col-xs-2 ""> {{ doc.get_formatted(""discount_amount"") }} </div>
+         <div class=""col-xs-2 text-right""> {{ doc.get_formatted(""discount_amount"") }} </div>
     </div> 
  {%- endif -%}          
            
 <div class=""row"">
     <div class=""col-xs-6 text-right""></div>
     <div class=""col-xs-4 text-right""><label><b>{{ _(""Grand Total"") }}</b></label></div>
-    <div class=""col-xs-2 "">{{ doc.get_formatted(""grand_total_import"") }} </div>
+    <div class=""col-xs-2 text-right"">{{ doc.get_formatted(""grand_total_import"") }} </div>
 </div>
 
 <div class=""row"">
  <div class=""col-xs-12 text-left"">{{ doc.terms or '' }}</div>
-</div>"
-"","""Custom DN""","Delivery Note","Stock","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
-    {%- if trigger_print -%}
-    <script>
-    window.print();
-    window.close();
-    </script>
-    {%- endif -%}
-    {% if letter_head and not no_letterhead %}
-    <div class=""letter-head"">{{ letter_head }}</div>
-    {% endif %}
-    {% if max_pages > 1 %}
-    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
-    {% endif %}
-{%- endmacro -%}
-
-{{ add_header(0, 1, doc, letter_head, no_letterhead) }}
-<h4><p class=""text-center""><b>{{ _(""Product Release"") }}</b></p></h4>
-<br>
-<div class=""row"">        
-      <div class=""col-xs-6"">            
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label>Ship To</label></div>
-            <div class=""col-xs-7"">{{ doc.shipping_address or '' }}</div>
-        </div>
-		<br>
-         {%- for row in doc.delivery_note_details|slice(1) -%}  
-         {% set u = frappe.get_doc(""Warehouse"", row[0].warehouse) %}               
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label>Pickup Location</label></div>
-            <div class=""col-xs-7"">{{ u.warehouse_name or '' }}</div>
-        </div>
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""></div>
-            <div class=""col-xs-7"">{{ u.address_line_1 or '' }}</div>
-        </div>
-        {%- if u.address_line_2 -%} 
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""></div>
-            <div class=""col-xs-7"">{{ u.address_line_2 or '' }}</div>
-        </div>
-        {%- endif -%}
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""></div>
-            <div class=""col-xs-7"">{%- if u.city -%}{{ u.city or '' }}, {%- endif -%}{{ u.state or '' }} {{ u.pin or '' }} </div>
-        </div>
-        {%- if u.phone_no -%}
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label>Phone</label></div>
-            <div class=""col-xs-7""> {{ u.phone_no or '' }}</div>
-        </div>
-        {%- endif -%}
-        {%- endfor -%}
-      </div>
-      <div class=""col-xs-6"">
-        <div class=""row"">
-			<div class=""col-xs-5 text-right""><label>Release No</label></div>
-            <div class=""col-xs-7"">{{ doc.name or '' }}</div>
-        </div>
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label>Release Date</label></div>
-            <div class=""col-xs-7"">{{ doc.get_formatted(""posting_date"") or '' }}<br>
-            </div>
-        </div>
-         {%- if doc.lr_date -%}  
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""> <label>Ship Date</label> </div>
-            <div class=""col-xs-7"">{{ doc.get_formatted(""lr_date"") or '' }}</div>
-        </div>
-        {%- endif -%}
-        {%- if doc.po_no -%}
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label>Buyer’s PO</label></div>
-            <div class=""col-xs-7""> {{ doc.po_no or '' }}</div>
-        </div>    
-        {%- endif -%}
-		{%- if doc.sales_rep_sm -%}
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label>Sales Rep SM</label>  </div>
-            <div class=""col-xs-7""> {{ doc.sales_rep_sm or '' }} </div>
-        </div>
-        {%- endif -%}
-        {%- if doc.shipping_terms -%}  
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label>Shipping Terms</label>  </div>
-            <div class=""col-xs-7"">{{ doc.shipping_terms or '' }}</div>
-        </div>     
-        {%- endif -%} 
-      </div>
-</div>
-<br>
-<table class=""table table-condensed table-hover table-bordered"">
-	<tbody>
-        <tr>
-            <th>Sr</th>
-            <th>Item</th>
-            <th>Product Description</th>
-            <th>Quantity</th>
-        </tr>
-        {%- for row in doc.delivery_note_details -%}
-        <tr>
-            <td style=""width: 3%"">{{ row.idx }}</td>
-            <td style=""width: 15%""><b>{{ row.item_code or '' }}</b></td>
-            <td style=""width: 67%; text-align: left;"">{%- if row.batch_no -%}<b>Product Code: </b>{{ row.batch_no or '' }}<br>{%- endif -%}{%- if row.warehouse_lot_id -%}<b>Lot#: </b>{{ row.warehouse_lot_id or '' }}<br>{%- endif -%}{%- if row.serial_no -%}<b>Serial No:</b>{{ row.serial_no or '' }}<br>{%- endif -%}{{ row.description or '' }}<br>{{ row.qty }} {{ row.stock_uom or '' }} @ {{ row.net_weight }}{{ row.weight_uom }}/{{ row.stock_uom or '' }}</td>
-			<td style=""width: 15%; text-align: right;""> {{ row.quantity_in_weight }} {{ row.weight_uom }}</td>
-        </tr>
-        {%- endfor -%}
-    </tbody>
-</table>
-<br>
-<div class=""row"">
- <div class=""col-xs-12 text-left"">{{ doc.terms or '' }}</div>
-</div>"
-"","""Custom PI""","Purchase Invoice","Accounts","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
-    {%- if trigger_print -%}
-    <script>
-    window.print();
-    window.close();
-    </script>
-    {%- endif -%}
-    {% if letter_head and not no_letterhead %}
-    <div class=""letter-head"">{{ letter_head }}</div>
-    {% endif %}
-    {%- if doc.meta.is_submittable and doc.docstatus==0-%}
-    <div class=""alert alert-info text-center"">
-        <h4 style=""margin: 0px;"">{{ _(""DRAFT"") }}</h4></div>
-    {%- endif -%}
-    {%- if doc.meta.is_submittable and doc.docstatus==2-%}
-    <div class=""alert alert-danger text-center"">
-        <h4 style=""margin: 0px;"">{{ _(""CANCELLED"") }}</h4></div>
-    {%- endif -%}
-    {% if max_pages > 1 %}
-    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
-    {% endif %}
-{%- endmacro -%}
-
-{{ add_header(0, 1, doc, letter_head, no_letterhead) }}
-<label><h4><p class=""text-center""><b>{{ _(""Purchase Invoice"") }}</b></p></h4></label>
-<br>
-<div class=""row"">        
-    <div class=""col-xs-6"">            
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label><b>To</b></label></div>
-            <div class=""col-xs-7 "">{{ doc.address_display or '' }}</div>
-        </div>                 
-	</div>
-    <div class=""col-xs-6"">
-        <div class=""row"">
-            <div class=""col-xs-6 text-right""><label><b>Invoice No</b></label></div>
-            <div class=""col-xs-6 "">{{ doc.name or '' }} </div>
-        </div>
-        <div class=""row"">
-            <div class=""col-xs-6 text-right""> <label><b>Date</b></label> </div>
-            <div class=""col-xs-6 "">{{ doc.get_formatted(""posting_date"") or '' }}</div>
-        </div> 
-         {%- if doc.bill_no -%}
-        <div class=""row"">
-            <div class=""col-xs-6 text-right"">
-               <label><b>Supplier Invoice No</b></label>
-            </div>
-            <div class=""col-xs-6 "">{{ doc.bill_no or ''}} </div>
-        </div>
-         {%- endif -%}
-         {%- if doc.bill_date -%}
-        <div class=""row"">
-            <div class=""col-xs-6 text-right""> <label><b>Supplier Invoice Date</b></label> </div>
-            <div class=""col-xs-6 "">{{ doc.get_formatted(""bill_date"") or ''}}</div>
-        </div>
-         {%- endif -%}
-    </div>
-</div>
-</div>
-<br>
-<table class=""table table-condensed table-hover table-bordered"">
-	<tbody>
-        <tr>
-            <th>Sr</th>
-            <th>Item</th>
-            <th>Product Description</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Amount</th>
-        </tr>
-        {%- for row in doc.entries -%}
-        <tr>
-			<td style=""width: 3%;"">{{ row.idx }}</td>
-			<td style=""width: 15%;""><b>{{ row.item_code or '' }}</b></td>
-			<td style=""width: 37%;"">{{ row.description or '' }}<br>{{ row.qty }} {{ row.stock_uom or '' }} @ {{ row.net_weight }} {{ row.weight_uom }}/{{ row.stock_uom or '' }}</td>
-			<td style=""width: 15%; text-align: right;"">{{ row.quantity_in_weight }}{{ row.weight_uom or '' }}</td>
-			<td style=""width: 15%; text-align: right;"">{{ row.get_formatted(""rate_per_weight_unit"", doc) or ''}}</td>
-			<td style=""width: 15%; text-align: right;"">{{ row.get_formatted(""amount"", doc) or ''}}</td>
-        </tr>
-        {%- endfor -%}
-    </tbody>
-</table>
-<br>
-<div class=""row"">
-	<div class=""col-xs-6 text-right""></div>
-	<div class=""col-xs-4 text-right""><label><b>{{ _(""Net Total"") }}</b></label></div>
-	<div class=""col-xs-2 "">{{ doc.get_formatted(""net_total"") or '' }}</div>
-</div>
-	{%- for row in doc.other_charges -%}
-    {%- if not row.included_in_print_rate -%}
-    {%- if row.tax_amount -%}      
-<div class=""row"">
-    <div class=""col-xs-6 text-right""></div>
-    <div class=""col-xs-4 text-right""><label><b>{{ row.description }}</b></label></div>
-    <div class=""col-xs-2 "">{{ row.get_formatted(""tax_amount"", doc) }}</div>
-</div> 
-    {%- endif -%}
-    {%- endif -%}
-	{%- endfor -%}
-	{%- if doc.discount_amount -%}
-<div class=""row"">
-	<div class=""col-xs-6 text-right""></div>
-	<div class=""col-xs-4 text-right""><label><b>{{ _(""Discount"") }}</b></label></div>
-	<div class=""col-xs-2 "">{{ doc.get_formatted(""discount_amount"") }}</div>
-</div> 
-	{%- endif -%}
-<div class=""row"">
-    <div class=""col-xs-6 text-right""></div>
-    <div class=""col-xs-4 text-right""><label><b>{{ _(""Grand Total"") }}</b></label></div>
-    <div class=""col-xs-2 "">{{ doc.get_formatted(""grand_total"") }}</div>
-</div>
-<br>
-<div class=""row"">
-	<div class=""col-xs-12 text-left"">{{ doc.terms or '' }}</div>
-</div>"
-"","""Custom PR""","Purchase Receipt","Stock","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
-    {%- if trigger_print -%}
-    <script>
-    window.print();
-    window.close();
-    </script>
-    {%- endif -%}
-    {% if letter_head and not no_letterhead %}
-    <div class=""letter-head"">{{ letter_head }}</div>
-    {% endif %}
-    {% if max_pages > 1 %}
-    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
-    {% endif %}
-{%- endmacro -%}
-
-{{ add_header(0, 1, doc, letter_head, no_letterhead) }}
-<label><h4><p class=""text-center""><b>{{ _(""Incoming Product Notice"") }}</b></p></h4></label>
-<br>
-<div class=""row"">        
-      <div class=""col-xs-6"">    
-        {%- for row in doc.purchase_receipt_details|slice(1) -%}   
-        {% set u = frappe.get_doc(""Warehouse"", row[0].warehouse) %}               
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label>To</label></div>
-            <div class=""col-xs-7"">{{ u.warehouse_name or '' }} </div>
-        </div>
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""></div>
-            <div class=""col-xs-7"">{{ u.address_line_1 or '' }}</div>
-        </div>
-        {%- if u.address_line_2 -%} 
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""></div>
-            <div class=""col-xs-7"">{{ u.address_line_2 or '' }}</div>
-        </div>
-        {%- endif -%}
-        {%- if u.state -%}
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""></div>
-            <div class=""col-xs-7"">{{ u.city or '' }}, {{ u.state or '' }} {{ u.pin or '' }}</div>
-        </div>
-        {%- endif -%}
-         {%- if u.phone_no -%}  
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label>Phone</label></div>
-            <div class=""col-xs-7"">{{ u.phone_no or '' }}</div>
-        </div>
-        {%- endif -%}
-        {%- endfor -%}
-      </div>
-      <div class=""col-xs-6"">
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label><b>Product Notice</b></label></div>
-            <div class=""col-xs-7 "">{{ doc.name or '' }}</div>
-        </div>
-         <div class=""row"">
-            <div class=""col-xs-5 text-right""><label>Date</label></div>
-            <div class=""col-xs-7 ""> {{ doc.get_formatted(""posting_date"") or '' }}</div>           
-        </div>
-         <div class=""row"">
-            <div class=""col-xs-5 text-right""> <label>From</label> </div>
-            <div class=""col-xs-7 "">{{ doc.address_display or '' }}</div>
-        </div>
-         <div class=""row"">
-           <div class=""col-xs-5 text-right""> <label>Subject</label></div>
-           <div class=""col-xs-7 "">Delivery Notification for {{ doc.get_formatted(""posting_date"") or '' }}</div>
-        </div>
-      </div>
-</div>
-<br>
-<table class=""table table-condensed table-hover table-bordered"">
-    <tbody>  
-		<tr>
-            <th>Sr</th>
-            <th>Item</th>
-            <th>Product Description</th>
-            <th>Quantity</th>
-            <th>Warehouse Lot#</th>
-        </tr>
-        {%- for row in doc.purchase_receipt_details -%}
-        <tr>
-            <td style=""width: 3%;"">{{ row.idx }}</td>
-            <td style=""width: 15%;""><b>{{ row.item_code or '' }} </b></td>
-            <td style=""width: 42%; text-align: left;"">{%- if row.batch_no -%}<b>Product Code: </b>{{ row.batch_no or '' }}<br>{%- endif -%}{%- if row.serial_no -%}<b>Serial No: </b>{{ row.serial_no or '' }}<br>{%- endif -%}{{ row.description or '' }}<br>{{ row.qty }} {{ row.stock_uom or '' }} @ {{ row.net_weight }}{{ row.weight_uom }}/{{ row.stock_uom or '' }}</td>
-            <td style=""width: 15%; text-align: right;"">{{ row.quantity_in_weight }} {{ row.weight_uom or '' }} </td>
-            <td style=""width: 25%""><b>Warehouse Please Provide<b></td>
-        </tr>
-        {%- endfor -%}
-    </tbody>
-</table>
-<br>
-<div class=""row"">
- <div class=""col-xs-12 text-left"">{{ doc.terms or '' }}</div>
-</div>"
-"","""Custom SI""","Sales Invoice","Accounts","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
-    {%- if trigger_print -%}
-    <script>
-    window.print();
-    window.close();
-    </script>
-    {%- endif -%}
-    {% if letter_head and not no_letterhead %}
-    <div class=""letter-head"">{{ letter_head }}</div>
-    {% endif %}
-    {%- if doc.meta.is_submittable and doc.docstatus==0-%}
-    <div class=""alert alert-info text-center"">
-        <h4 style=""margin: 0px;"">{{ _(""PROFORMA"") }}</h4></div>
-    {%- endif -%}
-    {%- if doc.meta.is_submittable and doc.docstatus==2-%}
-    <div class=""alert alert-danger text-center"">
-        <h4 style=""margin: 0px;"">{{ _(""CANCELLED"") }}</h4></div>
-    {%- endif -%}
-    {% if max_pages > 1 %}
-    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
-    {% endif %}
-{%- endmacro -%}
-
-{{ add_header(0, 1, doc, letter_head, no_letterhead) }}
-<label><h4><p class=""text-center""><b>{{ _(""Sales Invoice"") }}</b></p></h4></label>
-<br>
-<div class=""row"">        
-     <div class=""col-xs-6"">            
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label><b>Bill To</b></label> </div>
-            <div class=""col-xs-7 "">{{ doc.address_display or '' }}</div>
-        </div>
-        <br>
-        {%- if doc.shipping_address -%}
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label><b>Ship To</b></label> </div>
-            <div class=""col-xs-7 "">{{ doc.shipping_address or '' }}</div>
-        </div>  
-        {%- endif -%}              
-    </div>
-    <div class=""col-xs-6"">
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label><b>Invoice No</b></label> </div>
-            <div class=""col-xs-7 "">{{ doc.name or '' }}  </div>
-        </div>
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""> <label><b>Invoice Date</b></label>  </div>
-            <div class=""col-xs-7 "">{{ doc.get_formatted(""posting_date"") or '' }} </div>
-        </div> 
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label><b>Payment Due Date</b></label> </div>
-            <div class=""col-xs-7 "">{{ doc.get_formatted(""due_date"") or '' }} </div>
-        </div>
-        {%- if doc.credit_days -%}
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label><b>Payment Terms</b></label> </div>
-            <div class=""col-xs-7 "">{{ doc.credit_days or '' }} days</div>
-        </div>  
-        {%- endif -%}
-        {%- if doc.lr_date -%}
-         <div class=""row"">
-            <div class=""col-xs-5 text-right""><label><b>Ship Date</b></label> </div>
-            <div class=""col-xs-7 "">{{ doc.get_formatted(""lr_date"") or '' }} </div>
-        </div>    
-        {%- endif -%}
-         {%- if doc.po_no -%}
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label><b>PO No</b></label> </div>
-            <div class=""col-xs-7 "">{{ doc.po_no or ''}} </div>
-        </div>
-         {%- endif -%}
-         {%- if doc.sales_rep_sm -%}
-        <div class=""row"">
-            <div class=""col-xs-5 text-right""><label><b>Sales Rep SM</b></label> </div>
-            <div class=""col-xs-7 "">{{ doc.sales_rep_sm or '' }}</div>
-        </div>
-         {%- endif -%}
-    </div>
-</div>
-<br>
-<table class=""table table-condensed table-hover table-bordered"">
-        <tr>
-            <th>Sr</th>
-            <th>Item</th>
-            <th>Product Description</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Amount</th>
-        </tr>
-        {%- for row in doc.entries -%}
-        <tr>
-            <td style=""width: 3%;"">{{ row.idx }}</td>
-            <td style=""width: 15%;""><b>{{ row.item_code or '' }}</b></td>
-            <td style=""width: 37%;"">{%- if row.batch_no -%}<b>Product Code: </b>{{ row.batch_no or '' }}<br>{%- endif -%}{%- if row.serial_no -%}<b> Serial No: </b>{{ row.serial_no or '' }}<br>{%- endif -%}{{ row.description or '' }}<br>{{ row.qty }} {{ row.stock_uom or '' }} @ {{ row.net_weight }} {{ row.weight_uom }}/{{ row.stock_uom or '' }}</td>
-            <td style=""width: 15%; text-align: right;"">{{ row.quantity_in_weight }} {{ row.weight_uom or '' }}</td>
-            <td style=""width: 15%; text-align: right;"">{{ row.get_formatted(""rate_per_weight_unit"", doc) or ''}}</td>
-            <td style=""width: 15%; text-align: right;"">{{ row.get_formatted(""amount"", doc) or ''}}</td>
-        </tr>
-        {%- endfor -%}
-    </tbody>
-</table>
-<br>
-    
-<div class=""row"">
-    <div class=""col-xs-6 text-right""></div>
-    <div class=""col-xs-4 text-right""> <label><b>{{ _(""Net Total"") }}</b></label> </div>
-    <div class=""col-xs-2""><label>{{ doc.get_formatted(""net_total_export"") or '' }}</label> </div>
-</div>  
-
-	{%- for row in doc.other_charges -%}
-    {%- if not row.included_in_print_rate -%}
-    {%- if row.tax_amount -%}      
-<div class=""row"">
-    <div class=""col-xs-6 text-right""></div>
-    <div class=""col-xs-4 text-right""><label><b>{{ row.description }}</b></label></div>
-    <div class=""col-xs-2""><label>{{ row.get_formatted(""tax_amount"", doc) }}</label> </div>
-</div> 
-    {%- endif -%}
-    {%- endif -%}
-	{%- endfor -%}
-
-	{%- if doc.discount_amount -%}
-<div class=""row"">
-	 <div class=""col-xs-6 text-right""></div>
-	 <div class=""col-xs-4 text-right""> <label><b>{{ _(""Discount"") }}</b></label> </div>
-	 <div class=""col-xs-2""><label>{{ doc.get_formatted(""discount_amount"") }}</label> </div>
-</div> 
-	{%- endif -%}         
-           
-<div class=""row"">
-    <div class=""col-xs-6 text-right""></div>
-    <div class=""col-xs-4 text-right""><label><b>{{ _(""Grand Total"") }}</b></label></div>
-    <div class=""col-xs-2""><label>{{ doc.get_formatted(""grand_total_export"") }}</label> </div>
-</div>
-
-<div class=""row"">
- <div class=""col-xs-12 text-left"">{{ doc.terms_and_conditions or '' }}</div>
-</div>"
-"","""Custom Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<div style=""position: relative"">
-
-	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
-<div class=""page-break"">
-
-	<div style=""position: absolute; top: 0.1cm; right: 0.5cm;"">
-		{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
-	<div style=""position: absolute; top: 1.6cm; left: 1.5cm;"">
-		{{ doc.pay_to_recd_from }}</div>
-	<div style=""position: absolute; top: 3.1cm; left: 1.5cm; width: 7cm;"">
-		{{ doc.total_amount_in_words }}</div>
-	<div style=""position: absolute; top: 2.0cm; right: 0.5cm;"">
-		{{ doc.total_amount }}</div>
-
-	<div style=""position: relative; top: 9.25cm; left: 1cm;"">
-		{%- for label, value in (
-		        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
-		        (_(""Reference / Cheque No.""), doc.cheque_no),
-		        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
-		    ) -%}
-		    
-		      <div class=""row"">
-		        <div class=""col-xs-4""><label class=""text-right"">{{ label }}</label></div>
-		        <div class=""col-xs-8"">{{ value }}</div>
-		    </div>
-		   {%- endfor -%}
-
-		<hr>
-		<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
-		{%- for label, value in (
-	         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-	        (_(""References""), doc.remark)
-	    ) -%}
-	    <div class=""row"">
-	        <div class=""col-xs-4""><label class=""text-right"">{{ label }}</label></div>
-	        <div class=""col-xs-8"">{{ value }}</div>
-	    </div>
-	    {%- endfor -%}
-  
-        </div>
-
-        <div style=""position: relative; top: 14.25cm; left: 1cm;"">
-		{%- for label, value in (
-		        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
-		        (_(""Reference / Cheque No.""), doc.cheque_no),
-		        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
-		    ) -%}
-		    
-		      <div class=""row"">
-		        <div class=""col-xs-4""><label class=""text-right"">{{ label }}</label></div>
-		        <div class=""col-xs-8"">{{ value }}</div>
-		    </div>
-		   {%- endfor -%}
-
-		<hr>
-		<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
-		{%- for label, value in (
-	         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-	        (_(""References""), doc.remark)
-	    ) -%}
-	    <div class=""row"">
-	        <div class=""col-xs-4""><label class=""text-right"">{{ label }}</label></div>
-	        <div class=""col-xs-8"">{{ value }}</div>
-	    </div>
-	    {%- endfor -%}
-    
-        </div>
-</div>
-</div>"
-"","""Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<div style=""position: relative"">
-
-	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
-<div class=""page-break"">
-    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
-        and doc.set(""select_print_heading"", _(""Payment Advice"")) -%}{%- endif -%}
-    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
-
-{%- for label, value in (
-        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
-        (_(""Reference / Cheque No.""), doc.cheque_no),
-        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
-    ) -%}
-    <div class=""row"">
-        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-8"">{{ value }}</div>
-    </div>
-{%- endfor -%}
-	<hr>
-	<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
-{%- for label, value in (
-         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-        (_(""References""), doc.remark)
-    ) -%}
-    <div class=""row"">
-        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-8"">{{ value }}</div>
-    </div>
-    {%- endfor -%}
-    <hr>
-	<div style=""position: absolute; top: 14cm; left: 0cm;"">
-		Prepared By</div>
-	<div style=""position: absolute; top: 14cm; left: 5.5cm;"">
-		Authorised Signatory</div>
-	<div style=""position: absolute; top: 14cm; left: 11cm;"">
-		Received Payment as Above</div>
-	<div style=""position: absolute; top: 16.4cm; left: 5.9cm;"">
-		<strong>_____________</strong></div>
-	<div style=""position: absolute; top: 16.7cm; left: 6cm;"">
-		<strong>A/C Payee</strong></div>
-	<div style=""position: absolute; top: 16.7cm; left: 5.9cm;"">
-		<strong>_____________</strong></div>
-	<div style=""position: absolute; top: 16.9cm; left: 12cm;"">
-		{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
-	<div style=""position: absolute; top: 17.9cm; left: 1cm;"">
-		{{ doc.pay_to_recd_from }}</div>
-	<div style=""position: absolute; top: 18.6cm; left: 1cm; width: 7cm;"">
-		{{ doc.total_amount_in_words }}</div>
-	<div style=""position: absolute; top: 19.7cm; left: 12cm;"">
-		{{ doc.total_amount }}</div>
-</div>"
-"","""Credit Note""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
-
-<div class=""page-break"">
-    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
-        and doc.set(""select_print_heading"", _(""Credit Note"")) -%}{%- endif -%}
-    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
-
-    {%- for label, value in (
-        (_(""Credit To""), doc.pay_to_recd_from),
-        (_(""Date""), frappe.utils.formatdate(doc.voucher_date)),
-        (_(""Amount""), ""<strong>"" + frappe.utils.cstr(doc.total_amount) + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-        (_(""Remarks""), doc.remark)
-    ) -%}
-
-    <div class=""row"">
-        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-9"">{{ value }}</div>
-    </div>
-
-    {%- endfor -%}
-
-    <hr>
-    <br>
-    <p class=""strong"">
-        {{ _(""For"") }} {{ doc.company }},<br>
-        <br>
-        <br>
-        <br>
-        {{ _(""Authorized Signatory"") }}
-    </p>
-</div>"
-"","""Payment Receipt Voucher""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
-<div class=""page-break"">
-    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
-        and doc.set(""select_print_heading"", _(""Payment Receipt Note"")) -%}{%- endif -%}
-    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
-
-    {%- for label, value in (
-        (_(""Received On""), frappe.utils.formatdate(doc.voucher_date)),
-        (_(""Received From""), doc.pay_to_recd_from),
-        (_(""Amount""), ""<strong>"" + doc.total_amount or 0 + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
-        (_(""Remarks""), doc.remark)
-    ) -%}
-    <div class=""row"">
-        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
-        <div class=""col-sm-9"">{{ value }}</div>
-    </div>
-
-    {%- endfor -%}
-
-    <hr>
-    <br>
-    <p class=""strong"">
-        {{ _(""For"") }} {{ doc.company }},<br>
-        <br>
-        <br>
-        <br>
-        {{ _(""Authorized Signatory"") }}
-    </p>
 </div>"
 "","""POS Invoice""","Sales Invoice","Accounts","Yes","Server",0,"<style>
 	.print-format table, .print-format tr, 
@@ -1144,3 +758,389 @@
 <hr>
 <p>{{ doc.terms or """" }}</p>
 <p class=""text-center"">{{ _(""Thank you, please visit again."") }}</p>"
+"","""Payment Receipt Voucher""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Payment Receipt Note"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+
+    {%- for label, value in (
+        (_(""Received On""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Received From""), doc.pay_to_recd_from),
+        (_(""Amount""), ""<strong>"" + doc.total_amount or 0 + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""Remarks""), doc.remark)
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-9"">{{ value }}</div>
+    </div>
+
+    {%- endfor -%}
+
+    <hr>
+    <br>
+    <p class=""strong"">
+        {{ _(""For"") }} {{ doc.company }},<br>
+        <br>
+        <br>
+        <br>
+        {{ _(""Authorized Signatory"") }}
+    </p>
+</div>"
+"","""Credit Note""","Journal Voucher","Accounts","Yes","Server",0,"{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Credit Note"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+
+    {%- for label, value in (
+        (_(""Credit To""), doc.pay_to_recd_from),
+        (_(""Date""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Amount""), ""<strong>"" + frappe.utils.cstr(doc.total_amount) + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""Remarks""), doc.remark)
+    ) -%}
+
+    <div class=""row"">
+        <div class=""col-sm-3""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-9"">{{ value }}</div>
+    </div>
+
+    {%- endfor -%}
+
+    <hr>
+    <br>
+    <p class=""strong"">
+        {{ _(""For"") }} {{ doc.company }},<br>
+        <br>
+        <br>
+        <br>
+        {{ _(""Authorized Signatory"") }}
+    </p>
+</div>"
+"","""Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<div style=""position: relative"">
+
+	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+<div class=""page-break"">
+    {%- if not doc.get(""print_heading"") and not doc.get(""select_print_heading"") 
+        and doc.set(""select_print_heading"", _(""Payment Advice"")) -%}{%- endif -%}
+    {{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+
+{%- for label, value in (
+        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
+        (_(""Reference / Cheque No.""), doc.cheque_no),
+        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-8"">{{ value }}</div>
+    </div>
+{%- endfor -%}
+	<hr>
+	<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
+{%- for label, value in (
+         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+        (_(""References""), doc.remark)
+    ) -%}
+    <div class=""row"">
+        <div class=""col-sm-4""><label class=""text-right"">{{ label }}</label></div>
+        <div class=""col-sm-8"">{{ value }}</div>
+    </div>
+    {%- endfor -%}
+    <hr>
+	<div style=""position: absolute; top: 14cm; left: 0cm;"">
+		Prepared By</div>
+	<div style=""position: absolute; top: 14cm; left: 5.5cm;"">
+		Authorised Signatory</div>
+	<div style=""position: absolute; top: 14cm; left: 11cm;"">
+		Received Payment as Above</div>
+	<div style=""position: absolute; top: 16.4cm; left: 5.9cm;"">
+		<strong>_____________</strong></div>
+	<div style=""position: absolute; top: 16.7cm; left: 6cm;"">
+		<strong>A/C Payee</strong></div>
+	<div style=""position: absolute; top: 16.7cm; left: 5.9cm;"">
+		<strong>_____________</strong></div>
+	<div style=""position: absolute; top: 16.9cm; left: 12cm;"">
+		{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
+	<div style=""position: absolute; top: 17.9cm; left: 1cm;"">
+		{{ doc.pay_to_recd_from }}</div>
+	<div style=""position: absolute; top: 18.6cm; left: 1cm; width: 7cm;"">
+		{{ doc.total_amount_in_words }}</div>
+	<div style=""position: absolute; top: 19.7cm; left: 12cm;"">
+		{{ doc.total_amount }}</div>
+</div>"
+"","""Custom Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<div style=""position: relative"">
+
+	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
+<div class=""page-break"">
+
+	<div style=""position: absolute; top: 0.1cm; right: 0.5cm;"">
+		{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
+	<div style=""position: absolute; top: 1.6cm; left: 1.5cm;"">
+		{{ doc.pay_to_recd_from }}</div>
+	<div style=""position: absolute; top: 3.1cm; left: 1.5cm; width: 7cm;"">
+		{{ doc.total_amount_in_words }}</div>
+	<div style=""position: absolute; top: 2.0cm; right: 0.5cm;"">
+		{{ doc.total_amount }}</div>
+
+	<div style=""position: relative; top: 9.25cm; left: 1cm;"">
+		{%- for label, value in (
+		        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
+		        (_(""Reference / Cheque No.""), doc.cheque_no),
+		        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
+		    ) -%}
+		    
+		      <div class=""row"">
+		        <div class=""col-xs-4""><label class=""text-right"">{{ label }}</label></div>
+		        <div class=""col-xs-8"">{{ value }}</div>
+		    </div>
+		   {%- endfor -%}
+
+		<hr>
+		<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
+		{%- for label, value in (
+	         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+	        (_(""References""), doc.remark)
+	    ) -%}
+	    <div class=""row"">
+	        <div class=""col-xs-4""><label class=""text-right"">{{ label }}</label></div>
+	        <div class=""col-xs-8"">{{ value }}</div>
+	    </div>
+	    {%- endfor -%}
+  
+        </div>
+
+        <div style=""position: relative; top: 14.25cm; left: 1cm;"">
+		{%- for label, value in (
+		        (_(""Voucher Date""), frappe.utils.formatdate(doc.voucher_date)),
+		        (_(""Reference / Cheque No.""), doc.cheque_no),
+		        (_(""Reference / Cheque Date""), frappe.utils.formatdate(doc.cheque_date))
+		    ) -%}
+		    
+		      <div class=""row"">
+		        <div class=""col-xs-4""><label class=""text-right"">{{ label }}</label></div>
+		        <div class=""col-xs-8"">{{ value }}</div>
+		    </div>
+		   {%- endfor -%}
+
+		<hr>
+		<p>{{ _(""This amount is in full / part settlement of the listed bills"") }}:</p>
+		{%- for label, value in (
+	         (_(""Amount""), ""<strong>"" + (doc.total_amount or """") + ""</strong><br>"" + (doc.total_amount_in_words or """") + ""<br>""),
+	        (_(""References""), doc.remark)
+	    ) -%}
+	    <div class=""row"">
+	        <div class=""col-xs-4""><label class=""text-right"">{{ label }}</label></div>
+	        <div class=""col-xs-8"">{{ value }}</div>
+	    </div>
+	    {%- endfor -%}
+    
+        </div>
+</div>
+</div>"
+"","""Custom PR""","Purchase Receipt","Stock","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+    {%- if trigger_print -%}
+    <script>
+    window.print();
+    window.close();
+    </script>
+    {%- endif -%}
+    {% if letter_head and not no_letterhead %}
+    <div class=""letter-head"">{{ letter_head }}</div>
+    {% endif %}
+    {% if max_pages > 1 %}
+    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
+    {% endif %}
+{%- endmacro -%}
+
+{{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+<label><h4><p class=""text-center""><b>{{ _(""Incoming Product Notice"") }}</b></p></h4></label>
+<br>
+<div class=""row"">        
+      <div class=""col-xs-6"">    
+        {%- for row in doc.purchase_receipt_details|slice(1) -%}   
+        {% set u = frappe.get_doc(""Warehouse"", row[0].warehouse) %}               
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>To</label></div>
+            <div class=""col-xs-7"">{{ u.warehouse_name or '' }} </div>
+        </div>
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.address_line_1 or '' }}</div>
+        </div>
+        {%- if u.address_line_2 -%} 
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.address_line_2 or '' }}</div>
+        </div>
+        {%- endif -%}
+        {%- if u.state -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.city or '' }}, {{ u.state or '' }} {{ u.pin or '' }}</div>
+        </div>
+        {%- endif -%}
+         {%- if u.phone_no -%}  
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Phone</label></div>
+            <div class=""col-xs-7"">{{ u.phone_no or '' }}</div>
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class=""col-xs-6"">
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label><b>Product Notice</b></label></div>
+            <div class=""col-xs-7 "">{{ doc.name or '' }}</div>
+        </div>
+         <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Date</label></div>
+            <div class=""col-xs-7 ""> {{ doc.get_formatted(""posting_date"") or '' }}</div>           
+        </div>
+         <div class=""row"">
+            <div class=""col-xs-5 text-right""> <label>From</label> </div>
+            <div class=""col-xs-7 "">{{ doc.address_display or '' }}</div>
+        </div>
+         <div class=""row"">
+           <div class=""col-xs-5 text-right""> <label>Subject</label></div>
+           <div class=""col-xs-7 "">Delivery Notification for {{ doc.get_formatted(""posting_date"") or '' }}</div>
+        </div>
+      </div>
+</div>
+<br>
+<table class=""table table-condensed table-hover table-bordered"">
+    <tbody>  
+		<tr>
+            <th>Sr</th>
+            <th>Item</th>
+            <th>Product Description</th>
+            <th>Quantity</th>
+            <th>Warehouse Lot#</th>
+        </tr>
+        {%- for row in doc.purchase_receipt_details -%}
+        <tr>
+            <td style=""width: 3%;"">{{ row.idx }}</td>
+            <td style=""width: 15%;""><b>{{ row.item_code or '' }} </b></td>
+            <td style=""width: 42%; text-align: left;"">{%- if row.batch_no -%}<b>Product Code: </b>{{ row.batch_no or '' }}<br>{%- endif -%}{%- if row.serial_no -%}<b>Serial No: </b>{{ row.serial_no or '' }}<br>{%- endif -%}{{ row.description or '' }}<br>{{ row.qty }} {{ row.stock_uom or '' }} @ {{ row.net_weight }}{{ row.weight_uom }}/{{ row.stock_uom or '' }}</td>
+            <td style=""width: 15%; text-align: right;"">{{ row.quantity_in_weight }} {{ row.weight_uom or '' }} </td>
+            <td style=""width: 25%""><b>Warehouse Please Provide<b></td>
+        </tr>
+        {%- endfor -%}
+    </tbody>
+</table>
+<br>
+<div class=""row"">
+ <div class=""col-xs-12 text-left"">{{ doc.terms or '' }}</div>
+</div>"
+"","""Custom DN""","Delivery Note","Stock","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+    {%- if trigger_print -%}
+    <script>
+    window.print();
+    window.close();
+    </script>
+    {%- endif -%}
+    {% if letter_head and not no_letterhead %}
+    <div class=""letter-head"">{{ letter_head }}</div>
+    {% endif %}
+    {% if max_pages > 1 %}
+    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
+    {% endif %}
+{%- endmacro -%}
+
+{{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+<h4><p class=""text-center""><b>{{ _(""Product Release"") }}</b></p></h4>
+<br>
+<div class=""row"">        
+      <div class=""col-xs-6"">            
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Ship To</label></div>
+            <div class=""col-xs-7"">{{ doc.shipping_address or '' }}</div>
+        </div>
+		<br>
+         {%- for row in doc.delivery_note_details|slice(1) -%}  
+         {% set u = frappe.get_doc(""Warehouse"", row[0].warehouse) %}               
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Pickup Location</label></div>
+            <div class=""col-xs-7"">{{ u.warehouse_name or '' }}</div>
+        </div>
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.address_line_1 or '' }}</div>
+        </div>
+        {%- if u.address_line_2 -%} 
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.address_line_2 or '' }}</div>
+        </div>
+        {%- endif -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{%- if u.city -%}{{ u.city or '' }}, {%- endif -%}{{ u.state or '' }} {{ u.pin or '' }} </div>
+        </div>
+        {%- if u.phone_no -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Phone</label></div>
+            <div class=""col-xs-7""> {{ u.phone_no or '' }}</div>
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class=""col-xs-6"">
+        <div class=""row"">
+			<div class=""col-xs-5 text-right""><label>Release No</label></div>
+            <div class=""col-xs-7"">{{ doc.name or '' }}</div>
+        </div>
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Release Date</label></div>
+            <div class=""col-xs-7"">{{ doc.get_formatted(""posting_date"") or '' }}<br>
+            </div>
+        </div>
+         {%- if doc.lr_date -%}  
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""> <label>Ship Date</label> </div>
+            <div class=""col-xs-7"">{{ doc.get_formatted(""lr_date"") or '' }}</div>
+        </div>
+        {%- endif -%}
+        {%- if doc.po_no -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Buyer’s PO</label></div>
+            <div class=""col-xs-7""> {{ doc.po_no or '' }}</div>
+        </div>    
+        {%- endif -%}
+		{%- if doc.sales_rep_sm -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Sales Rep SM</label>  </div>
+            <div class=""col-xs-7""> {{ doc.sales_rep_sm or '' }} </div>
+        </div>
+        {%- endif -%}
+        {%- if doc.shipping_terms -%}  
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Shipping Terms</label>  </div>
+            <div class=""col-xs-7"">{{ doc.shipping_terms or '' }}</div>
+        </div>     
+        {%- endif -%} 
+      </div>
+</div>
+<br>
+<table class=""table table-condensed table-hover table-bordered"">
+	<tbody>
+        <tr>
+            <th>Sr</th>
+            <th>Item</th>
+            <th>Product Description</th>
+            <th>Quantity</th>
+        </tr>
+        {%- for row in doc.delivery_note_details -%}
+        <tr>
+            <td style=""width: 3%"">{{ row.idx }}</td>
+            <td style=""width: 15%""><b>{{ row.item_code or '' }}</b></td>
+            <td style=""width: 67%; text-align: left;"">{%- if row.batch_no -%}<b>Product Code: </b>{{ row.batch_no or '' }}<br>{%- endif -%}{%- if row.warehouse_lot_id -%}<b>Lot#: </b>{{ row.warehouse_lot_id or '' }}<br>{%- endif -%}{%- if row.serial_no -%}<b>Serial No:</b>{{ row.serial_no or '' }}<br>{%- endif -%}{{ row.description or '' }}<br>{{ row.qty }} {{ row.stock_uom or '' }} @ {{ row.net_weight }}{{ row.weight_uom }}/{{ row.stock_uom or '' }}</td>
+			<td style=""width: 15%; text-align: right;""> {{ row.quantity_in_weight }} {{ row.weight_uom }}</td>
+        </tr>
+        {%- endfor -%}
+    </tbody>
+</table>
+<br>
+<div class=""row"">
+ <div class=""col-xs-12 text-left"">{{ doc.terms or '' }}</div>
+</div>"
