@@ -15,7 +15,7 @@ frappe.query_reports["Custom Stock Ledger"] = {
 			"fieldname":"from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
-			"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
+			"default": frappe.datetime.user_to_obj("01/01/2015"),
 			"reqd": 1
 		},
 		{

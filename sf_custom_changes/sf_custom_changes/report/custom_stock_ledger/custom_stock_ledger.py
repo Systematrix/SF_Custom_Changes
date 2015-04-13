@@ -16,7 +16,7 @@ def execute(filters=None):
 
 		data.append([sle.date, sle.item_code, item_detail.item_name,
 			sle.warehouse,
-			item_detail.stock_uom, item_detail.weight_uom, sle.actual_qty, sle.qty_after_transaction,
+			item_detail.stock_uom, item_detail.net_weight, item_detail.weight_uom, sle.actual_qty, sle.qty_after_transaction,
 			(sle.incoming_rate if sle.actual_qty > 0 else 0.0),
 			sle.valuation_rate, sle.stock_value, sle.voucher_type, sle.voucher_no,
 			sle.batch_no])
@@ -26,9 +26,9 @@ def execute(filters=None):
 def get_columns():
 	return [_("Date") + ":Date:95", _("Item") + ":Link/Item:130", _("Item Name") + "::100",
 	        _("Warehouse") + ":Link/Warehouse:100",
-		_("Stock UOM") + ":Link/UOM:100",_("Fill UOM") + ":Link/UOM:100", _("Qty") + ":Float:50", _("Balance Qty") + ":Float:100",
+		_("Stock UOM") + ":Link/UOM:100","Fill:Float:80", _("Fill UOM") + ":Link/UOM:100", _("Qty") + ":Float:50", _("Balance Qty") + ":Float:100",
 		_("Incoming Rate") + ":Currency:110", _("Valuation Rate") + ":Currency:110", _("Balance Value") + ":Currency:110",
-	        _("Voucher Type") + "::110",_("Voucher #") + ":Dynamic Link/Voucher Type:100", _("Batch") + ":Link/Batch:100"]
+	        _("Voucher Type") + "::110",_("Voucher #") + ":Dynamic Link/Voucher Type:100", _("Batch") + ":Link/Batch:210"]
 
 def get_stock_ledger_entries(filters):
 	return frappe.db.sql("""select concat_ws(" ", posting_date) as date,
@@ -44,7 +44,7 @@ def get_stock_ledger_entries(filters):
 def get_item_details(filters):
 	item_details = {}
 	for item in frappe.db.sql("""select name, item_name, description, item_group,
-			brand, stock_uom, weight_uom from `tabItem` {item_conditions}"""\
+			brand, stock_uom, net_weight, weight_uom from `tabItem` {item_conditions}"""\
 			.format(item_conditions=get_item_conditions(filters)), filters, as_dict=1):
 		item_details.setdefault(item.name, item)
 
@@ -62,9 +62,11 @@ def get_item_conditions(filters):
 def get_sle_conditions(filters):
 	conditions = []
 	item_conditions=get_item_conditions(filters)
+        
 	if item_conditions:
 		conditions.append("""item_code in (select name from tabItem
 			{item_conditions})""".format(item_conditions=item_conditions))
+
 	if filters.get("warehouse"):
 		conditions.append("warehouse=%(warehouse)s")
 	if filters.get("voucher_no"):
