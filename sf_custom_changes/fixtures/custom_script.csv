@@ -18,7 +18,7 @@
 "Type:","Data (text)","Link","Code"
 "Info:","","Valid DocType",""
 "Start entering data below this line"
-"","""Purchase Order-Client""","Purchase Order","cur_frm.add_fetch('item_code','net_weight','net_weight');
+"","""Purchase Invoice-Client""","Purchase Invoice","cur_frm.add_fetch('item_code','net_weight','net_weight');
 cur_frm.add_fetch('item_code','weight_uom','weight_uom');
 cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
     var item = frappe.get_doc(cdt, cdn);
@@ -30,13 +30,43 @@ cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
     var rate = item.rate_per_weight_unit * item.quantity_in_weight / item.qty;
     frappe.model.set_value(cdt, cdn, ""rate"", rate);
 };
-cur_frm.add_fetch('supplier','credit_days','credit_days')
-frappe.ui.form.on(""Purchase Order"", ""credit_days"", function(frm) {
+cur_frm.add_fetch('supplier','credit_days','credit_days');
+frappe.ui.form.on(""Purchase Invoice"", ""credit_days"", function(frm) {
     var nos = frm.doc.credit_days* 1;
-    var ddate = frappe.datetime.add_days(frm.doc.transaction_date,nos);
+    var ddate = frappe.datetime.add_days(frm.doc.posting_date,nos);
+    cur_frm.set_value(""due_date"", ddate);
+});
+frappe.ui.form.on(""Purchase Invoice"", ""posting_date"", function(frm) {
+    var nos = frm.doc.credit_days* 1;
+    var ddate = frappe.datetime.add_days(frm.doc.posting_date,nos);
     cur_frm.set_value(""due_date"", ddate);
 });"
-"","""Purchase Receipt-Client""","Purchase Receipt","cur_frm.add_fetch('item_code','net_weight','net_weight');
+"","""Quotation-Client""","Quotation","cur_frm.add_fetch('item_code','net_weight','net_weight');
+cur_frm.add_fetch('item_code','weight_uom','weight_uom');
+cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
+    var item = frappe.get_doc(cdt, cdn);
+    var qty = item.net_weight ? flt(item.quantity_in_weight) / flt(item.net_weight) : 0.0;
+    frappe.model.set_value(cdt, cdn, ""qty"", qty);
+};
+cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
+    var item = frappe.get_doc(cdt, cdn);
+    var rate = item.rate_per_weight_unit * item.quantity_in_weight / item.qty;
+    frappe.model.set_value(cdt, cdn, ""rate"", rate);
+}"
+"","""Sales Order-Client""","Sales Order","cur_frm.add_fetch('item_code','net_weight','net_weight');
+cur_frm.add_fetch('item_code','weight_uom','weight_uom');
+cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
+    var item = frappe.get_doc(cdt, cdn);
+    var qty = item.net_weight ? flt(item.quantity_in_weight) / flt(item.net_weight) : 0.0;
+    frappe.model.set_value(cdt, cdn, ""qty"", qty);
+};
+cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
+    var item = frappe.get_doc(cdt, cdn);
+    var rate = item.rate_per_weight_unit * item.quantity_in_weight / item.qty;
+    frappe.model.set_value(cdt, cdn, ""rate"", rate);
+};
+cur_frm.add_fetch('customer','credit_days','credit_days')"
+"","""Delivery Note-Client""","Delivery Note","cur_frm.add_fetch('item_code','net_weight','net_weight');
 cur_frm.add_fetch('item_code','weight_uom','weight_uom');
 cur_frm.add_fetch('batch_no','warehouse_lot_id','warehouse_lot_id');
 cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
@@ -49,7 +79,7 @@ cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
     var rate = item.rate_per_weight_unit * item.quantity_in_weight / item.qty;
     frappe.model.set_value(cdt, cdn, ""rate"", rate);
 };
-cur_frm.add_fetch('supplier','credit_days','credit_days')"
+cur_frm.add_fetch('customer','credit_days','credit_days')"
 "","""Sales Invoice-Client""","Sales Invoice","cur_frm.add_fetch('item_code','net_weight','net_weight');
 cur_frm.add_fetch('item_code','weight_uom','weight_uom');
 cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
@@ -84,7 +114,7 @@ frappe.ui.form.on(""Sales Invoice"", ""refresh"", function(frm) {
         cur_frm.set_value(""sp_outstanding_amount"", comm);
     }
 });"
-"","""Delivery Note-Client""","Delivery Note","cur_frm.add_fetch('item_code','net_weight','net_weight');
+"","""Purchase Receipt-Client""","Purchase Receipt","cur_frm.add_fetch('item_code','net_weight','net_weight');
 cur_frm.add_fetch('item_code','weight_uom','weight_uom');
 cur_frm.add_fetch('batch_no','warehouse_lot_id','warehouse_lot_id');
 cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
@@ -97,8 +127,8 @@ cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
     var rate = item.rate_per_weight_unit * item.quantity_in_weight / item.qty;
     frappe.model.set_value(cdt, cdn, ""rate"", rate);
 };
-cur_frm.add_fetch('customer','credit_days','credit_days')"
-"","""Sales Order-Client""","Sales Order","cur_frm.add_fetch('item_code','net_weight','net_weight');
+cur_frm.add_fetch('supplier','credit_days','credit_days')"
+"","""Purchase Order-Client""","Purchase Order","cur_frm.add_fetch('item_code','net_weight','net_weight');
 cur_frm.add_fetch('item_code','weight_uom','weight_uom');
 cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
     var item = frappe.get_doc(cdt, cdn);
@@ -110,39 +140,9 @@ cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
     var rate = item.rate_per_weight_unit * item.quantity_in_weight / item.qty;
     frappe.model.set_value(cdt, cdn, ""rate"", rate);
 };
-cur_frm.add_fetch('customer','credit_days','credit_days')"
-"","""Quotation-Client""","Quotation","cur_frm.add_fetch('item_code','net_weight','net_weight');
-cur_frm.add_fetch('item_code','weight_uom','weight_uom');
-cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
-    var item = frappe.get_doc(cdt, cdn);
-    var qty = item.net_weight ? flt(item.quantity_in_weight) / flt(item.net_weight) : 0.0;
-    frappe.model.set_value(cdt, cdn, ""qty"", qty);
-};
-cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
-    var item = frappe.get_doc(cdt, cdn);
-    var rate = item.rate_per_weight_unit * item.quantity_in_weight / item.qty;
-    frappe.model.set_value(cdt, cdn, ""rate"", rate);
-}"
-"","""Purchase Invoice-Client""","Purchase Invoice","cur_frm.add_fetch('item_code','net_weight','net_weight');
-cur_frm.add_fetch('item_code','weight_uom','weight_uom');
-cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
-    var item = frappe.get_doc(cdt, cdn);
-    var qty = item.net_weight ? flt(item.quantity_in_weight) / flt(item.net_weight) : 0.0;
-    frappe.model.set_value(cdt, cdn, ""qty"", qty);
-};
-cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
-    var item = frappe.get_doc(cdt, cdn);
-    var rate = item.rate_per_weight_unit * item.quantity_in_weight / item.qty;
-    frappe.model.set_value(cdt, cdn, ""rate"", rate);
-};
-cur_frm.add_fetch('supplier','credit_days','credit_days');
-frappe.ui.form.on(""Purchase Invoice"", ""credit_days"", function(frm) {
+cur_frm.add_fetch('supplier','credit_days','credit_days')
+frappe.ui.form.on(""Purchase Order"", ""credit_days"", function(frm) {
     var nos = frm.doc.credit_days* 1;
-    var ddate = frappe.datetime.add_days(frm.doc.posting_date,nos);
-    cur_frm.set_value(""due_date"", ddate);
-});
-frappe.ui.form.on(""Purchase Invoice"", ""posting_date"", function(frm) {
-    var nos = frm.doc.credit_days* 1;
-    var ddate = frappe.datetime.add_days(frm.doc.posting_date,nos);
+    var ddate = frappe.datetime.add_days(frm.doc.transaction_date,nos);
     cur_frm.set_value(""due_date"", ddate);
 });"
