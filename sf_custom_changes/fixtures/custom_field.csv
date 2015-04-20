@@ -18,6 +18,7 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Journal Voucher Detail-remark""","Journal Voucher Detail","Data","Remark","","","","","remark",0,0,0,0,"","",0,"",0,0,0,1,0,0
 "","""Purchase Receipt-is_purchase_contract""","Purchase Receipt","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,1,0,"","",0,"",1,0,0,0,0,0
 "","""Purchase Receipt-prevdoc_docname""","Purchase Receipt","Data","Purchase Contract Load Id","","","Purchase Order","","prevdoc_docname",0,0,0,0,"","",0,"is_purchase_contract",1,0,0,0,0,0
 "","""Purchase Order-due_date""","Purchase Order","Date","Payment Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
