@@ -21,7 +21,7 @@ def get_data():
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Custom Stock Qty",
+					"name": "Custom Stock Projected Qty",
 					"doctype": "Item"
 				},
 				

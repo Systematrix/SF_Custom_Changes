@@ -1,17 +1,17 @@
 {
  "add_total_row": 0, 
  "apply_user_permissions": 1, 
- "creation": "2015-04-21 16:29:07.512607", 
+ "creation": "2015-04-21 17:39:12.980914", 
  "disabled": 0, 
  "docstatus": 0, 
  "doctype": "Report", 
  "is_standard": "Yes", 
- "modified": "2015-04-21 16:29:10.518571", 
+ "modified": "2015-04-21 17:39:12.980914", 
  "modified_by": "Administrator", 
  "module": "SF Custom Changes", 
- "name": "Custom Stock Qty", 
+ "name": "Custom Stock Projected Qty", 
  "owner": "Administrator", 
  "ref_doctype": "Item", 
- "report_name": "Custom Stock Qty", 
+ "report_name": "Custom Stock Projected Qty", 
  "report_type": "Script Report"
 }
