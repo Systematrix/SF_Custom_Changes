@@ -18,6 +18,12 @@ def get_data():
 					"name": "Custom Stock Balance",
 					"doctype": "Warehouse"
 				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Custom Stock Qty",
+					"doctype": "Item"
+				},
 				
 			]
 		},
