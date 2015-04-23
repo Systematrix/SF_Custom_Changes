@@ -18,6 +18,126 @@
 "Type:","Data (text)","Link","Link","Select","Select","Check","Code"
 "Info:","","Valid DocType","Valid Module Def","One of: No, Yes","One of: Server, Client","0 or 1",""
 "Start entering data below this line"
+"","""STE Material Transfer""","Stock Entry","Stock","Yes","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+    {%- if trigger_print -%}
+    <script>
+    window.print();
+    window.close();
+    </script>
+    {%- endif -%}
+    {% if letter_head and not no_letterhead %}
+    <div class=""letter-head"">{{ letter_head }}</div>
+    {% endif %}
+    {% if max_pages > 1 %}
+    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
+    {% endif %}
+{%- endmacro -%}
+
+{{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+<label><h4><p class=""text-center""><b>{{ _(""Delivery Request"") }}</b></p></h4></label>
+<br>
+<div class=""row"">        
+      <div class=""col-xs-6"">   
+        {%- for row in doc.mtn_details|slice(1) -%}   
+        {% set u = frappe.get_doc(""Warehouse"", row[0].t_warehouse) %}               
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Deliver To</label></div>
+            <div class=""col-xs-7"">{{ u.warehouse_name or '' }} </div>
+        </div>
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.address_line_1 or '' }}</div>
+        </div>
+        {%- if u.address_line_2 -%} 
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.address_line_2 or '' }}</div>
+        </div>
+        {%- endif -%}
+        {%- if u.state -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.city or '' }}, {{ u.state or '' }} {{ u.pin or '' }}</div>
+        </div>
+        {%- endif -%}
+         {%- if u.phone_no -%}  
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Phone</label></div>
+            <div class=""col-xs-7"">{{ u.phone_no or '' }}</div>
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+{%- for row in doc.mtn_details|slice(1) -%}   
+        {% set u = frappe.get_doc(""Warehouse"", row[0].s_warehouse) %}               
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Pickup From</label></div>
+            <div class=""col-xs-7"">{{ u.warehouse_name or '' }} </div> 
+        </div>
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.address_line_1 or '' }}</div>
+        </div>
+        {%- if u.address_line_2 -%} 
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.address_line_2 or '' }}</div>
+        </div>
+        {%- endif -%}
+        {%- if u.state -%}
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""></div>
+            <div class=""col-xs-7"">{{ u.city or '' }}, {{ u.state or '' }} {{ u.pin or '' }}</div>
+        </div>
+        {%- endif -%}
+         {%- if u.phone_no -%}  
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Phone</label></div>
+            <div class=""col-xs-7"">{{ u.phone_no or '' }}</div>
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+
+      </div>
+      <div class=""col-xs-6"">
+       <div class=""row"">
+            <div class=""col-xs-5 text-right"" style=""padding-right:0px !important; padding-left:0px !important""><label>Document Date</label></div>
+            <div class=""col-xs-7 ""> {{ doc.get_formatted(""posting_date"") or '' }}</div>           
+        </div>
+         <div class=""row"">
+            <div class=""col-xs-5 text-right"" style=""padding-right:0px !important; padding-left:0px !important""><label>Expected Ship Date</label></div>
+            <div class=""col-xs-7 ""> {{ doc.get_formatted(""expected_ship_date"") or ''  }}</div>           
+        </div> 
+         {%- if doc.trucker_name -%}
+         <div class=""row"">
+            <div class=""col-xs-5 text-right"" style=""padding-right:0px !important; padding-left:0px !important""><label>Trucker Name</label></div>
+            <div class=""col-xs-7 ""> {{ doc.trucker_name or ''  }}</div>           
+        </div>
+        {%- endif -%}
+        
+    </div>
+</div>
+<br>
+
+<table class=""table table-condensed table-hover table-bordered"">
+    <tbody>  
+		<tr>
+            <th>Sr</th>
+            <th>Item</th>
+            <th>Product Description</th>
+            <th>Quantity</th>
+        </tr>
+        {%- for row in doc.mtn_details -%}
+        <tr>
+            <td style=""width: 4%;"">{{ row.idx }}</td>
+            <td style=""width: 20%;""><b>{{ row.item_name or '' }} </b></td>
+            <td style=""width: 60%; text-align: left;""><b>{{ row.item_code or '' }}</b><br>{%- if row.batch_no -%}<b>Product Code: </b>{{ row.batch_no or '' }}<br>{%- endif -%}
+            {%- if row.serial_no -%}<b>Serial No: </b>{{ row.serial_no or '' }}<br>{%- endif -%}
+            {%- if row.warehouse_lot_id -%}<b>Warehouse Lot Id: </b>{{ row.warehouse_lot_id or '' }}<br>{%- endif -%}</td>
+            <td style=""width: 16%; text-align: right;"">{{ row.qty }} {{ row.stock_uom or '' }} </td>
+        </tr>
+        {%- endfor -%}
+    </tbody>
+</table>"
 "","""Custom PR""","Purchase Receipt","Stock","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
     {%- if trigger_print -%}
     <script>
