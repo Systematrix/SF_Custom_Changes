@@ -1,0 +1,49 @@
+<div style="margin-bottom: 7px;" class="text-center">
+	{%= frappe.boot.letter_heads[frappe.defaults.get_default("letter_head")] %}
+</div>
+<h2 class="text-center">{%= __("Custom Bank Reconciliation Statement") %}</h2>
+<h4 class="text-center">{%= filters.account && (filters.account + ", ")  || "" %} {%= filters.company %}</h4>
+<hr>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th style="width: 15%">{%= __("Posting Date") %}</th>
+			<th style="width: 15%">{%= __("Journal Voucher") %}</th>
+			<th style="width: 40%">{%= __("Reference") %}</th>
+			<th style="width: 15%; text-align: right;">{%= __("Debit") %}</th>
+			<th style="width: 15%; text-align: right;">{%= __("Credit") %}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for(var i=0, l=data.length; i<l; i++) { %}
+			{% if (data[i][__("Posting Date")]) { %}
+			<tr>
+				<td>{%= dateutil.str_to_user(data[i][__("Posting Date")]) %}</td>
+				<td>{%= data[i][__("Journal Voucher")] %}</td>
+				<td>{%= __("Against") %}: {%= data[i][__("Against Account")] %}
+					{% if (data[i][__("Reference")]) { %}
+						<br>{%= __("Reference") %}: {%= data[i][__("Reference")] %}
+						{% if (data[i][__("Ref Date")]) { %}
+							<br>{%= __("Reference Date") %}: {%= dateutil.str_to_user(data[i][__("Ref Date")]) %}
+						{% } %}
+					{% } %}
+					{% if (data[i][__("Clearance Date")]) { %}
+						<br>{%= __("Clearance Date") %}: {%= dateutil.str_to_user(data[i][__("Clearance Date")]) %}
+					{% } %}
+				</td>
+				<td style="text-align: right">{%= format_currency(data[i][__("Debit")]) %}</td>
+				<td style="text-align: right">{%= format_currency(data[i][__("Credit")]) %}</td>
+			</tr>
+			{% } else { %}
+			<tr>
+				<td></td>
+				<td></td>
+				<td>{%= data[i][__("Journal Voucher")] %}</td>
+				<td style="text-align: right">{%= format_currency(data[i][__("Debit")]) %}</td>
+				<td style="text-align: right">{%= format_currency(data[i][__("Credit")]) %}</td>
+			</tr>
+			{% } %}
+		{% } %}
+	</tbody>
+</table>
+<p class="text-right text-muted">Printed On {%= dateutil.str_to_user(dateutil.get_datetime_as_string()) %}</p>

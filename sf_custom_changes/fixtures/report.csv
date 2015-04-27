@@ -18,153 +18,356 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
-"","""Custom Sales Partners Commission""","Custom Sales Partners Commission","Sales Invoice","Yes","Query Report",0,0,1,"SELECT
-    name as ""Sales Invoice:Link/Sales Invoice:150"",
-    posting_date as ""Date::80"",
-    customer ""Customer:Link/Customer:150"",
-    sales_partner as ""Sales Partner:Link/Sales Partner:150"",
-	sum(net_total) as ""Invoiced Amount (Exculsive Tax):Currency:210"",
-	sum(total_commission) as ""Total Commission:Currency:150"",
-	sum(total_commission)*100/sum(net_total) as ""Percent Commission Rate:Float:170"",
-        payments_made as ""Payments Made:Currency:150"",
-        payment_details as ""Payment Details:Link/Journal Voucher:150"",
-        (sum(total_commission) - payments_made) as ""Outstanding Amount:Currency:150"" 
+"","""Custom Bank Reconciliation Statement""","Custom Bank Reconciliation Statement ","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
+"","""Custom Bank Clearance Summary""","Custom Bank Clearance Summary","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
+"","""Custom Stock Qty""","Custom Stock Qty","Item","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
+"","""Custom Stock Projected Qty""","Custom Stock Projected Qty","Item","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
+"","""Batch-Wise Balance History Report""","Batch-Wise Balance History Report","Stock Ledger Entry","Yes","Script Report",0,1,1,"","","","SF Custom Changes"
+"","""Daily Dispatch""","Daily Dispatch","Delivery Note","Yes","Query Report",1,0,1,"select count(*), posting_date from `tabDelivery Note` group by posting_date;","","","Selling"
+"","""Sales Invoices Open""","Sales Invoices Open","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""],[""Sales Invoice"",""outstanding_amount"",""!="",0]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""posting_date"",""Sales Invoice""],[""docstatus"",""Sales Invoice""],[""po_no"",""Sales Invoice""],[""due_date"",""Sales Invoice""],[""credit_days"",""Sales Invoice""],[""grand_total"",""Sales Invoice""],[""outstanding_amount"",""Sales Invoice""],[""delivery_date"",""Sales Invoice""],[""sales_rep_sm"",""Sales Invoice""],[""_user_tags"",""Sales Invoice""]],""sort_by"":""Sales Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
+"","""Purchase Invoices Unpaid""","Purchase Invoices Unpaid","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice"",""outstanding_amount"",""!="",0]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""bill_no"",""Purchase Invoice""],[""bill_date"",""Purchase Invoice""],[""grand_total_import"",""Purchase Invoice""],[""outstanding_amount"",""Purchase Invoice""],[""due_date"",""Purchase Invoice""],[""docstatus"",""Purchase Invoice""]],""sort_by"":""Purchase Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
+"","""Custom Stock Balance""","Stock Balance","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
+"","""Sales Order Report""","Sales Order Report","Sales Order","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Order"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Sales Order""],[""customer"",""Sales Order""],[""transaction_date"",""Sales Order""],[""delivery_date"",""Sales Order""],[""status"",""Sales Order""],[""per_delivered"",""Sales Order""],[""per_billed"",""Sales Order""],[""delivery_status"",""Sales Order""],[""sales_partner"",""Sales Order""],[""_user_tags"",""Sales Order""]],""sort_by"":""Sales Order.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Selling"
+"","""Purchase Order Report""","Purchase Order Report","Purchase Order","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Order"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Purchase Order""],[""supplier"",""Purchase Order""],[""transaction_date"",""Purchase Order""],[""grand_total_import"",""Purchase Order""],[""status"",""Purchase Order""],[""per_received"",""Purchase Order""],[""per_billed"",""Purchase Order""],[""_user_tags"",""Purchase Order""],[""item_code"",""Purchase Order Item""],[""stock_qty"",""Purchase Order Item""],[""rate_per_weight_unit"",""Purchase Order Item""],[""warehouse"",""Purchase Order Item""]],""sort_by"":""Purchase Order.transaction_date"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Buying"
+"","""Accounts Payable""","Accounts Payable","Purchase Invoice","Yes","Report Builder",1,0,1,"","","","Accounts"
+"","""Accounts Receivable""","Accounts Receivable","Sales Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
+"","""Available Stock for Packing Items""","Available Stock for Packing Items","Sales BOM","Yes","Script Report",0,0,1,"","","","Selling"
+"","""Bank Clearance Summary""","Bank Clearance Summary","Journal Voucher","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Bank Reconciliation Statement""","Bank Reconciliation Statement","Journal Voucher","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Batch-Wise Balance History""","Batch-Wise Balance History","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","Stock"
+"","""Budget Variance Report""","Budget Variance Report","Cost Center","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Completed Production Orders""","Completed Production Orders","Production Order","Yes","Query Report",0,0,1,"SELECT
+  `tabProduction Order`.name as ""Production Order:Link/Production Order:200"",
+  `tabProduction Order`.creation as ""Date:Date:120"",
+  `tabProduction Order`.production_item as ""Item:Link/Item:150"",
+  `tabProduction Order`.qty as ""To Produce:Int:100"",
+  `tabProduction Order`.produced_qty as ""Produced:Int:100""
 FROM
-	`tabSales Invoice`
+  `tabProduction Order`
 WHERE
-	docstatus = 1 and ifnull(net_total, 0) > 0 and ifnull(total_commission, 0) > 0
-GROUP BY
-	name
+  `tabProduction Order`.docstatus=1
+  AND ifnull(`tabProduction Order`.produced_qty,0) = `tabProduction Order`.qty","","","Manufacturing"
+"","""Customer Account Head""","Customer Account Head","Account","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Customer Acquisition and Loyalty""","Customer Acquisition and Loyalty","Customer","Yes","Script Report",1,0,1,"","","","Selling"
+"","""Customers Not Buying Since Long Time""","Customers Not Buying Since Long Time","Sales Order","Yes","Script Report",0,0,1,"","","","Selling"
+"","""Daily Time Log Summary""","Daily Time Log Summary","Time Log","Yes","Script Report",0,0,1,"","","","Projects"
+"","""Delivered Items To Be Billed""","Delivered Items To Be Billed","Sales Invoice","Yes","Query Report",0,0,1,"select
+    `tabDelivery Note`.`name` as ""Delivery Note:Link/Delivery Note:120"",
+	`tabDelivery Note`.`customer` as ""Customer:Link/Customer:120"",
+	`tabDelivery Note`.`posting_date` as ""Date:Date"",
+	`tabDelivery Note`.`project_name` as ""Project"",
+	`tabDelivery Note Item`.`item_code` as ""Item:Link/Item:120"",
+	(`tabDelivery Note Item`.`qty` - ifnull((select sum(qty) from `tabSales Invoice Item` 
+	    where `tabSales Invoice Item`.docstatus=1 and 
+            `tabSales Invoice Item`.delivery_note = `tabDelivery Note`.name and
+	        `tabSales Invoice Item`.dn_detail = `tabDelivery Note Item`.name), 0))
+		as ""Qty:Float:110"",
+	(`tabDelivery Note Item`.`base_amount` - ifnull((select sum(base_amount) from `tabSales Invoice Item` 
+        where `tabSales Invoice Item`.docstatus=1 and 
+            `tabSales Invoice Item`.delivery_note = `tabDelivery Note`.name and
+            `tabSales Invoice Item`.dn_detail = `tabDelivery Note Item`.name), 0))
+		as ""Amount:Currency:110"",
+	`tabDelivery Note Item`.`item_name` as ""Item Name::150"",
+	`tabDelivery Note Item`.`description` as ""Description::200""
+from `tabDelivery Note`, `tabDelivery Note Item`
+where
+    `tabDelivery Note`.docstatus = 1 and
+	`tabDelivery Note`.`status` != ""Stopped"" and
+    `tabDelivery Note`.name = `tabDelivery Note Item`.parent and
+    (`tabDelivery Note Item`.qty > ifnull((select sum(qty) from `tabSales Invoice Item` 
+        where `tabSales Invoice Item`.docstatus=1 and 
+            `tabSales Invoice Item`.delivery_note = `tabDelivery Note`.name and
+            `tabSales Invoice Item`.dn_detail = `tabDelivery Note Item`.name), 0))
+order by `tabDelivery Note`.`name` desc","","","Accounts"
+"","""Delivery Note Trends""","Delivery Note Trends","Delivery Note","Yes","Script Report",0,0,1,"","","","Stock"
+"","""Employee Birthday""","Employee Birthday","Employee","Yes","Script Report",0,0,1,"","","","HR"
+"","""Employee Information""","Employee Information","Employee","Yes","Report Builder",0,0,1,"","","{""filters"":[],""columns"":[[""name"",""Employee""],[""employee_number"",""Employee""],[""date_of_joining"",""Employee""],[""branch"",""Employee""],[""department"",""Employee""],[""designation"",""Employee""],[""gender"",""Employee""],[""status"",""Employee""],[""company"",""Employee""],[""employment_type"",""Employee""],""Employee""],[""reports_to"",""Employee""],[""company_email"",""Employee""]],""sort_by"":""Employee.bank_ac_no"",""sort_order"":""desc"",""sort_by_next"":"""",""sort_order_next"":""desc""}","HR"
+"","""Employee Leave Balance""","Employee Leave Balance","Employee","Yes","Script Report",0,0,1,"","","","HR"
+"","""General Ledger""","General Ledger","GL Entry","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Gross Profit""","Gross Profit","Sales Invoice","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Item Prices""","Item Prices","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","Stock"
+"","""Item Shortage Report""","Item Shortage Report","Bin","Yes","Report Builder",0,0,1,"","","{""filters"":[[""Bin"",""projected_qty"",""<"",""0""]],""columns"":[[""warehouse"",""Bin""],[""item_code"",""Bin""],[""actual_qty"",""Bin""],[""ordered_qty"",""Bin""],[""planned_qty"",""Bin""],[""reserved_qty"",""Bin""],[""projected_qty"",""Bin""]],""sort_by"":""Bin.projected_qty"",""sort_order"":""asc"",""sort_by_next"":"""",""sort_order_next"":""desc""}","Stock"
+"","""Item-wise Purchase History""","Item-wise Purchase History","Purchase Order","Yes","Query Report",1,0,1,"select
+    po_item.item_code as ""Item Code:Link/Item:120"",
+	po_item.item_name as ""Item Name::120"",
+	po_item.description as ""Description::150"",
+	po_item.qty as ""Qty:Float:100"",
+	po_item.stock_uom as ""UOM:Link/UOM:80"",
+	po_item.base_rate as ""Rate:Currency:120"",
+	po_item.base_amount as ""Amount:Currency:120"",
+	po.name as ""Purchase Order:Link/Purchase Order:120"",
+	po.transaction_date as ""Transaction Date:Date:140"",
+	po.supplier as ""Supplier:Link/Supplier:130"",
+	po_item.project_name as ""Project:Link/Project:130"",
+	ifnull(po_item.received_qty, 0) as ""Received Qty:Float:120""
+from
+	`tabPurchase Order` po, `tabPurchase Order Item` po_item
+where
+	po.name = po_item.parent and po.docstatus = 1
+order by po.name desc","","","Buying"
+"","""Item-wise Purchase Register""","Item-wise Purchase Register","Purchase Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
+"","""Item-wise Sales History""","Item-wise Sales History","Sales Order","Yes","Query Report",1,0,1,"select
+    so_item.item_code as ""Item Code:Link/Item:120"",
+	so_item.item_name as ""Item Name::120"",
+	so_item.description as ""Description::150"",
+	so_item.qty as ""Qty:Float:100"",
+	so_item.stock_uom as ""UOM:Link/UOM:80"",
+	so_item.base_rate as ""Rate:Currency:120"",
+	so_item.base_amount as ""Amount:Currency:120"",
+	so.name as ""Sales Order:Link/Sales Order:120"",
+	so.transaction_date as ""Transaction Date:Date:140"",
+	so.customer as ""Customer:Link/Customer:130"",
+	so.territory as ""Territory:Link/Territory:130"",
+    so.project_name as ""Project:Link/Project:130"",
+	ifnull(so_item.delivered_qty, 0) as ""Delivered Qty:Float:120"",
+	ifnull(so_item.billed_amt, 0) as ""Billed Amount:Currency:120""
+from
+	`tabSales Order` so, `tabSales Order Item` so_item
+where
+	so.name = so_item.parent
+	and so.docstatus = 1
+order by so.name desc","","","Selling"
+"","""Item-wise Sales Register""","Item-wise Sales Register","Sales Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
+"","""Items To Be Requested""","Items To Be Requested","Item","Yes","Query Report",0,0,1,"SELECT
+    tabBin.item_code as ""Item:Link/Item:120"",
+    tabBin.warehouse as ""Warehouse:Link/Warehouse:120"",
+    tabBin.actual_qty as ""Actual:Float:90"",
+    tabBin.indented_qty as ""Requested:Float:90"",
+    tabBin.reserved_qty as ""Reserved:Float:90"",
+    tabBin.ordered_qty as ""Ordered:Float:90"",
+    tabBin.projected_qty as ""Projected:Float:90""
+FROM
+    tabBin, tabItem
+WHERE
+    tabBin.item_code = tabItem.name
+    AND tabItem.is_purchase_item = ""Yes""
+    AND tabBin.projected_qty < 0
 ORDER BY
-	""Total Commission:Currency:120""","","","SF Custom Changes"
-"","""Item List Report""","Item List Report","Item","No","Report Builder",0,0,1,"","","{""filters"":[],""columns"":[[""name"",""Item""],[""item_name"",""Item""],[""item_group"",""Item""],[""description"",""Item""],[""income_account"",""Item""],[""expense_account"",""Item""],[""stock_uom"",""Item""],[""default_warehouse"",""Item""],[""net_weight"",""Item""]],""sort_by"":""Item.name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
-"","""Commission Report""","Commission Report","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""],[""Sales Invoice"",""outstanding_amount"",""="",0],[""Sales Invoice"",""sales_partner"",""!="",""""]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""posting_date"",""Sales Invoice""],[""po_no"",""Sales Invoice""],[""grand_total"",""Sales Invoice""],[""sales_partner"",""Sales Invoice""],[""sales_rep_sm"",""Sales Invoice""],[""total_commission"",""Sales Invoice""],[""commission_rate"",""Sales Invoice""],[""_user_tags"",""Sales Invoice""]],""sort_by"":""Sales Invoice.sales_partner"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
-"","""Bank Vouchers against PINVs""","Bank Vouchers against PINVs","Journal Voucher","No","Report Builder",0,0,1,"","","{""filters"":[[""Journal Voucher"",""docstatus"",""!="",""2""],[""Journal Voucher Detail"",""against_voucher"",""!="",""""]],""columns"":[[""name"",""Journal Voucher""],[""voucher_type"",""Journal Voucher""],[""posting_date"",""Journal Voucher""],[""cheque_no"",""Journal Voucher""],[""account"",""Journal Voucher Detail""],[""total_debit"",""Journal Voucher""],[""against_voucher"",""Journal Voucher Detail""],[""clearance_date"",""Journal Voucher""]],""sort_by"":""Journal Voucher.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
-"","""Journal Vouchers against Sales Invoices""","Journal Vouchers against Sales Invoices","Journal Voucher","No","Report Builder",0,0,1,"","","{""filters"":[[""Journal Voucher"",""docstatus"",""!="",""2""],[""Journal Voucher Detail"",""against_invoice"",""!="",""""]],""columns"":[[""name"",""Journal Voucher""],[""voucher_type"",""Journal Voucher""],[""posting_date"",""Journal Voucher""],[""cheque_no"",""Journal Voucher""],[""account"",""Journal Voucher Detail""],[""total_credit"",""Journal Voucher""],[""against_invoice"",""Journal Voucher Detail""],[""clearance_date"",""Journal Voucher""]],""sort_by"":""Journal Voucher.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
-"","""Custom Stock Ledger""","Custom Stock Ledger","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
-"","""Sales Invoice Report""","Sales Invoice Report","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""posting_date"",""Sales Invoice""],[""docstatus"",""Sales Invoice""],[""po_no"",""Sales Invoice""],[""due_date"",""Sales Invoice""],[""credit_days"",""Sales Invoice""],[""grand_total"",""Sales Invoice""],[""outstanding_amount"",""Sales Invoice""],[""delivery_date"",""Sales Invoice""],[""sales_rep_sm"",""Sales Invoice""],[""_user_tags"",""Sales Invoice""]],""sort_by"":""Sales Invoice.name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
-"","""Ordered Items To Be Delivered""","Ordered Items To Be Delivered","Delivery Note","Yes","Query Report",0,0,1,"select 
+    tabBin.projected_qty ASC","","","Stock"
+"","""Itemwise Recommended Reorder Level""","Itemwise Recommended Reorder Level","Item","Yes","Script Report",0,0,1,"","","","Stock"
+"","""Lead Details""","Lead Details","Lead","Yes","Query Report",0,0,1,"SELECT
+    `tabLead`.name as ""Lead Id:Link/Lead:120"",
+    `tabLead`.lead_name as ""Lead Name::120"",
+	`tabLead`.company_name as ""Company Name::120"",
+	`tabLead`.status as ""Status::120"",
+	concat_ws(', ', 
+		trim(',' from `tabAddress`.address_line1), 
+		trim(',' from tabAddress.address_line2), 
+		tabAddress.state, tabAddress.pincode, tabAddress.country
+	) as 'Address::180',
+	`tabLead`.phone as ""Phone::100"",
+	`tabLead`.mobile_no as ""Mobile No::100"",
+	`tabLead`.email_id as ""Email Id::120"",
+	`tabLead`.lead_owner as ""Lead Owner::120"",
+	`tabLead`.source as ""Source::120"",
+	`tabLead`.territory as ""Territory::120"",
+    `tabLead`.owner as ""Owner:Link/User:120""
+FROM
+	`tabLead`
+	left join `tabAddress` on (
+		`tabAddress`.lead=`tabLead`.name
+	)
+WHERE
+	`tabLead`.docstatus<2
+ORDER BY
+	`tabLead`.name asc","","","Selling"
+"","""Maintenance Schedules""","Maintenance Schedules","Maintenance Schedule","Yes","Query Report",0,0,1,"SELECT
+    ms_sch.scheduled_date as ""Schedule Date:Date:120"",
+	ms_sch.item_code as ""Item Code:Link/Item:120"",
+	ms_sch.item_name as ""Item Name::120"",
+	ms_sch.serial_no as ""Serial No::120"",
+	ms_sch.sales_person as ""Sales Person::120"",
+	ms.customer_name as ""Customer:Link/Customer:120"",
+	ms.address_display as ""Customer Address::120"",
+	ms_item.prevdoc_docname as ""Sales Order:Link/Sales Order:120"",
+	ms.company as ""Company:Link/Company:120""
+	
+FROM
+	`tabMaintenance Schedule` ms, 
+    `tabMaintenance Schedule Detail` ms_sch, 
+    `tabMaintenance Schedule Item` ms_item
+WHERE
+	ms.name = ms_sch.parent and ms.name = ms_item.parent and ms.docstatus = 1
+ORDER BY
+	ms_sch.scheduled_date asc, ms_sch.item_code asc","","","Support"
+"","""Material Requests for which Supplier Quotations are not created""","Material Requests for which Supplier Quotations are not created","Material Request","Yes","Query Report",0,0,1,"select 
+    mr.name as ""Material Request:Link/Material Request:120"",
+    mr.transaction_date as ""Date:Date:100"",
+	mr_item.item_code as ""Item Code:Link/Item:120"",
+	mr_item.qty as ""Qty:Float:100"",
+	mr_item.item_name as ""Item Name::150"",
+	mr_item.description as ""Description::200""
+from
+	`tabMaterial Request` mr, `tabMaterial Request Item` mr_item
+where
+	mr_item.parent = mr.name
+	and mr.material_request_type = ""Purchase""
+	and mr.docstatus = 1
+	and mr.status != ""Stopped""
+	and not exists(select name from `tabSupplier Quotation Item` where prevdoc_docname=mr.name)
+order by mr.transaction_date asc","","","Stock"
+"","""Monthly Attendance Sheet""","Monthly Attendance Sheet","Attendance","Yes","Script Report",0,0,1,"","","","HR"
+"","""Monthly Salary Register""","Monthly Salary Register","Salary Slip","Yes","Script Report",1,0,1,"","","","HR"
+"","""Open Production Orders""","Open Production Orders","Production Order","Yes","Query Report",0,0,1,"SELECT
+  `tabProduction Order`.name as ""Production Order:Link/Production Order:200"",
+  `tabProduction Order`.creation as ""Date:Date:120"",
+  `tabProduction Order`.production_item as ""Item:Link/Item:150"",
+  `tabProduction Order`.qty as ""To Produce:Int:100"",
+  `tabProduction Order`.produced_qty as ""Produced:Int:100""
+FROM
+  `tabProduction Order`
+WHERE
+  `tabProduction Order`.docstatus=1
+  AND ifnull(`tabProduction Order`.produced_qty,0) < `tabProduction Order`.qty
+  AND NOT EXISTS (SELECT name from `tabStock Entry` where production_order =`tabProduction Order`.name)","","","Manufacturing"
+"","""Ordered Items To Be Billed""","Ordered Items To Be Billed","Sales Invoice","Yes","Query Report",0,0,1,"select 
  `tabSales Order`.`name` as ""Sales Order:Link/Sales Order:120"",
  `tabSales Order`.`customer` as ""Customer:Link/Customer:120"",
+ `tabSales Order`.`status` as ""Status"",
  `tabSales Order`.`transaction_date` as ""Date:Date"",
  `tabSales Order`.`project_name` as ""Project"",
  `tabSales Order Item`.item_code as ""Item:Link/Item:120"",
- `tabSales Order Item`.qty as ""Qty:Float:140"",
- `tabSales Order Item`.delivered_qty as ""Delivered Qty:Float:140"",
- (`tabSales Order Item`.qty - ifnull(`tabSales Order Item`.delivered_qty, 0)) as ""Qty to Deliver:Float:140"",
- `tabSales Order Item`.warehouse as ""Warehouse:Link/Warehouse:150"",
- `tabSales Order Item`.base_amount as ""Amount:Float:140"",
- `tabSales Order`.`delivery_date` as ""Expected Delivery Date:Date:120"",
+ `tabSales Order Item`.base_amount as ""Amount:Currency:110"",
+ (`tabSales Order Item`.billed_amt * ifnull(`tabSales Order`.conversion_rate, 1)) as ""Billed Amount:Currency:110"",
+ (ifnull(`tabSales Order Item`.base_amount, 0) - (ifnull(`tabSales Order Item`.billed_amt, 0) * ifnull(`tabSales Order`.conversion_rate, 1))) as ""Pending Amount:Currency:120"",
  `tabSales Order Item`.item_name as ""Item Name::150"",
- `tabSales Order Item`.description as ""Description::200"",
- `tabSales Order Item`.item_group as ""Item Group:Link/Item Group:120""
+ `tabSales Order Item`.description as ""Description::200""
 from
  `tabSales Order`, `tabSales Order Item`
 where
  `tabSales Order Item`.`parent` = `tabSales Order`.`name`
  and `tabSales Order`.docstatus = 1
  and `tabSales Order`.status != ""Stopped""
- and ifnull(`tabSales Order Item`.delivered_qty,0) < ifnull(`tabSales Order Item`.qty,0)
-order by `tabSales Order`.transaction_date asc","","","Stock"
-"","""Stock Balance""","Stock Balance","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","Stock"
-"","""Issued Items Against Production Order""","Issued Items Against Production Order","Production Order","Yes","Query Report",0,0,1,"select
-    ste.production_order as ""Production Order:Link/Production Order:120"",
-    ste.posting_date as ""Issue Date:Date:140"",
-    ste_item.item_code as ""Item Code:Link/Item:120"",
-	ste_item.description as ""Description::150"",
-	ste_item.transfer_qty as ""Qty:Float:100"",
-	ste_item.stock_uom as ""UOM:Link/UOM:80"",
-	ste_item.amount as ""Amount:Currency:120"",
-	ste_item.serial_no as ""Serial No:Link/Serial No:80"",
-	ste_item.s_warehouse as ""Source Warehouse:Link/Warehouse:120"",
-	ste_item.t_warehouse as ""Target Warehouse:Link/Warehouse:120"",
-	pro.production_item as ""Finished Goods:Link/Item:120"", 
-	ste.name as ""Stock Entry:Link/Stock Entry:120""
+ and ifnull(`tabSales Order Item`.billed_amt,0) < ifnull(`tabSales Order Item`.amount,0)
+order by `tabSales Order`.transaction_date asc","","","Accounts"
+"","""Payment Period Based On Invoice Date""","Payment Period Based On Invoice Date","Journal Voucher","Yes","Script Report",1,0,1,"","","","Accounts"
+"","""Pending SO Items For Purchase Request""","Pending SO Items For Purchase Request","Sales Order","Yes","Query Report",0,0,1,"select 
+ so_item.item_code as ""Item Code:Link/Item:120"",
+ so_item.item_name as ""Item Name::120"",
+ so_item.description as ""Description::120"",
+ so.`name` as ""S.O. No.:Link/Sales Order:120"",
+ so.`transaction_date` as ""Date:Date:120"",
+ mr.name as ""Material Request:Link/Material Request:120"",
+ so.customer as ""Customer:Link/Customer:120"",
+ so.territory as ""Terretory:Link/Territory:120"",
+ sum(so_item.qty) as ""SO Qty:Float:100 "",
+ sum(mr_item.qty) as ""Requested Qty:Float:100""
 from
-	`tabStock Entry` ste, `tabStock Entry Detail` ste_item, `tabProduction Order` pro
+ `tabSales Order` so, `tabSales Order Item` so_item, 
+ `tabMaterial Request` mr, `tabMaterial Request Item` mr_item
 where
-	ifnull(ste.production_order, '') != '' and ste.name = ste_item.parent 
-	and ste.production_order = pro.name and ste.docstatus = 1 
-	and ste.purpose = 'Manufacture' or 'Repack'
-order by ste.posting_date, ste.production_order, ste_item.item_code","","","Manufacturing"
-"","""Supplier Addresses and Contacts""","Supplier Addresses and Contacts","Supplier","Yes","Query Report",0,0,1,"SELECT
-    `tabSupplier`.name as ""Supplier:Link/Supplier:120"",
-	`tabSupplier`.supplier_name as ""Supplier Name::120"",
-	`tabSupplier`.supplier_type as ""Supplier Type:Link/Supplier Type:120"",
-	concat_ws(', ', 
-		trim(',' from `tabAddress`.address_line1), 
-		trim(',' from tabAddress.address_line2), 
-		tabAddress.state, tabAddress.pincode, tabAddress.country
-	) as 'Address::180',
-    concat_ws(', ', `tabContact`.first_name, `tabContact`.last_name) as ""Contact Name::180"",
-	`tabContact`.phone as ""Phone"",
-	`tabContact`.mobile_no as ""Mobile No"",
-	`tabContact`.email_id as ""Email Id::120"",
-	`tabContact`.is_primary_contact as ""Is Primary Contact::120""
+ so_item.`parent` = so.`name` and mr_item.sales_order_no = so.name
+ and mr_item.parent = mr.name 
+ and so.docstatus = 1 and so.status != ""Stopped"" 
+ and mr.docstatus = 1 and mr.status != ""Stopped""
+group by so.name, so_item.item_code
+order by so.name desc, so_item.item_code asc","","","Selling"
+"","""Permitted Documents For User""","Permitted Documents For User","User","Yes","Script Report",0,0,1,"","","","Core"
+"","""Production Orders in Progress""","Production Orders in Progress","Production Order","Yes","Query Report",0,0,1,"SELECT
+  `tabProduction Order`.name as ""Production Order:Link/Production Order:200"",
+  `tabProduction Order`.creation as ""Date:Date:120"",
+  `tabProduction Order`.production_item as ""Item:Link/Item:150"",
+  `tabProduction Order`.qty as ""To Produce:Int:100"",
+  `tabProduction Order`.produced_qty as ""Produced:Int:100""
 FROM
-	`tabSupplier`
-	left join `tabAddress` on (
-		`tabAddress`.supplier=`tabSupplier`.name
-	)
-	left join `tabContact` on (
-		`tabContact`.supplier=`tabSupplier`.name
-	)
+  `tabProduction Order`
 WHERE
-	`tabSupplier`.docstatus<2
-ORDER BY
-	`tabSupplier`.name asc","","","Buying"
-"","""Received Items To Be Billed""","Received Items To Be Billed","Purchase Invoice","Yes","Query Report",0,0,1,"select
-    `tabPurchase Receipt`.`name` as ""Purchase Receipt:Link/Purchase Receipt:120"",
-    `tabPurchase Receipt`.`supplier` as ""Supplier:Link/Supplier:120"",
-	`tabPurchase Receipt`.`posting_date` as ""Date:Date"",
-	`tabPurchase Receipt Item`.`project_name` as ""Project"",
-	`tabPurchase Receipt Item`.`item_code` as ""Item:Link/Item:120"",
-	(`tabPurchase Receipt Item`.`qty` - ifnull((select sum(qty) from `tabPurchase Invoice Item` 
-	    where `tabPurchase Invoice Item`.purchase_receipt = `tabPurchase Receipt`.name and
-            `tabPurchase Invoice Item`.docstatus = 1 and
-	    `tabPurchase Invoice Item`.pr_detail = `tabPurchase Receipt Item`.name), 0))
-	    as ""Qty:Float:110"",
-	(`tabPurchase Receipt Item`.`base_amount` - ifnull((select sum(base_amount) 
-             from `tabPurchase Invoice Item` 
-             where `tabPurchase Invoice Item`.purchase_receipt = `tabPurchase Receipt`.name and
-            `tabPurchase Invoice Item`.docstatus = 1 and
-            `tabPurchase Invoice Item`.pr_detail = `tabPurchase Receipt Item`.name), 0))
-	    as ""Amount:Currency:110"",
-	`tabPurchase Receipt Item`.`item_name` as ""Item Name::150"",
-	`tabPurchase Receipt Item`.`description` as ""Description::200""
-from `tabPurchase Receipt`, `tabPurchase Receipt Item`
-where
-    `tabPurchase Receipt`.docstatus = 1 and
-    `tabPurchase Receipt`.name = `tabPurchase Receipt Item`.parent and
-    (`tabPurchase Receipt Item`.qty > ifnull((select sum(qty) from `tabPurchase Invoice Item` 
-        where `tabPurchase Invoice Item`.purchase_receipt = `tabPurchase Receipt`.name and
-            `tabPurchase Invoice Item`.docstatus=1 and 
-            `tabPurchase Invoice Item`.pr_detail = `tabPurchase Receipt Item`.name), 0))
-order by `tabPurchase Receipt`.`name` desc","","","Accounts"
-"","""Purchase Order Items To Be Received""","Purchase Order Items To Be Received","Purchase Receipt","Yes","Query Report",1,0,1,"select 
+  `tabProduction Order`.docstatus=1
+  AND ifnull(`tabProduction Order`.produced_qty,0) < `tabProduction Order`.qty
+  AND EXISTS (SELECT name from `tabStock Entry` where production_order =`tabProduction Order`.name)","","","Manufacturing"
+"","""Project wise Stock Tracking""","Project wise Stock Tracking","Project","Yes","Report Builder",0,0,1,"","","","Projects"
+"","""Purchase Invoice Trends""","Purchase Invoice Trends","Purchase Invoice","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Purchase Order Items To Be Billed""","Purchase Order Items To Be Billed","Purchase Invoice","Yes","Query Report",1,0,1,"select 
     `tabPurchase Order`.`name` as ""Purchase Order:Link/Purchase Order:120"",
-	`tabPurchase Order`.`transaction_date` as ""Date:Date:100"",
-	`tabPurchase Order Item`.`schedule_date` as ""Reqd by Date:Date:110"",
+    `tabPurchase Order`.`transaction_date` as ""Date:Date:100"",
 	`tabPurchase Order`.`supplier` as ""Supplier:Link/Supplier:120"",
 	`tabPurchase Order Item`.`project_name` as ""Project"",
 	`tabPurchase Order Item`.item_code as ""Item Code:Link/Item:120"",
-	`tabPurchase Order Item`.qty as ""Qty:Float:100"",
-	`tabPurchase Order Item`.received_qty as ""Received Qty:Float:100"", 
-	(`tabPurchase Order Item`.qty - ifnull(`tabPurchase Order Item`.received_qty, 0)) as ""Qty to Receive:Float:100"",
-    `tabPurchase Order Item`.warehouse as ""Warehouse:Link/Warehouse:150"",
+	`tabPurchase Order Item`.base_amount as ""Amount:Currency:100"",
+	`tabPurchase Order Item`.billed_amt as ""Billed Amount:Currency:100"", 
+	(`tabPurchase Order Item`.base_amount - ifnull(`tabPurchase Order Item`.billed_amt, 0)) as ""Amount to Bill:Currency:100"",
 	`tabPurchase Order Item`.item_name as ""Item Name::150"",
-	`tabPurchase Order Item`.description as ""Description::200"",
-    `tabPurchase Order Item`.brand as ""Brand::100""
+	`tabPurchase Order Item`.description as ""Description::200""
 from
 	`tabPurchase Order`, `tabPurchase Order Item`
 where
 	`tabPurchase Order Item`.`parent` = `tabPurchase Order`.`name`
 	and `tabPurchase Order`.docstatus = 1
 	and `tabPurchase Order`.status != ""Stopped""
-	and ifnull(`tabPurchase Order Item`.received_qty, 0) < ifnull(`tabPurchase Order Item`.qty, 0)
-order by `tabPurchase Order`.transaction_date asc","","","Stock"
-"","""Trial Balance""","Trial Balance","GL Entry","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""Profit and Loss Statement""","Profit and Loss Statement","GL Entry","Yes","Script Report",0,0,1,"","","","Accounts"
+	and ifnull(`tabPurchase Order Item`.billed_amt, 0) < ifnull(`tabPurchase Order Item`.base_amount, 0)
+order by `tabPurchase Order`.transaction_date asc","","","Accounts"
+"","""Purchase Order Trends""","Purchase Order Trends","Purchase Order","Yes","Script Report",0,0,1,"","","","Buying"
+"","""Purchase Receipt Trends""","Purchase Receipt Trends","Purchase Receipt","Yes","Script Report",0,0,1,"","","","Stock"
+"","""Purchase Register""","Purchase Register","Purchase Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
+"","""Quotation Trends""","Quotation Trends","Quotation","Yes","Script Report",0,0,1,"","","","Selling"
+"","""Requested Items To Be Ordered""","Requested Items To Be Ordered","Purchase Order","Yes","Query Report",1,0,1,"select 
+    mr.name as ""Material Request:Link/Material Request:120"",
+	mr.transaction_date as ""Date:Date:100"",
+	mr_item.item_code as ""Item Code:Link/Item:120"",
+	sum(ifnull(mr_item.qty, 0)) as ""Qty:Float:100"",
+	sum(ifnull(mr_item.ordered_qty, 0)) as ""Ordered Qty:Float:100"", 
+	(sum(mr_item.qty) - sum(ifnull(mr_item.ordered_qty, 0))) as ""Qty to Order:Float:100"",
+	mr_item.item_name as ""Item Name::150"",
+	mr_item.description as ""Description::200""
+from
+	`tabMaterial Request` mr, `tabMaterial Request Item` mr_item
+where
+	mr_item.parent = mr.name
+	and mr.material_request_type = ""Purchase""
+	and mr.docstatus = 1
+	and mr.status != ""Stopped""
+group by mr.name, mr_item.item_code
+having
+	sum(ifnull(mr_item.ordered_qty, 0)) < sum(ifnull(mr_item.qty, 0))
+order by mr.transaction_date asc","","","Buying"
+"","""Requested Items To Be Transferred""","Requested Items To Be Transferred","Stock Entry","Yes","Query Report",1,0,1,"select 
+    mr.name as ""Material Request:Link/Material Request:120"",
+	mr.transaction_date as ""Date:Date:100"",
+	mr_item.item_code as ""Item Code:Link/Item:120"",
+	mr_item.qty as ""Qty:Float:100"",
+	mr_item.ordered_qty as ""Transferred Qty:Float:100"", 
+	(mr_item.qty - ifnull(mr_item.ordered_qty, 0)) as ""Qty to Transfer:Float:100"",
+	mr_item.item_name as ""Item Name::150"",
+	mr_item.description as ""Description::200""
+from
+	`tabMaterial Request` mr, `tabMaterial Request Item` mr_item
+where
+	mr_item.parent = mr.name
+	and mr.material_request_type = ""Transfer""
+	and mr.docstatus = 1
+	and mr.status != ""Stopped""
+	and ifnull(mr_item.ordered_qty, 0) < ifnull(mr_item.qty, 0)
+order by mr.transaction_date asc","","","Stock"
+"","""Sales Invoice Trends""","Sales Invoice Trends","Sales Invoice","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Sales Order Trends""","Sales Order Trends","Sales Order","Yes","Script Report",0,0,1,"","","","Selling"
+"","""Sales Partners Commission""","Sales Partners Commission","Sales Invoice","Yes","Query Report",0,0,1,"SELECT
+    sales_partner as ""Sales Partner:Link/Sales Partner:150"",
+	sum(net_total) as ""Invoiced Amount (Exculsive Tax):Currency:210"",
+	sum(total_commission) as ""Total Commission:Currency:150"",
+	sum(total_commission)*100/sum(net_total) as ""Average Commission Rate:Currency:170""
+FROM
+	`tabSales Invoice`
+WHERE
+	docstatus = 1 and ifnull(net_total, 0) > 0 and ifnull(total_commission, 0) > 0
+GROUP BY
+	sales_partner
+ORDER BY
+	""Total Commission:Currency:120""","","","Accounts"
+"","""Sales Person Target Variance Item Group-Wise""","Sales Person Target Variance Item Group-Wise","Sales Order","Yes","Script Report",0,0,1,"","","","Selling"
+"","""Sales Person-wise Transaction Summary""","Sales Person-wise Transaction Summary","Sales Order","Yes","Script Report",1,0,1,"","","","Selling"
+"","""Sales Register""","Sales Register","Sales Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
+"","""Serial No Service Contract Expiry""","Serial No Service Contract Expiry","Serial No","Yes","Report Builder",0,0,1,"","","{""filters"":[[""Serial No"",""status"",""="",""Delivered""]],""columns"":[[""name"",""Serial No""],[""item_code"",""Serial No""],[""amc_expiry_date"",""Serial No""],[""maintenance_status"",""Serial No""],[""delivery_document_no"",""Serial No""],[""customer"",""Serial No""],[""customer_name"",""Serial No""],[""item_name"",""Serial No""],[""description"",""Serial No""],[""item_group"",""Serial No""],[""brand"",""Serial No""]],""sort_by"":""Serial No.amc_expiry_date"",""sort_order"":""asc"",""sort_by_next"":"""",""sort_order_next"":""desc""}","Stock"
+"","""Serial No Status""","Serial No Status","Serial No","Yes","Report Builder",0,0,1,"","","{""sort_by"": ""Serial No.name"", ""sort_order"": ""desc"", ""sort_by_next"": """", ""filters"": [], ""sort_order_next"": ""desc"", ""columns"": [[""name"", ""Serial No""], [""item_code"", ""Serial No""], [""warehouse"", ""Serial No""], [""status"", ""Serial No""], [""item_name"", ""Serial No""], [""description"", ""Serial No""], [""item_group"", ""Serial No""], [""brand"", ""Serial No""], [""purchase_document_no"", ""Serial No""], [""purchase_date"", ""Serial No""], [""customer"", ""Serial No""], [""customer_name"", ""Serial No""], [""purchase_rate"", ""Serial No""], [""delivery_document_no"", ""Serial No""], [""delivery_date"", ""Serial No""], [""supplier"", ""Serial No""], [""supplier_name"", ""Serial No""]]}","Stock"
+"","""Serial No Warranty Expiry""","Serial No Warranty Expiry","Serial No","Yes","Report Builder",0,0,1,"","","{""filters"":[[""Serial No"",""status"",""="",""Delivered""]],""columns"":[[""name"",""Serial No""],[""item_code"",""Serial No""],[""warranty_expiry_date"",""Serial No""],[""warranty_period"",""Serial No""],[""maintenance_status"",""Serial No""],[""purchase_document_no"",""Serial No""],[""purchase_date"",""Serial No""],[""supplier"",""Serial No""],[""supplier_name"",""Serial No""],[""delivery_document_no"",""Serial No""],[""delivery_date"",""Serial No""],[""customer"",""Serial No""],[""customer_name"",""Serial No""],[""item_name"",""Serial No""],[""description"",""Serial No""],[""item_group"",""Serial No""],[""brand"",""Serial No""]],""sort_by"":""Serial No.warranty_expiry_date"",""sort_order"":""asc"",""sort_by_next"":"""",""sort_order_next"":""asc""}","Stock"
+"","""Stock Ageing""","Stock Ageing","Item","Yes","Script Report",0,0,1,"","","","Stock"
+"","""Stock Ledger""","Stock Ledger","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","Stock"
+"","""Stock Projected Qty""","Stock Projected Qty","Item","Yes","Script Report",1,0,1,"","","","Stock"
+"","""Supplier Account Head""","Supplier Account Head","Account","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Supplier-Wise Sales Analytics""","Supplier-Wise Sales Analytics","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","Stock"
+"","""Territory Target Variance Item Group-Wise""","Territory Target Variance Item Group-Wise","Sales Order","Yes","Script Report",0,0,1,"","","","Selling"
+"","""ToDo""","ToDo","ToDo","Yes","Script Report",0,0,1,"","","","Core"
+"","""Item-wise Price List Rate""","Item-wise Price List Rate","Price List","Yes","Report Builder",0,0,1,"","","{""filters"":[[""Item Price"",""price_list"",""like"",""%""],[""Item Price"",""item_code"",""like"",""%""]],""columns"":[[""name"",""Item Price""],[""price_list"",""Item Price""],[""item_code"",""Item Price""],[""item_name"",""Item Price""],[""item_description"",""Item Price""],[""price_list_rate"",""Item Price""],[""buying"",""Item Price""],[""selling"",""Item Price""],[""currency"",""Item Price""]],""sort_by"":""Item Price.modified"",""sort_order"":""desc"",""sort_by_next"":"""",""sort_order_next"":""desc""}","Stock"
+"","""Balance Sheet""","Balance Sheet","GL Entry","Yes","Script Report",0,0,1,"","","","Accounts"
 "","""Customer Addresses and Contacts""","Customer Addresses And Contacts","Customer","Yes","Query Report",0,0,1,"SELECT
 	`tabCustomer`.name as customer_id,
 	`tabCustomer`.customer_name,
@@ -194,351 +397,150 @@ WHERE
 	`tabCustomer`.docstatus<2
 ORDER BY
 	`tabCustomer`.name asc","","","Selling"
-"","""Balance Sheet""","Balance Sheet","GL Entry","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""Item-wise Price List Rate""","Item-wise Price List Rate","Price List","Yes","Report Builder",0,0,1,"","","{""filters"":[[""Item Price"",""price_list"",""like"",""%""],[""Item Price"",""item_code"",""like"",""%""]],""columns"":[[""name"",""Item Price""],[""price_list"",""Item Price""],[""item_code"",""Item Price""],[""item_name"",""Item Price""],[""item_description"",""Item Price""],[""price_list_rate"",""Item Price""],[""buying"",""Item Price""],[""selling"",""Item Price""],[""currency"",""Item Price""]],""sort_by"":""Item Price.modified"",""sort_order"":""desc"",""sort_by_next"":"""",""sort_order_next"":""desc""}","Stock"
-"","""ToDo""","ToDo","ToDo","Yes","Script Report",0,0,1,"","","","Core"
-"","""Territory Target Variance Item Group-Wise""","Territory Target Variance Item Group-Wise","Sales Order","Yes","Script Report",0,0,1,"","","","Selling"
-"","""Supplier-Wise Sales Analytics""","Supplier-Wise Sales Analytics","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","Stock"
-"","""Supplier Account Head""","Supplier Account Head","Account","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""Stock Projected Qty""","Stock Projected Qty","Item","Yes","Script Report",1,0,1,"","","","Stock"
-"","""Stock Ledger""","Stock Ledger","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","Stock"
-"","""Stock Ageing""","Stock Ageing","Item","Yes","Script Report",0,0,1,"","","","Stock"
-"","""Serial No Warranty Expiry""","Serial No Warranty Expiry","Serial No","Yes","Report Builder",0,0,1,"","","{""filters"":[[""Serial No"",""status"",""="",""Delivered""]],""columns"":[[""name"",""Serial No""],[""item_code"",""Serial No""],[""warranty_expiry_date"",""Serial No""],[""warranty_period"",""Serial No""],[""maintenance_status"",""Serial No""],[""purchase_document_no"",""Serial No""],[""purchase_date"",""Serial No""],[""supplier"",""Serial No""],[""supplier_name"",""Serial No""],[""delivery_document_no"",""Serial No""],[""delivery_date"",""Serial No""],[""customer"",""Serial No""],[""customer_name"",""Serial No""],[""item_name"",""Serial No""],[""description"",""Serial No""],[""item_group"",""Serial No""],[""brand"",""Serial No""]],""sort_by"":""Serial No.warranty_expiry_date"",""sort_order"":""asc"",""sort_by_next"":"""",""sort_order_next"":""asc""}","Stock"
-"","""Serial No Status""","Serial No Status","Serial No","Yes","Report Builder",0,0,1,"","","{""sort_by"": ""Serial No.name"", ""sort_order"": ""desc"", ""sort_by_next"": """", ""filters"": [], ""sort_order_next"": ""desc"", ""columns"": [[""name"", ""Serial No""], [""item_code"", ""Serial No""], [""warehouse"", ""Serial No""], [""status"", ""Serial No""], [""item_name"", ""Serial No""], [""description"", ""Serial No""], [""item_group"", ""Serial No""], [""brand"", ""Serial No""], [""purchase_document_no"", ""Serial No""], [""purchase_date"", ""Serial No""], [""customer"", ""Serial No""], [""customer_name"", ""Serial No""], [""purchase_rate"", ""Serial No""], [""delivery_document_no"", ""Serial No""], [""delivery_date"", ""Serial No""], [""supplier"", ""Serial No""], [""supplier_name"", ""Serial No""]]}","Stock"
-"","""Serial No Service Contract Expiry""","Serial No Service Contract Expiry","Serial No","Yes","Report Builder",0,0,1,"","","{""filters"":[[""Serial No"",""status"",""="",""Delivered""]],""columns"":[[""name"",""Serial No""],[""item_code"",""Serial No""],[""amc_expiry_date"",""Serial No""],[""maintenance_status"",""Serial No""],[""delivery_document_no"",""Serial No""],[""customer"",""Serial No""],[""customer_name"",""Serial No""],[""item_name"",""Serial No""],[""description"",""Serial No""],[""item_group"",""Serial No""],[""brand"",""Serial No""]],""sort_by"":""Serial No.amc_expiry_date"",""sort_order"":""asc"",""sort_by_next"":"""",""sort_order_next"":""desc""}","Stock"
-"","""Sales Register""","Sales Register","Sales Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
-"","""Sales Person-wise Transaction Summary""","Sales Person-wise Transaction Summary","Sales Order","Yes","Script Report",1,0,1,"","","","Selling"
-"","""Sales Person Target Variance Item Group-Wise""","Sales Person Target Variance Item Group-Wise","Sales Order","Yes","Script Report",0,0,1,"","","","Selling"
-"","""Sales Partners Commission""","Sales Partners Commission","Sales Invoice","Yes","Query Report",0,0,1,"SELECT
-    sales_partner as ""Sales Partner:Link/Sales Partner:150"",
-	sum(net_total) as ""Invoiced Amount (Exculsive Tax):Currency:210"",
-	sum(total_commission) as ""Total Commission:Currency:150"",
-	sum(total_commission)*100/sum(net_total) as ""Average Commission Rate:Currency:170""
-FROM
-	`tabSales Invoice`
-WHERE
-	docstatus = 1 and ifnull(net_total, 0) > 0 and ifnull(total_commission, 0) > 0
-GROUP BY
-	sales_partner
-ORDER BY
-	""Total Commission:Currency:120""","","","Accounts"
-"","""Sales Order Trends""","Sales Order Trends","Sales Order","Yes","Script Report",0,0,1,"","","","Selling"
-"","""Sales Invoice Trends""","Sales Invoice Trends","Sales Invoice","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""Requested Items To Be Transferred""","Requested Items To Be Transferred","Stock Entry","Yes","Query Report",1,0,1,"select 
-    mr.name as ""Material Request:Link/Material Request:120"",
-	mr.transaction_date as ""Date:Date:100"",
-	mr_item.item_code as ""Item Code:Link/Item:120"",
-	mr_item.qty as ""Qty:Float:100"",
-	mr_item.ordered_qty as ""Transferred Qty:Float:100"", 
-	(mr_item.qty - ifnull(mr_item.ordered_qty, 0)) as ""Qty to Transfer:Float:100"",
-	mr_item.item_name as ""Item Name::150"",
-	mr_item.description as ""Description::200""
-from
-	`tabMaterial Request` mr, `tabMaterial Request Item` mr_item
-where
-	mr_item.parent = mr.name
-	and mr.material_request_type = ""Transfer""
-	and mr.docstatus = 1
-	and mr.status != ""Stopped""
-	and ifnull(mr_item.ordered_qty, 0) < ifnull(mr_item.qty, 0)
-order by mr.transaction_date asc","","","Stock"
-"","""Requested Items To Be Ordered""","Requested Items To Be Ordered","Purchase Order","Yes","Query Report",1,0,1,"select 
-    mr.name as ""Material Request:Link/Material Request:120"",
-	mr.transaction_date as ""Date:Date:100"",
-	mr_item.item_code as ""Item Code:Link/Item:120"",
-	sum(ifnull(mr_item.qty, 0)) as ""Qty:Float:100"",
-	sum(ifnull(mr_item.ordered_qty, 0)) as ""Ordered Qty:Float:100"", 
-	(sum(mr_item.qty) - sum(ifnull(mr_item.ordered_qty, 0))) as ""Qty to Order:Float:100"",
-	mr_item.item_name as ""Item Name::150"",
-	mr_item.description as ""Description::200""
-from
-	`tabMaterial Request` mr, `tabMaterial Request Item` mr_item
-where
-	mr_item.parent = mr.name
-	and mr.material_request_type = ""Purchase""
-	and mr.docstatus = 1
-	and mr.status != ""Stopped""
-group by mr.name, mr_item.item_code
-having
-	sum(ifnull(mr_item.ordered_qty, 0)) < sum(ifnull(mr_item.qty, 0))
-order by mr.transaction_date asc","","","Buying"
-"","""Quotation Trends""","Quotation Trends","Quotation","Yes","Script Report",0,0,1,"","","","Selling"
-"","""Purchase Register""","Purchase Register","Purchase Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
-"","""Purchase Receipt Trends""","Purchase Receipt Trends","Purchase Receipt","Yes","Script Report",0,0,1,"","","","Stock"
-"","""Purchase Order Trends""","Purchase Order Trends","Purchase Order","Yes","Script Report",0,0,1,"","","","Buying"
-"","""Purchase Order Items To Be Billed""","Purchase Order Items To Be Billed","Purchase Invoice","Yes","Query Report",1,0,1,"select 
+"","""Profit and Loss Statement""","Profit and Loss Statement","GL Entry","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Trial Balance""","Trial Balance","GL Entry","Yes","Script Report",0,0,1,"","","","Accounts"
+"","""Purchase Order Items To Be Received""","Purchase Order Items To Be Received","Purchase Receipt","Yes","Query Report",1,0,1,"select 
     `tabPurchase Order`.`name` as ""Purchase Order:Link/Purchase Order:120"",
-    `tabPurchase Order`.`transaction_date` as ""Date:Date:100"",
+	`tabPurchase Order`.`transaction_date` as ""Date:Date:100"",
+	`tabPurchase Order Item`.`schedule_date` as ""Reqd by Date:Date:110"",
 	`tabPurchase Order`.`supplier` as ""Supplier:Link/Supplier:120"",
 	`tabPurchase Order Item`.`project_name` as ""Project"",
 	`tabPurchase Order Item`.item_code as ""Item Code:Link/Item:120"",
-	`tabPurchase Order Item`.base_amount as ""Amount:Currency:100"",
-	`tabPurchase Order Item`.billed_amt as ""Billed Amount:Currency:100"", 
-	(`tabPurchase Order Item`.base_amount - ifnull(`tabPurchase Order Item`.billed_amt, 0)) as ""Amount to Bill:Currency:100"",
+	`tabPurchase Order Item`.qty as ""Qty:Float:100"",
+	`tabPurchase Order Item`.received_qty as ""Received Qty:Float:100"", 
+	(`tabPurchase Order Item`.qty - ifnull(`tabPurchase Order Item`.received_qty, 0)) as ""Qty to Receive:Float:100"",
+    `tabPurchase Order Item`.warehouse as ""Warehouse:Link/Warehouse:150"",
 	`tabPurchase Order Item`.item_name as ""Item Name::150"",
-	`tabPurchase Order Item`.description as ""Description::200""
+	`tabPurchase Order Item`.description as ""Description::200"",
+    `tabPurchase Order Item`.brand as ""Brand::100""
 from
 	`tabPurchase Order`, `tabPurchase Order Item`
 where
 	`tabPurchase Order Item`.`parent` = `tabPurchase Order`.`name`
 	and `tabPurchase Order`.docstatus = 1
 	and `tabPurchase Order`.status != ""Stopped""
-	and ifnull(`tabPurchase Order Item`.billed_amt, 0) < ifnull(`tabPurchase Order Item`.base_amount, 0)
-order by `tabPurchase Order`.transaction_date asc","","","Accounts"
-"","""Purchase Invoice Trends""","Purchase Invoice Trends","Purchase Invoice","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""Project wise Stock Tracking""","Project wise Stock Tracking","Project","Yes","Report Builder",0,0,1,"","","","Projects"
-"","""Production Orders in Progress""","Production Orders in Progress","Production Order","Yes","Query Report",0,0,1,"SELECT
-  `tabProduction Order`.name as ""Production Order:Link/Production Order:200"",
-  `tabProduction Order`.creation as ""Date:Date:120"",
-  `tabProduction Order`.production_item as ""Item:Link/Item:150"",
-  `tabProduction Order`.qty as ""To Produce:Int:100"",
-  `tabProduction Order`.produced_qty as ""Produced:Int:100""
-FROM
-  `tabProduction Order`
-WHERE
-  `tabProduction Order`.docstatus=1
-  AND ifnull(`tabProduction Order`.produced_qty,0) < `tabProduction Order`.qty
-  AND EXISTS (SELECT name from `tabStock Entry` where production_order =`tabProduction Order`.name)","","","Manufacturing"
-"","""Permitted Documents For User""","Permitted Documents For User","User","Yes","Script Report",0,0,1,"","","","Core"
-"","""Pending SO Items For Purchase Request""","Pending SO Items For Purchase Request","Sales Order","Yes","Query Report",0,0,1,"select 
- so_item.item_code as ""Item Code:Link/Item:120"",
- so_item.item_name as ""Item Name::120"",
- so_item.description as ""Description::120"",
- so.`name` as ""S.O. No.:Link/Sales Order:120"",
- so.`transaction_date` as ""Date:Date:120"",
- mr.name as ""Material Request:Link/Material Request:120"",
- so.customer as ""Customer:Link/Customer:120"",
- so.territory as ""Terretory:Link/Territory:120"",
- sum(so_item.qty) as ""SO Qty:Float:100 "",
- sum(mr_item.qty) as ""Requested Qty:Float:100""
-from
- `tabSales Order` so, `tabSales Order Item` so_item, 
- `tabMaterial Request` mr, `tabMaterial Request Item` mr_item
+	and ifnull(`tabPurchase Order Item`.received_qty, 0) < ifnull(`tabPurchase Order Item`.qty, 0)
+order by `tabPurchase Order`.transaction_date asc","","","Stock"
+"","""Received Items To Be Billed""","Received Items To Be Billed","Purchase Invoice","Yes","Query Report",0,0,1,"select
+    `tabPurchase Receipt`.`name` as ""Purchase Receipt:Link/Purchase Receipt:120"",
+    `tabPurchase Receipt`.`supplier` as ""Supplier:Link/Supplier:120"",
+	`tabPurchase Receipt`.`posting_date` as ""Date:Date"",
+	`tabPurchase Receipt Item`.`project_name` as ""Project"",
+	`tabPurchase Receipt Item`.`item_code` as ""Item:Link/Item:120"",
+	(`tabPurchase Receipt Item`.`qty` - ifnull((select sum(qty) from `tabPurchase Invoice Item` 
+	    where `tabPurchase Invoice Item`.purchase_receipt = `tabPurchase Receipt`.name and
+            `tabPurchase Invoice Item`.docstatus = 1 and
+	    `tabPurchase Invoice Item`.pr_detail = `tabPurchase Receipt Item`.name), 0))
+	    as ""Qty:Float:110"",
+	(`tabPurchase Receipt Item`.`base_amount` - ifnull((select sum(base_amount) 
+             from `tabPurchase Invoice Item` 
+             where `tabPurchase Invoice Item`.purchase_receipt = `tabPurchase Receipt`.name and
+            `tabPurchase Invoice Item`.docstatus = 1 and
+            `tabPurchase Invoice Item`.pr_detail = `tabPurchase Receipt Item`.name), 0))
+	    as ""Amount:Currency:110"",
+	`tabPurchase Receipt Item`.`item_name` as ""Item Name::150"",
+	`tabPurchase Receipt Item`.`description` as ""Description::200""
+from `tabPurchase Receipt`, `tabPurchase Receipt Item`
 where
- so_item.`parent` = so.`name` and mr_item.sales_order_no = so.name
- and mr_item.parent = mr.name 
- and so.docstatus = 1 and so.status != ""Stopped"" 
- and mr.docstatus = 1 and mr.status != ""Stopped""
-group by so.name, so_item.item_code
-order by so.name desc, so_item.item_code asc","","","Selling"
-"","""Payment Period Based On Invoice Date""","Payment Period Based On Invoice Date","Journal Voucher","Yes","Script Report",1,0,1,"","","","Accounts"
-"","""Ordered Items To Be Billed""","Ordered Items To Be Billed","Sales Invoice","Yes","Query Report",0,0,1,"select 
+    `tabPurchase Receipt`.docstatus = 1 and
+    `tabPurchase Receipt`.name = `tabPurchase Receipt Item`.parent and
+    (`tabPurchase Receipt Item`.qty > ifnull((select sum(qty) from `tabPurchase Invoice Item` 
+        where `tabPurchase Invoice Item`.purchase_receipt = `tabPurchase Receipt`.name and
+            `tabPurchase Invoice Item`.docstatus=1 and 
+            `tabPurchase Invoice Item`.pr_detail = `tabPurchase Receipt Item`.name), 0))
+order by `tabPurchase Receipt`.`name` desc","","","Accounts"
+"","""Supplier Addresses and Contacts""","Supplier Addresses and Contacts","Supplier","Yes","Query Report",0,0,1,"SELECT
+    `tabSupplier`.name as ""Supplier:Link/Supplier:120"",
+	`tabSupplier`.supplier_name as ""Supplier Name::120"",
+	`tabSupplier`.supplier_type as ""Supplier Type:Link/Supplier Type:120"",
+	concat_ws(', ', 
+		trim(',' from `tabAddress`.address_line1), 
+		trim(',' from tabAddress.address_line2), 
+		tabAddress.state, tabAddress.pincode, tabAddress.country
+	) as 'Address::180',
+    concat_ws(', ', `tabContact`.first_name, `tabContact`.last_name) as ""Contact Name::180"",
+	`tabContact`.phone as ""Phone"",
+	`tabContact`.mobile_no as ""Mobile No"",
+	`tabContact`.email_id as ""Email Id::120"",
+	`tabContact`.is_primary_contact as ""Is Primary Contact::120""
+FROM
+	`tabSupplier`
+	left join `tabAddress` on (
+		`tabAddress`.supplier=`tabSupplier`.name
+	)
+	left join `tabContact` on (
+		`tabContact`.supplier=`tabSupplier`.name
+	)
+WHERE
+	`tabSupplier`.docstatus<2
+ORDER BY
+	`tabSupplier`.name asc","","","Buying"
+"","""Issued Items Against Production Order""","Issued Items Against Production Order","Production Order","Yes","Query Report",0,0,1,"select
+    ste.production_order as ""Production Order:Link/Production Order:120"",
+    ste.posting_date as ""Issue Date:Date:140"",
+    ste_item.item_code as ""Item Code:Link/Item:120"",
+	ste_item.description as ""Description::150"",
+	ste_item.transfer_qty as ""Qty:Float:100"",
+	ste_item.stock_uom as ""UOM:Link/UOM:80"",
+	ste_item.amount as ""Amount:Currency:120"",
+	ste_item.serial_no as ""Serial No:Link/Serial No:80"",
+	ste_item.s_warehouse as ""Source Warehouse:Link/Warehouse:120"",
+	ste_item.t_warehouse as ""Target Warehouse:Link/Warehouse:120"",
+	pro.production_item as ""Finished Goods:Link/Item:120"", 
+	ste.name as ""Stock Entry:Link/Stock Entry:120""
+from
+	`tabStock Entry` ste, `tabStock Entry Detail` ste_item, `tabProduction Order` pro
+where
+	ifnull(ste.production_order, '') != '' and ste.name = ste_item.parent 
+	and ste.production_order = pro.name and ste.docstatus = 1 
+	and ste.purpose = 'Manufacture' or 'Repack'
+order by ste.posting_date, ste.production_order, ste_item.item_code","","","Manufacturing"
+"","""Stock Balance""","Stock Balance","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","Stock"
+"","""Ordered Items To Be Delivered""","Ordered Items To Be Delivered","Delivery Note","Yes","Query Report",0,0,1,"select 
  `tabSales Order`.`name` as ""Sales Order:Link/Sales Order:120"",
  `tabSales Order`.`customer` as ""Customer:Link/Customer:120"",
- `tabSales Order`.`status` as ""Status"",
  `tabSales Order`.`transaction_date` as ""Date:Date"",
  `tabSales Order`.`project_name` as ""Project"",
  `tabSales Order Item`.item_code as ""Item:Link/Item:120"",
- `tabSales Order Item`.base_amount as ""Amount:Currency:110"",
- (`tabSales Order Item`.billed_amt * ifnull(`tabSales Order`.conversion_rate, 1)) as ""Billed Amount:Currency:110"",
- (ifnull(`tabSales Order Item`.base_amount, 0) - (ifnull(`tabSales Order Item`.billed_amt, 0) * ifnull(`tabSales Order`.conversion_rate, 1))) as ""Pending Amount:Currency:120"",
+ `tabSales Order Item`.qty as ""Qty:Float:140"",
+ `tabSales Order Item`.delivered_qty as ""Delivered Qty:Float:140"",
+ (`tabSales Order Item`.qty - ifnull(`tabSales Order Item`.delivered_qty, 0)) as ""Qty to Deliver:Float:140"",
+ `tabSales Order Item`.warehouse as ""Warehouse:Link/Warehouse:150"",
+ `tabSales Order Item`.base_amount as ""Amount:Float:140"",
+ `tabSales Order`.`delivery_date` as ""Expected Delivery Date:Date:120"",
  `tabSales Order Item`.item_name as ""Item Name::150"",
- `tabSales Order Item`.description as ""Description::200""
+ `tabSales Order Item`.description as ""Description::200"",
+ `tabSales Order Item`.item_group as ""Item Group:Link/Item Group:120""
 from
  `tabSales Order`, `tabSales Order Item`
 where
  `tabSales Order Item`.`parent` = `tabSales Order`.`name`
  and `tabSales Order`.docstatus = 1
  and `tabSales Order`.status != ""Stopped""
- and ifnull(`tabSales Order Item`.billed_amt,0) < ifnull(`tabSales Order Item`.amount,0)
-order by `tabSales Order`.transaction_date asc","","","Accounts"
-"","""Open Production Orders""","Open Production Orders","Production Order","Yes","Query Report",0,0,1,"SELECT
-  `tabProduction Order`.name as ""Production Order:Link/Production Order:200"",
-  `tabProduction Order`.creation as ""Date:Date:120"",
-  `tabProduction Order`.production_item as ""Item:Link/Item:150"",
-  `tabProduction Order`.qty as ""To Produce:Int:100"",
-  `tabProduction Order`.produced_qty as ""Produced:Int:100""
+ and ifnull(`tabSales Order Item`.delivered_qty,0) < ifnull(`tabSales Order Item`.qty,0)
+order by `tabSales Order`.transaction_date asc","","","Stock"
+"","""Sales Invoice Report""","Sales Invoice Report","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""posting_date"",""Sales Invoice""],[""docstatus"",""Sales Invoice""],[""po_no"",""Sales Invoice""],[""due_date"",""Sales Invoice""],[""credit_days"",""Sales Invoice""],[""grand_total"",""Sales Invoice""],[""outstanding_amount"",""Sales Invoice""],[""delivery_date"",""Sales Invoice""],[""sales_rep_sm"",""Sales Invoice""],[""_user_tags"",""Sales Invoice""]],""sort_by"":""Sales Invoice.name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
+"","""Custom Stock Ledger""","Custom Stock Ledger","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
+"","""Journal Vouchers against Sales Invoices""","Journal Vouchers against Sales Invoices","Journal Voucher","No","Report Builder",0,0,1,"","","{""filters"":[[""Journal Voucher"",""docstatus"",""!="",""2""],[""Journal Voucher Detail"",""against_invoice"",""!="",""""]],""columns"":[[""name"",""Journal Voucher""],[""voucher_type"",""Journal Voucher""],[""posting_date"",""Journal Voucher""],[""cheque_no"",""Journal Voucher""],[""account"",""Journal Voucher Detail""],[""total_credit"",""Journal Voucher""],[""against_invoice"",""Journal Voucher Detail""],[""clearance_date"",""Journal Voucher""]],""sort_by"":""Journal Voucher.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
+"","""Bank Vouchers against PINVs""","Bank Vouchers against PINVs","Journal Voucher","No","Report Builder",0,0,1,"","","{""filters"":[[""Journal Voucher"",""docstatus"",""!="",""2""],[""Journal Voucher Detail"",""against_voucher"",""!="",""""]],""columns"":[[""name"",""Journal Voucher""],[""voucher_type"",""Journal Voucher""],[""posting_date"",""Journal Voucher""],[""cheque_no"",""Journal Voucher""],[""account"",""Journal Voucher Detail""],[""total_debit"",""Journal Voucher""],[""against_voucher"",""Journal Voucher Detail""],[""clearance_date"",""Journal Voucher""]],""sort_by"":""Journal Voucher.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
+"","""Commission Report""","Commission Report","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""],[""Sales Invoice"",""outstanding_amount"",""="",0],[""Sales Invoice"",""sales_partner"",""!="",""""]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""posting_date"",""Sales Invoice""],[""po_no"",""Sales Invoice""],[""grand_total"",""Sales Invoice""],[""sales_partner"",""Sales Invoice""],[""sales_rep_sm"",""Sales Invoice""],[""total_commission"",""Sales Invoice""],[""commission_rate"",""Sales Invoice""],[""_user_tags"",""Sales Invoice""]],""sort_by"":""Sales Invoice.sales_partner"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
+"","""Item List Report""","Item List Report","Item","No","Report Builder",0,0,1,"","","{""filters"":[],""columns"":[[""name"",""Item""],[""item_name"",""Item""],[""item_group"",""Item""],[""description"",""Item""],[""income_account"",""Item""],[""expense_account"",""Item""],[""stock_uom"",""Item""],[""default_warehouse"",""Item""],[""net_weight"",""Item""]],""sort_by"":""Item.name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
+"","""Custom Sales Partners Commission""","Custom Sales Partners Commission","Sales Invoice","Yes","Query Report",0,0,1,"SELECT
+    name as ""Sales Invoice:Link/Sales Invoice:150"",
+    posting_date as ""Date::80"",
+    customer ""Customer:Link/Customer:150"",
+    sales_partner as ""Sales Partner:Link/Sales Partner:150"",
+	sum(net_total) as ""Invoiced Amount (Exculsive Tax):Currency:210"",
+	sum(total_commission) as ""Total Commission:Currency:150"",
+	sum(total_commission)*100/sum(net_total) as ""Percent Commission Rate:Float:170"",
+        payments_made as ""Payments Made:Currency:150"",
+        payment_details as ""Payment Details:Link/Journal Voucher:150"",
+        (sum(total_commission) - payments_made) as ""Outstanding Amount:Currency:150"" 
 FROM
-  `tabProduction Order`
+	`tabSales Invoice`
 WHERE
-  `tabProduction Order`.docstatus=1
-  AND ifnull(`tabProduction Order`.produced_qty,0) < `tabProduction Order`.qty
-  AND NOT EXISTS (SELECT name from `tabStock Entry` where production_order =`tabProduction Order`.name)","","","Manufacturing"
-"","""Monthly Salary Register""","Monthly Salary Register","Salary Slip","Yes","Script Report",1,0,1,"","","","HR"
-"","""Monthly Attendance Sheet""","Monthly Attendance Sheet","Attendance","Yes","Script Report",0,0,1,"","","","HR"
-"","""Material Requests for which Supplier Quotations are not created""","Material Requests for which Supplier Quotations are not created","Material Request","Yes","Query Report",0,0,1,"select 
-    mr.name as ""Material Request:Link/Material Request:120"",
-    mr.transaction_date as ""Date:Date:100"",
-	mr_item.item_code as ""Item Code:Link/Item:120"",
-	mr_item.qty as ""Qty:Float:100"",
-	mr_item.item_name as ""Item Name::150"",
-	mr_item.description as ""Description::200""
-from
-	`tabMaterial Request` mr, `tabMaterial Request Item` mr_item
-where
-	mr_item.parent = mr.name
-	and mr.material_request_type = ""Purchase""
-	and mr.docstatus = 1
-	and mr.status != ""Stopped""
-	and not exists(select name from `tabSupplier Quotation Item` where prevdoc_docname=mr.name)
-order by mr.transaction_date asc","","","Stock"
-"","""Maintenance Schedules""","Maintenance Schedules","Maintenance Schedule","Yes","Query Report",0,0,1,"SELECT
-    ms_sch.scheduled_date as ""Schedule Date:Date:120"",
-	ms_sch.item_code as ""Item Code:Link/Item:120"",
-	ms_sch.item_name as ""Item Name::120"",
-	ms_sch.serial_no as ""Serial No::120"",
-	ms_sch.sales_person as ""Sales Person::120"",
-	ms.customer_name as ""Customer:Link/Customer:120"",
-	ms.address_display as ""Customer Address::120"",
-	ms_item.prevdoc_docname as ""Sales Order:Link/Sales Order:120"",
-	ms.company as ""Company:Link/Company:120""
-	
-FROM
-	`tabMaintenance Schedule` ms, 
-    `tabMaintenance Schedule Detail` ms_sch, 
-    `tabMaintenance Schedule Item` ms_item
-WHERE
-	ms.name = ms_sch.parent and ms.name = ms_item.parent and ms.docstatus = 1
+	docstatus = 1 and ifnull(net_total, 0) > 0 and ifnull(total_commission, 0) > 0
+GROUP BY
+	name
 ORDER BY
-	ms_sch.scheduled_date asc, ms_sch.item_code asc","","","Support"
-"","""Lead Details""","Lead Details","Lead","Yes","Query Report",0,0,1,"SELECT
-    `tabLead`.name as ""Lead Id:Link/Lead:120"",
-    `tabLead`.lead_name as ""Lead Name::120"",
-	`tabLead`.company_name as ""Company Name::120"",
-	`tabLead`.status as ""Status::120"",
-	concat_ws(', ', 
-		trim(',' from `tabAddress`.address_line1), 
-		trim(',' from tabAddress.address_line2), 
-		tabAddress.state, tabAddress.pincode, tabAddress.country
-	) as 'Address::180',
-	`tabLead`.phone as ""Phone::100"",
-	`tabLead`.mobile_no as ""Mobile No::100"",
-	`tabLead`.email_id as ""Email Id::120"",
-	`tabLead`.lead_owner as ""Lead Owner::120"",
-	`tabLead`.source as ""Source::120"",
-	`tabLead`.territory as ""Territory::120"",
-    `tabLead`.owner as ""Owner:Link/User:120""
-FROM
-	`tabLead`
-	left join `tabAddress` on (
-		`tabAddress`.lead=`tabLead`.name
-	)
-WHERE
-	`tabLead`.docstatus<2
-ORDER BY
-	`tabLead`.name asc","","","Selling"
-"","""Itemwise Recommended Reorder Level""","Itemwise Recommended Reorder Level","Item","Yes","Script Report",0,0,1,"","","","Stock"
-"","""Items To Be Requested""","Items To Be Requested","Item","Yes","Query Report",0,0,1,"SELECT
-    tabBin.item_code as ""Item:Link/Item:120"",
-    tabBin.warehouse as ""Warehouse:Link/Warehouse:120"",
-    tabBin.actual_qty as ""Actual:Float:90"",
-    tabBin.indented_qty as ""Requested:Float:90"",
-    tabBin.reserved_qty as ""Reserved:Float:90"",
-    tabBin.ordered_qty as ""Ordered:Float:90"",
-    tabBin.projected_qty as ""Projected:Float:90""
-FROM
-    tabBin, tabItem
-WHERE
-    tabBin.item_code = tabItem.name
-    AND tabItem.is_purchase_item = ""Yes""
-    AND tabBin.projected_qty < 0
-ORDER BY
-    tabBin.projected_qty ASC","","","Stock"
-"","""Item-wise Sales Register""","Item-wise Sales Register","Sales Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
-"","""Item-wise Sales History""","Item-wise Sales History","Sales Order","Yes","Query Report",1,0,1,"select
-    so_item.item_code as ""Item Code:Link/Item:120"",
-	so_item.item_name as ""Item Name::120"",
-	so_item.description as ""Description::150"",
-	so_item.qty as ""Qty:Float:100"",
-	so_item.stock_uom as ""UOM:Link/UOM:80"",
-	so_item.base_rate as ""Rate:Currency:120"",
-	so_item.base_amount as ""Amount:Currency:120"",
-	so.name as ""Sales Order:Link/Sales Order:120"",
-	so.transaction_date as ""Transaction Date:Date:140"",
-	so.customer as ""Customer:Link/Customer:130"",
-	so.territory as ""Territory:Link/Territory:130"",
-    so.project_name as ""Project:Link/Project:130"",
-	ifnull(so_item.delivered_qty, 0) as ""Delivered Qty:Float:120"",
-	ifnull(so_item.billed_amt, 0) as ""Billed Amount:Currency:120""
-from
-	`tabSales Order` so, `tabSales Order Item` so_item
-where
-	so.name = so_item.parent
-	and so.docstatus = 1
-order by so.name desc","","","Selling"
-"","""Item-wise Purchase Register""","Item-wise Purchase Register","Purchase Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
-"","""Item-wise Purchase History""","Item-wise Purchase History","Purchase Order","Yes","Query Report",1,0,1,"select
-    po_item.item_code as ""Item Code:Link/Item:120"",
-	po_item.item_name as ""Item Name::120"",
-	po_item.description as ""Description::150"",
-	po_item.qty as ""Qty:Float:100"",
-	po_item.stock_uom as ""UOM:Link/UOM:80"",
-	po_item.base_rate as ""Rate:Currency:120"",
-	po_item.base_amount as ""Amount:Currency:120"",
-	po.name as ""Purchase Order:Link/Purchase Order:120"",
-	po.transaction_date as ""Transaction Date:Date:140"",
-	po.supplier as ""Supplier:Link/Supplier:130"",
-	po_item.project_name as ""Project:Link/Project:130"",
-	ifnull(po_item.received_qty, 0) as ""Received Qty:Float:120""
-from
-	`tabPurchase Order` po, `tabPurchase Order Item` po_item
-where
-	po.name = po_item.parent and po.docstatus = 1
-order by po.name desc","","","Buying"
-"","""Item Shortage Report""","Item Shortage Report","Bin","Yes","Report Builder",0,0,1,"","","{""filters"":[[""Bin"",""projected_qty"",""<"",""0""]],""columns"":[[""warehouse"",""Bin""],[""item_code"",""Bin""],[""actual_qty"",""Bin""],[""ordered_qty"",""Bin""],[""planned_qty"",""Bin""],[""reserved_qty"",""Bin""],[""projected_qty"",""Bin""]],""sort_by"":""Bin.projected_qty"",""sort_order"":""asc"",""sort_by_next"":"""",""sort_order_next"":""desc""}","Stock"
-"","""Item Prices""","Item Prices","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","Stock"
-"","""Gross Profit""","Gross Profit","Sales Invoice","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""General Ledger""","General Ledger","GL Entry","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""Employee Leave Balance""","Employee Leave Balance","Employee","Yes","Script Report",0,0,1,"","","","HR"
-"","""Employee Information""","Employee Information","Employee","Yes","Report Builder",0,0,1,"","","{""filters"":[],""columns"":[[""name"",""Employee""],[""employee_number"",""Employee""],[""date_of_joining"",""Employee""],[""branch"",""Employee""],[""department"",""Employee""],[""designation"",""Employee""],[""gender"",""Employee""],[""status"",""Employee""],[""company"",""Employee""],[""employment_type"",""Employee""],""Employee""],[""reports_to"",""Employee""],[""company_email"",""Employee""]],""sort_by"":""Employee.bank_ac_no"",""sort_order"":""desc"",""sort_by_next"":"""",""sort_order_next"":""desc""}","HR"
-"","""Employee Birthday""","Employee Birthday","Employee","Yes","Script Report",0,0,1,"","","","HR"
-"","""Delivery Note Trends""","Delivery Note Trends","Delivery Note","Yes","Script Report",0,0,1,"","","","Stock"
-"","""Delivered Items To Be Billed""","Delivered Items To Be Billed","Sales Invoice","Yes","Query Report",0,0,1,"select
-    `tabDelivery Note`.`name` as ""Delivery Note:Link/Delivery Note:120"",
-	`tabDelivery Note`.`customer` as ""Customer:Link/Customer:120"",
-	`tabDelivery Note`.`posting_date` as ""Date:Date"",
-	`tabDelivery Note`.`project_name` as ""Project"",
-	`tabDelivery Note Item`.`item_code` as ""Item:Link/Item:120"",
-	(`tabDelivery Note Item`.`qty` - ifnull((select sum(qty) from `tabSales Invoice Item` 
-	    where `tabSales Invoice Item`.docstatus=1 and 
-            `tabSales Invoice Item`.delivery_note = `tabDelivery Note`.name and
-	        `tabSales Invoice Item`.dn_detail = `tabDelivery Note Item`.name), 0))
-		as ""Qty:Float:110"",
-	(`tabDelivery Note Item`.`base_amount` - ifnull((select sum(base_amount) from `tabSales Invoice Item` 
-        where `tabSales Invoice Item`.docstatus=1 and 
-            `tabSales Invoice Item`.delivery_note = `tabDelivery Note`.name and
-            `tabSales Invoice Item`.dn_detail = `tabDelivery Note Item`.name), 0))
-		as ""Amount:Currency:110"",
-	`tabDelivery Note Item`.`item_name` as ""Item Name::150"",
-	`tabDelivery Note Item`.`description` as ""Description::200""
-from `tabDelivery Note`, `tabDelivery Note Item`
-where
-    `tabDelivery Note`.docstatus = 1 and
-	`tabDelivery Note`.`status` != ""Stopped"" and
-    `tabDelivery Note`.name = `tabDelivery Note Item`.parent and
-    (`tabDelivery Note Item`.qty > ifnull((select sum(qty) from `tabSales Invoice Item` 
-        where `tabSales Invoice Item`.docstatus=1 and 
-            `tabSales Invoice Item`.delivery_note = `tabDelivery Note`.name and
-            `tabSales Invoice Item`.dn_detail = `tabDelivery Note Item`.name), 0))
-order by `tabDelivery Note`.`name` desc","","","Accounts"
-"","""Daily Time Log Summary""","Daily Time Log Summary","Time Log","Yes","Script Report",0,0,1,"","","","Projects"
-"","""Customers Not Buying Since Long Time""","Customers Not Buying Since Long Time","Sales Order","Yes","Script Report",0,0,1,"","","","Selling"
-"","""Customer Acquisition and Loyalty""","Customer Acquisition and Loyalty","Customer","Yes","Script Report",1,0,1,"","","","Selling"
-"","""Customer Account Head""","Customer Account Head","Account","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""Completed Production Orders""","Completed Production Orders","Production Order","Yes","Query Report",0,0,1,"SELECT
-  `tabProduction Order`.name as ""Production Order:Link/Production Order:200"",
-  `tabProduction Order`.creation as ""Date:Date:120"",
-  `tabProduction Order`.production_item as ""Item:Link/Item:150"",
-  `tabProduction Order`.qty as ""To Produce:Int:100"",
-  `tabProduction Order`.produced_qty as ""Produced:Int:100""
-FROM
-  `tabProduction Order`
-WHERE
-  `tabProduction Order`.docstatus=1
-  AND ifnull(`tabProduction Order`.produced_qty,0) = `tabProduction Order`.qty","","","Manufacturing"
-"","""Budget Variance Report""","Budget Variance Report","Cost Center","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""Batch-Wise Balance History""","Batch-Wise Balance History","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","Stock"
-"","""Bank Reconciliation Statement""","Bank Reconciliation Statement","Journal Voucher","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""Bank Clearance Summary""","Bank Clearance Summary","Journal Voucher","Yes","Script Report",0,0,1,"","","","Accounts"
-"","""Available Stock for Packing Items""","Available Stock for Packing Items","Sales BOM","Yes","Script Report",0,0,1,"","","","Selling"
-"","""Accounts Receivable""","Accounts Receivable","Sales Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
-"","""Accounts Payable""","Accounts Payable","Purchase Invoice","Yes","Report Builder",1,0,1,"","","","Accounts"
-"","""Purchase Order Report""","Purchase Order Report","Purchase Order","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Order"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Purchase Order""],[""supplier"",""Purchase Order""],[""transaction_date"",""Purchase Order""],[""grand_total_import"",""Purchase Order""],[""status"",""Purchase Order""],[""per_received"",""Purchase Order""],[""per_billed"",""Purchase Order""],[""_user_tags"",""Purchase Order""],[""item_code"",""Purchase Order Item""],[""stock_qty"",""Purchase Order Item""],[""rate_per_weight_unit"",""Purchase Order Item""],[""warehouse"",""Purchase Order Item""]],""sort_by"":""Purchase Order.transaction_date"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Buying"
-"","""Sales Order Report""","Sales Order Report","Sales Order","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Order"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Sales Order""],[""customer"",""Sales Order""],[""transaction_date"",""Sales Order""],[""delivery_date"",""Sales Order""],[""status"",""Sales Order""],[""per_delivered"",""Sales Order""],[""per_billed"",""Sales Order""],[""delivery_status"",""Sales Order""],[""sales_partner"",""Sales Order""],[""_user_tags"",""Sales Order""]],""sort_by"":""Sales Order.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Selling"
-"","""Custom Stock Balance""","Stock Balance","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
-"","""Purchase Invoices Unpaid""","Purchase Invoices Unpaid","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice"",""outstanding_amount"",""!="",0]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""bill_no"",""Purchase Invoice""],[""bill_date"",""Purchase Invoice""],[""grand_total_import"",""Purchase Invoice""],[""outstanding_amount"",""Purchase Invoice""],[""due_date"",""Purchase Invoice""],[""docstatus"",""Purchase Invoice""]],""sort_by"":""Purchase Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
-"","""Sales Invoices Open""","Sales Invoices Open","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""],[""Sales Invoice"",""outstanding_amount"",""!="",0]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""posting_date"",""Sales Invoice""],[""docstatus"",""Sales Invoice""],[""po_no"",""Sales Invoice""],[""due_date"",""Sales Invoice""],[""credit_days"",""Sales Invoice""],[""grand_total"",""Sales Invoice""],[""outstanding_amount"",""Sales Invoice""],[""delivery_date"",""Sales Invoice""],[""sales_rep_sm"",""Sales Invoice""],[""_user_tags"",""Sales Invoice""]],""sort_by"":""Sales Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
-"","""Daily Dispatch""","Daily Dispatch","Delivery Note","Yes","Query Report",1,0,1,"select count(*), posting_date from `tabDelivery Note` group by posting_date;","","","Selling"
-"","""Batch-Wise Balance History Report""","Batch-Wise Balance History Report","Stock Ledger Entry","Yes","Script Report",0,1,1,"","","","SF Custom Changes"
-"","""Custom Stock Projected Qty""","Custom Stock Projected Qty","Item","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
-"","""Custom Stock Qty""","Custom Stock Qty","Item","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
+	""Total Commission:Currency:120""","","","SF Custom Changes"

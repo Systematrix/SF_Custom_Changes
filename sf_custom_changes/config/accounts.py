@@ -13,6 +13,18 @@ def get_data():
 					"doctype": "Sales Invoice",
                                         "description": _("Sales Commission Report"),
 				},
+                                {
+					"type": "report",
+					"is_query_report": True,
+					"name": "Custom Bank Reconciliation Statement",
+					"doctype": "Journal Voucher",
+				},
+                                {
+					"type": "report",
+					"is_query_report": True,
+					"name": "Custom Bank Clearance Summary",
+					"doctype": "Journal Voucher",
+				},
 				
 			]
 		},
