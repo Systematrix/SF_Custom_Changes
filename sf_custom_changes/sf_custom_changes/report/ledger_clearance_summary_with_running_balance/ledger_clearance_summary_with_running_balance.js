@@ -1,7 +1,7 @@
 // Copyright (c) 2013, Web Notes Technologies Pvt. Ltd. and Contributors
 // License: GNU General Public License v3. See license.txt
 
-frappe.query_reports["Custom Bank Clearance Summary"] = {
+frappe.query_reports["Ledger Clearance Summary With Running Balance"] = {
 	"filters": [
 		{
 			"fieldname":"from_date",

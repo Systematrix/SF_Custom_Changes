@@ -16,13 +16,7 @@ def get_data():
                                 {
 					"type": "report",
 					"is_query_report": True,
-					"name": "Custom Bank Reconciliation Statement",
-					"doctype": "Journal Voucher",
-				},
-                                {
-					"type": "report",
-					"is_query_report": True,
-					"name": "Custom Bank Clearance Summary",
+					"name": "Ledger Clearance Summary With Running Balance",
 					"doctype": "Journal Voucher",
 				},
 				

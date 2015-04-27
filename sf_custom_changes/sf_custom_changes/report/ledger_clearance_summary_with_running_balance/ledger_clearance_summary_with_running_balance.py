@@ -15,9 +15,10 @@ def execute(filters=None):
 	
 def get_columns():
 	return [_("Journal Voucher") + ":Link/Journal Voucher:140", _("Account") + ":Link/Account:140", 
-		_("Posting Date") + ":Date:100", _("Clearance Date") + ":Date:110", _("Against Account") + ":Link/Account:200", 
+		_("Posting Date") + ":Date:100", _("Against Account") + ":Link/Account:200", 
 		_("Debit") + ":Currency:120", _("Running Debit") + ":Currency:120",
-                _("Credit") + ":Currency:120", _("Running Credit") + ":Currency:120"
+                _("Credit") + ":Currency:120", _("Running Credit") + ":Currency:120",
+                _("Posting Reference") + "::130", _("Reference") + "::100", _("Ref Date") + ":Date:110",
 	]
 
 def get_conditions(filters):
@@ -35,8 +36,9 @@ def get_conditions(filters):
 def get_entries(filters):
 	conditions = get_conditions(filters)
 	entries =  frappe.db.sql("""select jv.name, jvd.account, jv.posting_date, 
-		jv.clearance_date, jvd.against_account, jvd.debit, (@rdeb:=@rdeb+(ifnull(jvd.debit, 0))) as RunningDebit,
-                jvd.credit, (@rcredit:=@rcredit+(ifnull(jvd.credit, 0))) as RunningCredit
+		jvd.against_account, jvd.debit, (@rdeb:=@rdeb+(ifnull(jvd.debit, 0))) as RunningDebit,
+                jvd.credit, (@rcredit:=@rcredit+(ifnull(jvd.credit, 0))) as RunningCredit,
+                jvd.remark, jv.cheque_no, jv.cheque_date
 		from `tabJournal Voucher Detail` jvd, `tabJournal Voucher` jv 
 		JOIN (select @rcredit := 0.0, @rdeb:=0.0) B
 		where jvd.parent = jv.name and jv.docstatus=1 %s
