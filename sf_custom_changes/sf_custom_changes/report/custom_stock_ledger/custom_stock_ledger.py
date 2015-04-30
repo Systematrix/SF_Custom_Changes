@@ -18,7 +18,7 @@ def execute(filters=None):
 			sle.warehouse,
 			item_detail.stock_uom, item_detail.net_weight, item_detail.weight_uom, sle.actual_qty, sle.qty_after_transaction,
 			(sle.incoming_rate if sle.actual_qty > 0 else 0.0),
-			sle.valuation_rate, sle.stock_value, sle.voucher_type, sle.voucher_no,
+			sle.valuation_rate, sle.stock_value, sle.voucher_type, sle.voucher_no, sle.csname,
 			sle.batch_no])
 
 	return columns, data
@@ -28,12 +28,17 @@ def get_columns():
 	        _("Warehouse") + ":Link/Warehouse:100",
 		_("Stock UOM") + ":Link/UOM:100","Fill:Float:80", _("Fill UOM") + ":Link/UOM:100", _("Qty") + ":Float:50", _("Balance Qty") + ":Float:100",
 		_("Incoming Rate") + ":Currency:110", _("Valuation Rate") + ":Currency:110", _("Balance Value") + ":Currency:110",
-	        _("Voucher Type") + "::110",_("Voucher #") + ":Dynamic Link/Voucher Type:100", _("Batch") + ":Link/Batch:210"]
+	        _("Voucher Type") + "::110",_("Voucher #") + ":Dynamic Link/Voucher Type:100",_("Customer/Supplier") + "::130", _("Batch") + ":Link/Batch:210"]
 
 def get_stock_ledger_entries(filters):
 	return frappe.db.sql("""select concat_ws(" ", posting_date) as date,
 			item_code, warehouse, actual_qty, qty_after_transaction, incoming_rate, valuation_rate,
-			stock_value, voucher_type, voucher_no, batch_no, serial_no, company
+			stock_value, voucher_type, voucher_no, batch_no, serial_no, company,
+			CASE
+            WHEN voucher_type = "Purchase Receipt" then (select supplier_name from `tabPurchase Receipt` where name=voucher_no) 
+            WHEN voucher_type = "Delivery Note" then (select customer_name from `tabDelivery Note` where name=voucher_no)
+            else " "
+            END AS csname
 		from `tabStock Ledger Entry`
 		where company = %(company)s and
 			posting_date between %(from_date)s and %(to_date)s
