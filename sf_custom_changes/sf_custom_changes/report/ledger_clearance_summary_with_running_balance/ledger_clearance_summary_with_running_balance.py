@@ -35,10 +35,10 @@ def get_conditions(filters):
 def get_entries(filters):
 	conditions = get_conditions(filters)
 	entries =  frappe.db.sql("""select jv.name, jvd.account, jv.posting_date, 
-		jvd.against_account, jvd.debit, jvd.credit, (@rdeb:=@rdeb-(ifnull(jvd.debit, 0))+(ifnull(jvd.credit, 0))) as RunningBalance,
+		jvd.against_account, jvd.debit, jvd.credit, (@rbal:=@rbal-(ifnull(jvd.debit, 0))+(ifnull(jvd.credit, 0))) as RunningBalance,
                 jvd.remark, jv.cheque_no, jv.cheque_date
 		from `tabJournal Voucher Detail` jvd, `tabJournal Voucher` jv 
-		JOIN (select @rcredit := 0.0, @rdeb:=0.0) B
+		JOIN (select @rbal:=0.0) B
 		where jvd.parent = jv.name and jv.docstatus=1 %s
 		order by jv.name DESC
 		""" % conditions, filters, as_list=1)
