@@ -25,7 +25,7 @@ def execute(filters=None):
 def get_columns():
 	return [_("Date") + ":Date:95", _("Item") + ":Link/Item:130", _("Item Name") + "::100",
 	        _("Warehouse") + ":Link/Warehouse:100",
-		_("Stock UOM") + ":Link/UOM:100","Fill:Float:80", _("Fill UOM") + ":Link/UOM:100", _("Qty") + ":Float:50", _("Balance Qty") + ":Float:100",   _("Voucher #") + ":Dynamic Link/Voucher Type:100",_("Customer/Supplier") + "::130", _("Batch") + ":Link/Batch:210", _("Incoming Rate") + ":Currency:110", _("Valuation Rate") + ":Currency:110", _("Balance Value") + ":Currency:110"]
+		_("Stock UOM") + ":Link/UOM:100","Fill:Float:80", _("Fill UOM") + ":Link/UOM:100", _("Qty") + ":Float:50", _("Balance Qty") + ":Float:100",   _("Voucher #") + ":Data:100",_("Customer/Supplier") + "::130", _("Batch") + ":Link/Batch:210", _("Incoming Rate") + ":Currency:110", _("Valuation Rate") + ":Currency:110", _("Balance Value") + ":Currency:110"]
 
 def get_stock_ledger_entries(filters):
 	return frappe.db.sql("""select concat_ws(" ", posting_date) as date,
