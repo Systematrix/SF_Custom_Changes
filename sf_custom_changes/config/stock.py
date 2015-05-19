@@ -24,6 +24,12 @@ def get_data():
 					"name": "Custom Stock Projected Qty",
 					"doctype": "Item"
 				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Stock Balance by Batch",
+					"doctype": "Stock Ledger Entry"
+				},
 				
 			]
 		},
