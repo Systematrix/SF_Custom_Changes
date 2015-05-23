@@ -19,7 +19,8 @@ def execute(filters=None):
 			for batch in sorted(iwb_map[item][wh]):
 				qty_dict = iwb_map[item][wh][batch]
 				data.append([item, item_map[item]["item_name"],
-					item_map[item]["description"], wh, batch, qty_dict.warehouse_lot,
+					item_map[item]["net_weight"],item_map[item]["weight_uom"],item_map[item]["stock_uom"],
+                                        wh, batch, qty_dict.warehouse_lot,
 					qty_dict.opening_qty, qty_dict.in_qty,
 					qty_dict.out_qty, qty_dict.bal_qty
 				])
@@ -29,10 +30,11 @@ def execute(filters=None):
 def get_columns(filters):
 	"""return columns based on filters"""
 
-	columns = [_("Item") + ":Link/Item:100"] + [_("Item Name") + "::150"] + [_("Description") + "::150"] + \
-	[_("Warehouse") + ":Link/Warehouse:100"] + [_("Batch") + ":Link/Batch:150"] +[_("Wearehous Lot") + ":Data:150"] + \
-        [_("Opening Qty") + "::90"] + \
-	[_("In Qty") + "::80"] + [_("Out Qty") + "::80"] + [_("Balance Qty") + "::90"]
+	columns = [_("Item") + ":Link/Item:100"] + [_("Item Name") + "::150"] + \
+	 [_("Net Weight") + ":Float:80"] +  [_("Fill") + ":Link/UOM:90"] + [_("Stock UOM") + ":Link/UOM:90"] + \
+         [_("Warehouse") + ":Link/Warehouse:100"] + [_("Batch") + ":Link/Batch:150"] +[_("Wearehous Lot") + ":Data:150"] + \
+         [_("Opening Qty") + "::90"] + \
+	 [_("In Qty") + "::80"] + [_("Out Qty") + "::80"] + [_("Balance Qty") + "::90"]
 
 	return columns
 
@@ -88,7 +90,7 @@ def get_item_warehouse_batch_map(filters):
 
 def get_item_details(filters):
 	item_map = {}
-	for d in frappe.db.sql("select name, item_name, description from tabItem", as_dict=1):
+	for d in frappe.db.sql("select name, item_name, net_weight, stock_uom, weight_uom from tabItem", as_dict=1):
 		item_map.setdefault(d.name, d)
 
 	return item_map
