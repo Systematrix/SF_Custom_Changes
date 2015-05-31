@@ -3,6 +3,14 @@
 
 frappe.query_reports["Ledger Clearance Summary With Running Balance"] = {
 	"filters": [
+                 {
+			"fieldname":"company",
+			"label": __("Company"),
+			"fieldtype": "Link",
+			"options": "Company",
+			"default": frappe.defaults.get_user_default("company"),
+			"reqd": 1
+		},
 		{
 			"fieldname":"from_date",
 			"label": __("From Date"),
