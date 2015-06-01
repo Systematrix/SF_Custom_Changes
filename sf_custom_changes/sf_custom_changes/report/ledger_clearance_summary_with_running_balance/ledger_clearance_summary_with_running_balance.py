@@ -55,7 +55,7 @@ def get_gl_entries(filters):
 	gl_entries = frappe.db.sql("""select posting_date, account,
 			sum(ifnull(debit, 0)) as debit, sum(ifnull(credit, 0)) as credit,
 			voucher_type, voucher_no, cost_center, remarks, is_opening, against,
-                        (@rbal:=@rbal-(ifnull(debit, 0))+(ifnull(credit, 0))) as RunningBalance
+                        (@rbal:=@rbal+(ifnull(debit, 0))-(ifnull(credit, 0))) as RunningBalance
 		from `tabGL Entry`
                 JOIN (select @rbal:=0.0) B
 		where company=%(company)s {conditions}
