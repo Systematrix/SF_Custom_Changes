@@ -18,6 +18,13 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
+"","""File Attachments Report""","File Attachments Report","File Data","Yes","Query Report",0,0,1,"SELECT
+    creation as ""Created On::90"",
+    owner as ""Owner::250"",
+    file_name as ""Document Name::250"",
+    attached_to_doctype as ""Attached On::250"",
+    attached_to_name as ""Document Id:Dynamic Link/Attached On:250""
+from `tabFile Data`","","","Core"
 "","""Custom Stock Projected Qty""","Custom Stock Projected Qty","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Stock Balance by Batch""","Stock Balance by Batch","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Ledger Clearance Summary With Running Balance""","Ledger Clearance Summary With Running Balance","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"

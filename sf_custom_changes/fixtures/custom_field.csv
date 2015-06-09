@@ -18,6 +18,9 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Purchase Receipt-prevdoc_docname""","Purchase Receipt","Data","Purchase Contract Load Id","","","Purchase Order","","prevdoc_docname",0,0,0,0,"","",0,"is_purchase_contract",1,0,0,0,0,0
+"","""Purchase Receipt-is_purchase_contract""","Purchase Receipt","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,1,0,"","",0,"",1,0,0,0,0,0
+"","""Purchase Receipt-expected_arrival_date""","Purchase Receipt","Date","Expected Arrival Date","","","","","expected_arrival_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-stock_uom""","Purchase Invoice Item","Link","Stock UOM","","","UOM","","stock_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-weight_uom""","Purchase Invoice Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-net_weight""","Purchase Invoice Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
@@ -79,8 +82,6 @@
 "","""Sales Taxes and Charges-tip2""","Sales Taxes and Charges","Data","","","","","","tip2",0,0,1,0,"","'Enter a percentage - 1.5, 2.5, 10.5'",0,"eval:doc.charge_type==""On Net Total""",1,0,0,0,0,0
 "","""Purchase Order-is_purchase_contract""","Purchase Order","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Purchase Order-due_date""","Purchase Order","Date","Payment Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
-"","""Purchase Receipt-prevdoc_docname""","Purchase Receipt","Data","Purchase Contract Load Id","","","Purchase Order","","prevdoc_docname",0,0,0,0,"","",0,"is_purchase_contract",1,0,0,0,0,0
-"","""Purchase Receipt-is_purchase_contract""","Purchase Receipt","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,1,0,"","",0,"",1,0,0,0,0,0
 "","""Journal Voucher Detail-remark""","Journal Voucher Detail","Data","Remark","","","","","remark",0,0,0,0,"","",0,"",0,0,0,1,0,0
 "","""Purchase Receipt Item-warehouse_lot_id""","Purchase Receipt Item","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",1,0,0,0,1,0
 "","""Delivery Note Item-warehouse_lot_id""","Delivery Note Item","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",1,0,0,0,1,0

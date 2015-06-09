@@ -80,13 +80,11 @@
          <div class=""row"">
             <div class=""col-xs-5 text-right""> <label>From</label> </div>
             <div class=""col-xs-7 "">{{ doc.address_display or '' }}</div>
-        </div>
-         {%- for row in doc.purchase_receipt_details|slice(1) -%}   
+        </div>           
          <div class=""row"">
            <div class=""col-xs-5 text-right""> <label>Expected Arrival Date</label></div>
-           <div class=""col-xs-7 "">{{ row[0].get_formatted(""schedule_date"") or '' }}</div>
+           <div class=""col-xs-7 "">{{ doc.get_formatted(""expected_arrival_date"") or '' }}</div>
         </div>
-        {%- endfor -%}
       </div>
 </div>
 <br>
