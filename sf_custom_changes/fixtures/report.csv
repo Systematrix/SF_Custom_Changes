@@ -20,11 +20,12 @@
 "Start entering data below this line"
 "","""File Attachments Report""","File Attachments Report","File Data","Yes","Query Report",0,0,1,"SELECT
     creation as ""Created On::90"",
-    owner as ""Owner::250"",
+    owner as ""Owner::150"",
     file_name as ""Document Name::250"",
-    attached_to_doctype as ""Attached On::250"",
-    attached_to_name as ""Document Id:Dynamic Link/Attached On:250""
-from `tabFile Data`","","","Core"
+    attached_to_doctype as ""Attached On::200"",
+    attached_to_name as ""Attached To:Dynamic Link/Attached On:150""
+FROM `tabFile Data`
+ORDER BY attached_to_doctype","","","Core"
 "","""Custom Stock Projected Qty""","Custom Stock Projected Qty","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Stock Balance by Batch""","Stock Balance by Batch","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Ledger Clearance Summary With Running Balance""","Ledger Clearance Summary With Running Balance","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
