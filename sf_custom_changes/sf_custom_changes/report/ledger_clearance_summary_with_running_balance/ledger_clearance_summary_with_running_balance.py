@@ -36,8 +36,8 @@ def validate_filters(filters, account_details):
 		frappe.throw(_("From Date must be before To Date"))
 
 def get_columns():
-	return [_("Posting Date") + ":Date:100", _("Account") + ":Link/Account:200", _("Debit") + ":Float:100",
-		_("Credit") + ":Float:100", _("Running Balance") + ":Float:110", _("Voucher Type") + "::120",
+	return [_("Posting Date") + ":Date:100", _("Account") + ":Link/Account:200", _("Debit") + ":Currency:100",
+		_("Credit") + ":Currency:100", _("Running Balance") + ":Currency:110", _("Voucher Type") + "::120",
                 _("Voucher No") + ":Dynamic Link/Voucher Type:160",
 		_("Against Account") + "::120", _("Remarks") + "::400", _("Check Number") + "::100"]
 
