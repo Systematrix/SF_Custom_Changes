@@ -18,17 +18,9 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
-"","""File Attachments Report""","File Attachments Report","File Data","Yes","Query Report",0,0,1,"SELECT
-    creation as ""Created On::90"",
-    owner as ""Owner::150"",
-    file_name as ""Document Name::250"",
-    attached_to_doctype as ""Attached On::200"",
-    attached_to_name as ""Attached To:Dynamic Link/Attached On:150""
-FROM `tabFile Data`
-ORDER BY attached_to_doctype","","","Core"
-"","""Custom Stock Projected Qty""","Custom Stock Projected Qty","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Stock Balance by Batch""","Stock Balance by Batch","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Ledger Clearance Summary With Running Balance""","Ledger Clearance Summary With Running Balance","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
+"","""Custom Stock Projected Qty""","Custom Stock Projected Qty","Item","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Batch-Wise Balance History Report""","Batch-Wise Balance History Report","Stock Ledger Entry","Yes","Script Report",0,1,1,"","","","SF Custom Changes"
 "","""Daily Dispatch""","Daily Dispatch","Delivery Note","Yes","Query Report",1,0,1,"select count(*), posting_date from `tabDelivery Note` group by posting_date;","","","Selling"
 "","""Sales Invoices Open""","Sales Invoices Open","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""],[""Sales Invoice"",""outstanding_amount"",""!="",0]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""posting_date"",""Sales Invoice""],[""docstatus"",""Sales Invoice""],[""po_no"",""Sales Invoice""],[""due_date"",""Sales Invoice""],[""credit_days"",""Sales Invoice""],[""grand_total"",""Sales Invoice""],[""outstanding_amount"",""Sales Invoice""],[""delivery_date"",""Sales Invoice""],[""sales_rep_sm"",""Sales Invoice""],[""_user_tags"",""Sales Invoice""]],""sort_by"":""Sales Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"

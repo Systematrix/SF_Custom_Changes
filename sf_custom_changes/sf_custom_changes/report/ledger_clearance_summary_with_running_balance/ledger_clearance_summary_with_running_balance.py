@@ -39,7 +39,7 @@ def get_columns():
 	return [_("Posting Date") + ":Date:100", _("Account") + ":Link/Account:200", _("Debit") + ":Float:100",
 		_("Credit") + ":Float:100", _("Running Balance") + ":Float:110", _("Voucher Type") + "::120",
                 _("Voucher No") + ":Dynamic Link/Voucher Type:160",
-		_("Against Account") + "::120", _("Remarks") + "::400"]
+		_("Against Account") + "::120", _("Remarks") + "::400", _("Check Number") + "::100"]
 
 def get_result(filters, account_details):
 	gl_entries = get_gl_entries(filters)
@@ -57,7 +57,11 @@ def get_gl_entries(filters):
 	gl_entries = frappe.db.sql("""select posting_date, account,
 			sum(ifnull(debit, 0)) as debit, sum(ifnull(credit, 0)) as credit,
 			voucher_type, voucher_no, cost_center, remarks, is_opening, against,
-                        (@rbal:=@rbal+(ifnull(debit, 0))-(ifnull(credit, 0))) as RunningBalance
+                        (@rbal:=@rbal+(ifnull(debit, 0))-(ifnull(credit, 0))) as RunningBalance,
+                        CASE
+            WHEN 1 =1 then (select cheque_no from `tabJournal Voucher` where name=voucher_no)
+            else " "
+            END AS cheque_no
 		from `tabGL Entry`
                 JOIN (select @rbal:=0.0) B
 		where company=%(company)s {conditions}
@@ -167,6 +171,6 @@ def get_result_as_list(data):
 	for d in data:
 		result.append([d.get("posting_date"), d.get("account"), d.get("debit"),
 			d.get("credit"), d.get("RunningBalance"), d.get("voucher_type"), d.get("voucher_no"),
-			d.get("against"), d.get("remarks")])
+			d.get("against"), d.get("remarks"), d.get("cheque_no")])
 
 	return result
