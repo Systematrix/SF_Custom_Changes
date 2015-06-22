@@ -18,8 +18,59 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
+"","""For USBank"""," For USBank","GL Entry","Yes","Query Report",1,0,1,"select
+`tabGL Entry`.posting_date as ""Posting Date:Date:100"",
+`tabGL Entry`.account as ""Account:200"",
+`tabGL Entry`.debit as ""Debit:100"",
+`tabGL Entry`.credit as ""Credit:100"",
+(@rbal := @rbal - `tabGL Entry`.credit + `tabGL Entry`.debit) as ""Running Total:Float:100"",
+`tabGL Entry`.voucher_type as ""Voucher Type:100"",
+`tabGL Entry`.voucher_no as ""Voucher Number:100"",
+`tabGL Entry`.remarks as ""Remarks:120"",
+`tabGL Entry`.against as ""Against Account:120""
+from
+`tabGL Entry`
+JOIN (select @rbal := 0) B
+where
+`tabGL Entry`.account = ""USBank - SF""
+order by
+`tabGL Entry`.posting_date ASC","","","SF Custom Changes"
+"","""For SquareUP""","For SquareUP","GL Entry","Yes","Query Report",1,0,1,"select
+`tabGL Entry`.posting_date as ""Posting Date:Date:100"",
+`tabGL Entry`.account as ""Account:200"",
+`tabGL Entry`.debit as ""Debit:100"",
+`tabGL Entry`.credit as ""Credit:100"",
+(@rbal := @rbal - `tabGL Entry`.credit + `tabGL Entry`.debit) as ""Running Total:Float:100"",
+`tabGL Entry`.voucher_type as ""Voucher Type:100"",
+`tabGL Entry`.voucher_no as ""Voucher Number:100"",
+`tabGL Entry`.remarks as ""Remarks:120"",
+`tabGL Entry`.against as ""Against Account:120""
+from
+`tabGL Entry`
+JOIN (select @rbal := 0) B
+where
+`tabGL Entry`.account = ""SquareUp - SF""
+order by
+`tabGL Entry`.posting_date ASC
+","","","SF Custom Changes"
+"","""For Wells Fargo""","For Wells Fargo","GL Entry","Yes","Query Report",1,0,1,"select
+`tabGL Entry`.posting_date as ""Posting Date:Date:100"",
+`tabGL Entry`.account as ""Account:200"",
+`tabGL Entry`.debit as ""Debit:100"",
+`tabGL Entry`.credit as ""Credit:100"",
+(@rbal := @rbal - `tabGL Entry`.credit + `tabGL Entry`.debit) as ""Running Total:Float:100"",
+`tabGL Entry`.voucher_type as ""Voucher Type:100"",
+`tabGL Entry`.voucher_no as ""Voucher Number:100"",
+`tabGL Entry`.remarks as ""Remarks:120"",
+`tabGL Entry`.against as ""Against Account:120""
+from
+`tabGL Entry`
+JOIN (select @rbal := 0) B
+where
+`tabGL Entry`.account = ""Wells Fargo Checking - SF""
+order by
+`tabGL Entry`.posting_date ASC","","","SF Custom Changes"
 "","""Stock Balance by Batch""","Stock Balance by Batch","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
-"","""Ledger Clearance Summary With Running Balance""","Ledger Clearance Summary With Running Balance","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Custom Stock Projected Qty""","Custom Stock Projected Qty","Item","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Batch-Wise Balance History Report""","Batch-Wise Balance History Report","Stock Ledger Entry","Yes","Script Report",0,1,1,"","","","SF Custom Changes"
 "","""Daily Dispatch""","Daily Dispatch","Delivery Note","Yes","Query Report",1,0,1,"select count(*), posting_date from `tabDelivery Note` group by posting_date;","","","Selling"

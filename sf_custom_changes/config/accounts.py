@@ -13,11 +13,26 @@ def get_data():
 					"doctype": "Sales Invoice",
                                         "description": _("Sales Commission Report"),
 				},
-                                {
+				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Ledger Clearance Summary With Running Balance",
-					"doctype": "Journal Voucher",
+					"name": "For Wells Fargo",
+					"doctype": "GL Entry",
+                                        "description": _("Running Balance"),
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "For SquareUP",
+					"doctype": "GL Entry",
+                                        "description": _("Running Balance"),
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "For USBank",
+					"doctype": "GL Entry",
+                                        "description": _("Running Balance"),
 				},
 				
 			]

@@ -1,0 +1,18 @@
+{
+ "add_total_row": 1, 
+ "apply_user_permissions": 1, 
+ "creation": "2015-06-22 14:51:50.862776", 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "is_standard": "Yes", 
+ "modified": "2015-06-22 14:52:11.769693", 
+ "modified_by": "Administrator", 
+ "module": "SF Custom Changes", 
+ "name": "For Wells Fargo", 
+ "owner": "Administrator", 
+ "query": "select\n`tabGL Entry`.posting_date as \"Posting Date:Date:100\",\n`tabGL Entry`.account as \"Account:200\",\n`tabGL Entry`.debit as \"Debit:100\",\n`tabGL Entry`.credit as \"Credit:100\",\n(@rbal := @rbal - `tabGL Entry`.credit + `tabGL Entry`.debit) as \"Running Total:Float:100\",\n`tabGL Entry`.voucher_type as \"Voucher Type:100\",\n`tabGL Entry`.voucher_no as \"Voucher Number:100\",\n`tabGL Entry`.remarks as \"Remarks:120\",\n`tabGL Entry`.against as \"Against Account:120\"\nfrom\n`tabGL Entry`\nJOIN (select @rbal := 0) B\nwhere\n`tabGL Entry`.account = \"Wells Fargo Checking - SF\"\norder by\n`tabGL Entry`.posting_date ASC", 
+ "ref_doctype": "GL Entry", 
+ "report_name": "For Wells Fargo", 
+ "report_type": "Query Report"
+}
