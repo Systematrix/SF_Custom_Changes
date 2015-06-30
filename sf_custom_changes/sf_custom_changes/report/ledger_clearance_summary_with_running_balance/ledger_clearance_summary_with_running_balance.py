@@ -39,7 +39,7 @@ def get_columns():
 	return [_("Posting Date") + ":Date:100", _("Account") + ":Link/Account:200", _("Debit") + ":Currency:100",
 		_("Credit") + ":Currency:100", _("Running Balance") + ":Currency:110", _("Voucher Type") + "::120",
                 _("Voucher No") + ":Dynamic Link/Voucher Type:160",
-		_("Against Account") + "::120", _("Remarks") + "::400", _("Check Number") + "::100"]
+		_("Against Account") + "::120", _("Remarks") + "::400", _("Check Number") + "::100",_("RBal") + ":Currency:100"]
 
 def get_result(filters, account_details):
 	gl_entries = get_gl_entries(filters)
@@ -168,9 +168,12 @@ def get_balance_row(label, balance):
 
 def get_result_as_list(data):
 	result = []
+        rb = 0
 	for d in data:
+                if d.get("account")  and d.get("account") != 'Closing (Opening + Totals)' and d.get("account") != 'Totals':
+                        rb = rb+ d.get("debit") - d.get("credit") 
 		result.append([d.get("posting_date"), d.get("account"), d.get("debit"),
 			d.get("credit"), d.get("RunningBalance"), d.get("voucher_type"), d.get("voucher_no"),
-			d.get("against"), d.get("remarks"), d.get("cheque_no")])
+			d.get("against"), d.get("remarks"), d.get("cheque_no"), rb])
 
 	return result
