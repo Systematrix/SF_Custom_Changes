@@ -18,6 +18,7 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Sales Order-credit_days""","Sales Order","Int","Credit Days","","","","","credit_days",0,0,1,0,"","",0,"",1,0,0,0,0,0
 "","""Employee-social_security_number""","Employee","Data","Social Security Number","","","","","social_security_number",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Receipt-expected_arrival_date""","Purchase Receipt","Date","Expected Arrival Date","","","","","expected_arrival_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Journal Voucher-address_name""","Journal Voucher","Link","Address","","","Address","","address_name",0,0,0,0,"","",0,"",1,0,0,0,0,0
@@ -48,7 +49,6 @@
 "","""Delivery Note-sales_rep_sm""","Delivery Note","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note-credit_days""","Delivery Note","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Sales Order-sales_rep_sm""","Sales Order","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Order-credit_days""","Sales Order","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Purchase Receipt-due_date""","Purchase Receipt","Date","Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Purchase Receipt-credit_days""","Purchase Receipt","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Purchase Order-credit_days""","Purchase Order","Int","Payment Terms (Days)","","","","","credit_days",0,0,0,0,"","",0,"",0,0,0,0,0,1

@@ -42,11 +42,11 @@
 
 		<div style=""position: absolute; top: 0.1cm; right: 0.5cm; font-size:14px"">
 			{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
-		<div style=""position: absolute; top: 1.6cm; left: 1.5cm;font-size:14px"">
+		<div style=""position: absolute; top: 2.0cm; left: 1.5cm;font-size:14px"">
 			{{ doc.pay_to_recd_from }}</div>
 		<div style=""position: absolute; top: 3.1cm; left: 1.5cm;font-size:14px"">
 			{{ doc.total_amount_in_words }} <br>
-                        {{ doc.address or '' }}
+                        <div style=""font-size:12px""><br>{{ doc.address or '' }}</div>
                 </div>
 		<div style=""position: absolute; top: 2.0cm; right: 0.5cm; font-size:14px"">
                         {{ '{:20,.2f}'.format(doc.total_debit,'') }}

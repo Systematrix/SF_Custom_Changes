@@ -16,22 +16,8 @@ def get_data():
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "For Wells Fargo",
-					"doctype": "GL Entry",
-                                        "description": _("Running Balance"),
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "For SquareUP",
-					"doctype": "GL Entry",
-                                        "description": _("Running Balance"),
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "For USBank",
-					"doctype": "GL Entry",
+					"name": "Running Balance",
+					"doctype": "Journal Voucher",
                                         "description": _("Running Balance"),
 				},
 				
