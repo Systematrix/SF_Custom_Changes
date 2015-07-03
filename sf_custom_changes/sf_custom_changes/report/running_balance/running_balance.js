@@ -29,6 +29,7 @@ frappe.query_reports["Running Balance"] = {
 			"label": __("Bank Account"),
 			"fieldtype": "Link",
 			"options": "Account",
+                        "default": "Wells Fargo Checking - SF",
 			"get_query": function() {
 				return {
 					"query": "erpnext.controllers.queries.get_account_list", 

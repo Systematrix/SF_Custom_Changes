@@ -20,8 +20,6 @@ def execute(filters=None):
 	return columns, res
 
 def validate_filters(filters, account_details):
-        if not filters.get("account"):
-		msgprint(_("Please select Bank Account"), raise_exception=1)
 	if filters.get("account") and not account_details.get(filters.account):
 		frappe.throw(_("Account {0} does not exists").format(filters.account))
 
