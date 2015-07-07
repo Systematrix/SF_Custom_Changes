@@ -35,6 +35,6 @@ def validate_bill_no(self, method):
 				frappe.throw(_("Supplier Invoice Number must be unique. Current Supplier Invoice Number already exists for {0}").format(comma_and(items)))
 		if self.bill_date:
 				if getdate(self.bill_date) > getdate(self.posting_date):
-					frappe.throw(_("Supplier Invoice Date cannot be after Purchase Order Date"))
+					frappe.throw(_("Supplier Invoice Date cannot be after Purchase Invoice Date"))
 
 
