@@ -22,7 +22,7 @@ def execute(filters=None):
 					item_map[item]["net_weight"],item_map[item]["weight_uom"],item_map[item]["stock_uom"],
                                         wh, batch, qty_dict.warehouse_lot,
 					qty_dict.opening_qty, qty_dict.in_qty,
-					qty_dict.out_qty, qty_dict.bal_qty
+					qty_dict.out_qty, qty_dict.bal_qty, qty_dict.stock_val
 				])
 
 	return columns, data
@@ -34,7 +34,7 @@ def get_columns(filters):
 	 [_("Net Weight") + ":Float:80"] +  [_("Fill") + ":Link/UOM:90"] + [_("Stock UOM") + ":Link/UOM:90"] + \
          [_("Warehouse") + ":Link/Warehouse:100"] + [_("Batch") + ":Link/Batch:150"] +[_("Wearehous Lot") + ":Data:150"] + \
          [_("Opening Qty") + "::90"] + \
-	 [_("In Qty") + "::80"] + [_("Out Qty") + "::80"] + [_("Balance Qty") + "::90"]
+	 [_("In Qty") + "::80"] + [_("Out Qty") + "::80"] + [_("Balance Qty") + "::90"] + [_("Valuation Rate") + ":Currency:100"] 
 
 	return columns
 
@@ -59,8 +59,13 @@ def get_stock_ledger_entries(filters):
                 WHEN batch_no !='' then
                 (select warehouse_lot_id from `tabBatch` where name=batch_no)
                 ELSE " "
-                END AS warehouse_lot
-		from `tabStock Ledger Entry`
+                END AS warehouse_lot,
+		CASE
+                WHEN batch_no !='' then
+                ( select sum(stock_value_difference)/sum(actual_qty) from `tabStock Ledger Entry` b where b.batch_no = c.batch_no  group by 			batch_no)
+                ELSE " "
+                END AS stock_val
+		from `tabStock Ledger Entry` c
 		where docstatus < 2 %s order by item_code, warehouse""" %
 		conditions, as_dict=1)
 
@@ -79,6 +84,7 @@ def get_item_warehouse_batch_map(filters):
 		if d.posting_date < filters["from_date"]:
 			qty_dict.opening_qty += flt(d.actual_qty, float_precision)
 		elif d.posting_date >= filters["from_date"] and d.posting_date <= filters["to_date"]:
+                        qty_dict.stock_val = d.stock_val
 			if flt(d.actual_qty) > 0:
 				qty_dict.in_qty += flt(d.actual_qty, float_precision)
 			else:
