@@ -12,7 +12,9 @@ def execute(filters=None):
 	columns = get_columns(filters)
 	item_map = get_item_details(filters)
 	iwb_map = get_item_warehouse_batch_map(filters)
-
+        total_bal_qty = 0
+        total_val_rate =0
+        total_batch_value = 0
 	data = []
 	for item in sorted(iwb_map):
 		for wh in sorted(iwb_map[item]):
@@ -21,9 +23,16 @@ def execute(filters=None):
 				data.append([item, item_map[item]["item_name"],
 					item_map[item]["net_weight"],item_map[item]["weight_uom"],item_map[item]["stock_uom"],
                                         wh, batch, qty_dict.warehouse_lot,
-					qty_dict.opening_qty, qty_dict.in_qty,
-					qty_dict.out_qty, qty_dict.bal_qty, qty_dict.stock_val
+					qty_dict.bal_qty, qty_dict.stock_val, qty_dict.opening_qty,  qty_dict.in_qty, 
+					qty_dict.out_qty, (flt(qty_dict.stock_val)*flt(qty_dict.bal_qty))
 				])
+                                total_bal_qty +=qty_dict.bal_qty
+                                total_val_rate +=flt(qty_dict.stock_val)
+                                total_batch_value +=(flt(qty_dict.stock_val)*flt(qty_dict.bal_qty))
+                                
+
+	#add total row
+	data.append(['Total','','','','','','','',total_bal_qty,total_val_rate,'','','',total_batch_value])
 
 	return columns, data
 
@@ -32,9 +41,10 @@ def get_columns(filters):
 
 	columns = [_("Item") + ":Link/Item:100"] + [_("Item Name") + "::150"] + \
 	 [_("Net Weight") + ":Float:80"] +  [_("Fill") + ":Link/UOM:90"] + [_("Stock UOM") + ":Link/UOM:90"] + \
-         [_("Warehouse") + ":Link/Warehouse:100"] + [_("Batch") + ":Link/Batch:150"] +[_("Wearehous Lot") + ":Data:150"] + \
-         [_("Opening Qty") + "::90"] + \
-	 [_("In Qty") + "::80"] + [_("Out Qty") + "::80"] + [_("Balance Qty") + "::90"] + [_("Valuation Rate") + ":Currency:100"] 
+         [_("Warehouse") + ":Link/Warehouse:100"] + [_("Batch") + ":Link/Batch:150"] +[_("Warehouse Lot") + ":Data:150"] + \
+         [_("Balance Qty") + "::90"] + [_("Valuation Rate") + ":Currency:100"] + [_("Opening Qty") + "::90"] + \
+	 [_("In Qty") + "::80"] + [_("Out Qty") + "::80"]  + \
+         [_("Batch Value") + ":Currency:100"] 
 
 	return columns
 
@@ -77,7 +87,7 @@ def get_item_warehouse_batch_map(filters):
 	for d in sle:
 		iwb_map.setdefault(d.item_code, {}).setdefault(d.warehouse, {})\
 			.setdefault(d.batch_no, frappe._dict({
-				"opening_qty": 0.0, "in_qty": 0.0, "out_qty": 0.0, "bal_qty": 0.0
+				"opening_qty": 0.0, "in_qty": 0.0, "out_qty": 0.0, "bal_qty": 0.0, "batch_value": 0.0
 			}))
 		qty_dict = iwb_map[d.item_code][d.warehouse][d.batch_no]
                 qty_dict.warehouse_lot = d.warehouse_lot
