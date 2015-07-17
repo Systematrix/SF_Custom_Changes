@@ -23,16 +23,16 @@ def execute(filters=None):
 				data.append([item, item_map[item]["item_name"],
 					item_map[item]["net_weight"],item_map[item]["weight_uom"],item_map[item]["stock_uom"],
                                         wh, batch, qty_dict.warehouse_lot,
-					qty_dict.bal_qty, qty_dict.stock_val, qty_dict.opening_qty,  qty_dict.in_qty, 
-					qty_dict.out_qty, (flt(qty_dict.stock_val)*flt(qty_dict.bal_qty))
+					qty_dict.bal_qty, qty_dict.stock_val, (flt(qty_dict.stock_val)*flt(qty_dict.bal_qty)),
+                                        qty_dict.opening_qty,  qty_dict.in_qty, 
+					qty_dict.out_qty, 
 				])
                                 total_bal_qty +=qty_dict.bal_qty
-                                total_val_rate +=flt(qty_dict.stock_val)
                                 total_batch_value +=(flt(qty_dict.stock_val)*flt(qty_dict.bal_qty))
                                 
 
 	#add total row
-	data.append(['Total','','','','','','','',total_bal_qty,total_val_rate,'','','',total_batch_value])
+	data.append(['Total','','','','','','','',total_bal_qty,'',total_batch_value,'','',''])
 
 	return columns, data
 
@@ -42,9 +42,9 @@ def get_columns(filters):
 	columns = [_("Item") + ":Link/Item:100"] + [_("Item Name") + "::150"] + \
 	 [_("Net Weight") + ":Float:80"] +  [_("Fill") + ":Link/UOM:90"] + [_("Stock UOM") + ":Link/UOM:90"] + \
          [_("Warehouse") + ":Link/Warehouse:100"] + [_("Batch") + ":Link/Batch:150"] +[_("Warehouse Lot") + ":Data:150"] + \
-         [_("Balance Qty") + "::90"] + [_("Valuation Rate") + ":Currency:100"] + [_("Opening Qty") + "::90"] + \
-	 [_("In Qty") + "::80"] + [_("Out Qty") + "::80"]  + \
-         [_("Batch Value") + ":Currency:100"] 
+         [_("Balance Qty") + "::90"] + [_("Valuation Rate") + ":Currency:100"] + [_("Batch Value") + ":Currency:100"] + \
+         [_("Opening Qty") + "::90"] + [_("In Qty") + "::80"] + [_("Out Qty") + "::80"]
+         
 
 	return columns
 
