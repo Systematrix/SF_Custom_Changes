@@ -42,7 +42,7 @@
 			{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
 		<div style=""position: absolute; top: 1.365cm; left: 1.5cm;font-size:14px"">
 			{{ doc.pay_to_recd_from }}</div>
-		<div style=""position: absolute; top: 3.1cm; left: 1.5cm;font-size:14px"">
+		<div style=""position: absolute; top: 2.465cm; left: 1.5cm;font-size:14px"">
 			{{ doc.total_amount_in_words | replace(""USD"", """") | replace(""only."", """") }} <br>
         	<br> {{ doc.address or '' }}
         </div>
@@ -81,7 +81,7 @@
 				</div>  
 		    </div>            
 		</div>
-		<div style=""position: relative; top: 17.5cm; left: 0.5cm;""> 
+		<div style=""position: relative; top: 18.135cm; left: 0.5cm;""> 
 				<div class=""row"">
 				    <div class=""col-xs-4 text-right"">{{ doc.pay_to_recd_from }}</div>
 				    <div class=""col-xs-8 "">{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
