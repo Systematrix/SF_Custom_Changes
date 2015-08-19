@@ -20,6 +20,13 @@ def get_data():
 					"doctype": "Journal Voucher",
                                         "description": _("Running Balance"),
 				},
+                                {
+					"type": "report",
+					"is_query_report": True,
+					"name": "Consolidated Banks Report",
+					"doctype": "Journal Voucher",
+                                        "description": _("Consolidated Banks Report"),
+				},
 				
 			]
 		},

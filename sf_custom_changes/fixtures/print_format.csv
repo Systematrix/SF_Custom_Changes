@@ -50,7 +50,7 @@
                         {%- endif -%}
         	<br> {{ doc.address or '' }}
                 </div>
-		<div style=""position: absolute; top: 1.365cm; right: 0.025cm; font-size:16px"">
+		<div style=""position: absolute; top: 1.365cm; left: 16.1cm; font-size:16px"">
             {{ '{:20,.2f}'.format(doc.total_debit,'') }}
         </div>
 	    <div style=""position: relative; top: 9.0cm; left: 0.5cm;"">

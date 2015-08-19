@@ -18,70 +18,7 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
-"","""For USBank""","For USBank","GL Entry","Yes","Query Report",0,0,1,"select
-`tabGL Entry`.posting_date as ""Posting Date:Date:100"",
-`tabGL Entry`.account as ""Account:200"",
-`tabGL Entry`.debit as ""Debit:Currency:100"",
-`tabGL Entry`.credit as ""Credit:Currency:100"",
-(@rbal := @rbal - `tabGL Entry`.credit + `tabGL Entry`.debit) as ""Running Total:Currency:100"",
-`tabGL Entry`.voucher_type as ""Voucher Type:150"",
-`tabGL Entry`.voucher_no as ""Voucher Number:150"",
-`tabGL Entry`.remarks as ""Remarks:250"",
-`tabGL Entry`.against as ""Against Account:250"",
-CASE
-WHEN 1=1 then (select cheque_no from `tabJournal Voucher` where name=voucher_no)
-else "" ""
-END AS ""Check Number:200""
-from
-`tabGL Entry`
-JOIN (select @rbal := 0) B
-where
-`tabGL Entry`.account = ""USBank - SF""
-order by
-`tabGL Entry`.posting_date ASC","","","SF Custom Changes"
-"","""For SquareUP""","For SquareUP","GL Entry","Yes","Query Report",0,0,1,"select
-`tabGL Entry`.posting_date as ""Posting Date:Date:100"",
-`tabGL Entry`.account as ""Account:200"",
-`tabGL Entry`.debit as ""Debit:Currency:100"",
-`tabGL Entry`.credit as ""Credit:Currency:100"",
-(@rbal := @rbal - `tabGL Entry`.credit + `tabGL Entry`.debit) as ""Running Total:Currency:100"",
-`tabGL Entry`.voucher_type as ""Voucher Type:150"",
-`tabGL Entry`.voucher_no as ""Voucher Number:150"",
-`tabGL Entry`.remarks as ""Remarks:250"",
-`tabGL Entry`.against as ""Against Account:250"",
-CASE
-WHEN 1=1 then (select cheque_no from `tabJournal Voucher` where name=voucher_no)
-else "" ""
-END AS ""Check Number:200""
-from
-`tabGL Entry`
-JOIN (select @rbal := 0) B
-where
-`tabGL Entry`.account = ""SquareUp - SF""
-order by
-`tabGL Entry`.posting_date ASC","","","SF Custom Changes"
-"","""For Wells Fargo""","For Wells Fargo","GL Entry","Yes","Query Report",0,0,1,"select
-`tabGL Entry`.posting_date as ""Posting Date:Date:100"",
-`tabGL Entry`.account as ""Account:200"",
-`tabGL Entry`.debit as ""Debit:Currency:100"",
-`tabGL Entry`.credit as ""Credit:Currency:100"",
-(@rbal := @rbal - `tabGL Entry`.credit + `tabGL Entry`.debit) as ""Running Total:Currency:100"",
-`tabGL Entry`.voucher_type as ""Voucher Type:150"",
-`tabGL Entry`.voucher_no as ""Voucher Number:150"",
-`tabGL Entry`.remarks as ""Remarks:250"",
-`tabGL Entry`.against as ""Against Account:250"",
-CASE
-WHEN 1=1 then (select cheque_no from `tabJournal Voucher` where name=voucher_no)
-else "" ""
-END AS ""Check Number:200""
-from
-`tabGL Entry`
-JOIN (select @rbal := 0) B
-where
-`tabGL Entry`.account = ""Wells Fargo Checking - SF""
-order by
-`tabGL Entry`.posting_date ASC","","","SF Custom Changes"
-"","""Ledger Clearance Summary With Running Balance""","Ledger Clearance Summary With Running Balance","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
+"","""Consolidated Banks Report""","Consolidated Banks Report","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Selling Price (per weight unit)""","Selling Price (per weight unit)","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""],[""Sales Invoice Item"",""item_name"",""!="",""Freight Charge""],[""Sales Invoice Item"",""item_name"",""!="",""Storage Income""]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""item_code"",""Sales Invoice Item""],[""item_name"",""Sales Invoice Item""],[""weight_uom"",""Sales Invoice Item""],[""rate_per_weight_unit"",""Sales Invoice Item""]],""sort_by"":""Sales Invoice Item.item_name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Purchase Price (per weight unit)""","Purchase Price (per weight unit)","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice Item"",""item_name"",""!="",""Auto Expenses""],[""Purchase Invoice Item"",""item_name"",""!="",""Freight Charge""],[""Purchase Invoice Item"",""item_name"",""!="",""Professional Services""],[""Purchase Invoice Item"",""item_name"",""!="",""Processing Charge""],[""Purchase Invoice Item"",""item_name"",""!="",""Warehouse Charge""],[""Purchase Invoice Item"",""item_name"",""!="",""Utilities""],[""Purchase Invoice Item"",""item_name"",""!="",""Storage""]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""item_code"",""Purchase Invoice Item""],[""item_name"",""Purchase Invoice Item""],[""weight_uom"",""Purchase Invoice Item""],[""rate_per_weight_unit"",""Purchase Invoice Item""]],""sort_by"":""Purchase Invoice Item.item_name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Custom Sales Partners Commission""","Custom Sales Partners Commission","Sales Invoice","Yes","Query Report",0,0,1,"SELECT
