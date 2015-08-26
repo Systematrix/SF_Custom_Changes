@@ -15,19 +15,21 @@ def execute(filters=None):
 		item_detail = item_details[sle.item_code]
 
 		data.append([sle.date, sle.item_code, item_detail.item_name,
-			sle.warehouse,
-			item_detail.stock_uom, item_detail.net_weight, item_detail.weight_uom, sle.actual_qty, sle.qty_after_transaction,
-			sle.voucher_no, sle.csname, sle.batch_no, (sle.incoming_rate if sle.actual_qty > 0 else 0.0),
+			sle.warehouse, sle.actual_qty, sle.qty_after_transaction,
+			sle.voucher_no, sle.csname, sle.batch_no, sle.warehouse_lot,item_detail.stock_uom, item_detail.net_weight,
+                        item_detail.weight_uom, (sle.incoming_rate if sle.actual_qty > 0 else 0.0),
 			sle.valuation_rate, sle.stock_value, sle.voucher_type])
 
 	return columns, data
 
 def get_columns():
 	return [_("Date") + ":Date:95", _("Item") + ":Link/Item:130", _("Item Name") + "::100",
-	        _("Warehouse") + ":Link/Warehouse:100",
-		_("Stock UOM") + ":Link/UOM:100","Fill:Float:80", _("Fill UOM") + ":Link/UOM:100", _("Qty") + ":Float:50", 
+	        _("Warehouse") + ":Link/Warehouse:100", _("Qty") + ":Float:50", 
                 _("Balance Qty") + ":Float:100",   _("Voucher #") + ":Dynamic Link/Voucher Type:100",_("Customer/Supplier") + "::130", 
-                _("Batch") + ":Link/Batch:210", _("Incoming Rate") + ":Currency:110", _("Valuation Rate") + ":Currency:110", 
+                _("Batch") + ":Link/Batch:210",_("Warehouse Lot#") + ":Data:150", 
+                _("Stock UOM") + ":Link/UOM:100","Fill:Float:80", _("Fill UOM") + ":Link/UOM:100",
+                _("Incoming Rate") + ":Currency:110", 
+                _("Valuation Rate") + ":Currency:110", 
                 _("Balance Value") + ":Currency:110",_("Voucher Type") + "::110"]
 
 def get_stock_ledger_entries(filters):
@@ -38,6 +40,11 @@ def get_stock_ledger_entries(filters):
             WHEN voucher_type = "Delivery Note" then (select customer_name from `tabDelivery Note` where name=voucher_no)
             else " "
             END AS csname, 
+                         CASE
+                WHEN batch_no !='' then
+                (select warehouse_lot_id from `tabBatch` where name=batch_no)
+                ELSE " "
+                END AS warehouse_lot,
                          incoming_rate, valuation_rate, stock_value
 		from `tabStock Ledger Entry`
 		where company = %(company)s and

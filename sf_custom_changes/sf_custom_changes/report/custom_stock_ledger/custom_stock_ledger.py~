@@ -34,8 +34,8 @@ def get_stock_ledger_entries(filters):
 	return frappe.db.sql("""select concat_ws(" ", posting_date) as date,
 			item_code, warehouse, actual_qty, qty_after_transaction, voucher_type, voucher_no, batch_no, serial_no, company, 
 			CASE
-            WHEN voucher_type = "Purchase Receipt" then (select supplier_name from `tabPurchase Receipt` where name=voucher_no) as cs
-            WHEN voucher_type = "Delivery Note" then (select customer_name from `tabDelivery Note` where name=voucher_no) as ps
+            WHEN voucher_type = "Purchase Receipt" then (select supplier_name from `tabPurchase Receipt` where name=voucher_no)
+            WHEN voucher_type = "Delivery Note" then (select customer_name from `tabDelivery Note` where name=voucher_no)
             else " "
             END AS csname, 
                          incoming_rate, valuation_rate, stock_value
