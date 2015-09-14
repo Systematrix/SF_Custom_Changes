@@ -15,7 +15,7 @@ frappe.query_reports["Consolidated Banks Report"] = {
 			"fieldname":"from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
-			"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
+			"default": frappe.defaults.get_user_default("year_start_date"),
 			"width": "80"
 		},
 		{
