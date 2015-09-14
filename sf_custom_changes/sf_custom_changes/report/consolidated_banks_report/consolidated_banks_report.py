@@ -61,6 +61,7 @@ def get_gl_entries(filters):
             END AS cheque_no
 		from `tabGL Entry`
 		where company=%(company)s  and account IN ('Wells Fargo Checking - SF', 'USBank - SF', 'SquareUp - SF')
+                {conditions}
 		{group_by_condition}
 		order by posting_date, account"""\
 		.format(conditions=get_conditions(filters), group_by_condition=group_by_condition),
