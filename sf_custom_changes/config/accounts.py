@@ -16,9 +16,9 @@ def get_data():
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Running Balance",
+					"name": "Check Register",
 					"doctype": "Journal Voucher",
-                                        "description": _("Running Balance"),
+                                        "description": _("Check Register"),
 				},
                                 {
 					"type": "report",
