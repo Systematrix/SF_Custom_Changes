@@ -21,6 +21,12 @@ def get_data():
 				{
 					"type": "report",
 					"is_query_report": True,
+					"name": "Custom Stock Balance - Concise",
+					"doctype": "Warehouse"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
 					"name": "Custom Stock Projected Qty",
 					"doctype": "Item"
 				},

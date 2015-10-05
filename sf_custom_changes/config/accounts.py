@@ -27,6 +27,18 @@ def get_data():
 					"doctype": "Journal Voucher",
                                         "description": _("Consolidated Banks Report"),
 				},
+				{
+					"type": "report",
+					"name": "Accounts Receivable - Concise",
+					"doctype": "Sales Invoice",
+					"is_query_report": True
+				},
+				{
+					"type": "report",
+					"name": "Accounts Payable - Concise",
+					"doctype": "Purchase Invoice",
+					"is_query_report": True
+				},
 				
 			]
 		},
