@@ -46,25 +46,30 @@
 	{%- from ""templates/print_formats/standard_macros.html"" import add_header -%}
 	<div class=""page-break"">
 		<div style=""position: absolute; top: 0.1cm; right: 0.5cm; font-size:18px"">
-			{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
+			{{ frappe.utils.formatdate(doc.cheque_date) }}
+		</div>
 		<div style=""position: absolute; top: 1.365cm; left: 1.5cm;font-size:18px"">
-			{{ doc.pay_to_recd_from }}</div>
+			{{ doc.pay_to_recd_from }}
+		</div>
 		<div style=""position: absolute; top: 2.465cm; left: 1.5cm;font-size:18px"">
                         {%- if doc.total_debit|round == doc.total_debit -%}
 			   {{ doc.total_amount_in_words | replace(""USD"", """") | replace(""only."", """") }} and no cents** <br>
                           {% else %}
                            {{ doc.total_amount_in_words | replace(""USD"", """") | replace(""only."", """") }}**<br>
                         {%- endif -%}
-        	<br> {{ doc.address or '' }}
+        	<br>
+        	<div style=""font-size:16px""> {{ doc.address or '' }}
+        	</div>
                 <br> {{ doc.user_remark or '' }}
-                </div>
-		<div style=""position: absolute; top: 1.395cm; left: 16.7cm; font-size:18px;"">**{{ frappe.utils.cstr(doc.total_amount) | replace(""$ "", """") | replace(""₹"", """") | replace("" "", """")}}</div>
-	    <div style=""position: relative; top: 9.0cm; left: 0.5cm;"">
+        </div>
+		<div style=""position: absolute; top: 1.795cm; left: 17.7cm; font-size:18px;"">**{{ frappe.utils.cstr(doc.total_amount) | replace(""$ "", """") | replace(""₹"", """") | replace("" "", """")}}
+		</div>
+	    <div style=""position: relative; top: 9.0cm; left: 0.5cm; width:100%;"">
 			<div class=""row"">
 			    <div class=""col-xs-4 text-right"">{{ doc.pay_to_recd_from }}</div>
 			    <div class=""col-xs-8 "">{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
 			</div>
-			<div class=""row"" style=""position: absolute; left: 1.5cm; width: 17cm;"">
+			<div class=""row"" style=""position: absolute; left: 0.1cm; width: 98%;"">
 				<table class=""table table-condensed table-hover"">
 				<tbody>	
 					<tr>
@@ -121,7 +126,7 @@
 				    <div class=""col-xs-4 "">{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
                                     <div class=""col-xs-4 "">{{ doc.name }}</div>
 				</div>
-			<div class=""row"" style=""position: absolute; left: 1.5cm; width: 17cm;"">
+			<div class=""row"" style=""position: absolute; left: 0.1cm; width: 98%;"">
 				<table class=""table table-condensed table-hover"">
 				<tbody>	
 					<tr>
