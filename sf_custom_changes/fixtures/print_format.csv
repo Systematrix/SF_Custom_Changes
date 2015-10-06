@@ -59,10 +59,10 @@
                         {%- endif -%}
         	<br>
         	<div style=""font-size:16px""> {{ doc.address or '' }}
-        	</div>
                 <br> {{ doc.user_remark or '' }}
+            </div>
         </div>
-		<div style=""position: absolute; top: 1.795cm; left: 17.7cm; font-size:18px;"">**{{ frappe.utils.cstr(doc.total_amount) | replace(""$ "", """") | replace(""₹"", """") | replace("" "", """")}}
+		<div style=""position: absolute; top: 1.995cm; left: 17cm; font-size:18px;"">**{{ frappe.utils.cstr(doc.total_amount) | replace(""$ "", """") | replace(""₹"", """") | replace("" "", """")}}
 		</div>
 	    <div style=""position: relative; top: 9.0cm; left: 0.5cm; width:100%;"">
 			<div class=""row"">
