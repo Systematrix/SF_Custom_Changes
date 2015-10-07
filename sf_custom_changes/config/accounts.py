@@ -29,6 +29,20 @@ def get_data():
 				},
 				{
 					"type": "report",
+					"is_query_report": True,
+					"name": "Sales Invoice Custom Report",
+					"doctype": "Sales Invoice",
+                                        "description": _("Custom Report"),
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Purchase Invoice Custom Report",
+					"doctype": "Purchase Invoice",
+                                        "description": _("Custom Report"),
+				},
+				{
+					"type": "report",
 					"name": "Accounts Receivable - Concise",
 					"doctype": "Sales Invoice",
 					"is_query_report": True

@@ -18,6 +18,8 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
+"","""Purchase Invoice Custom Report""","Purchase Invoice Custom Report","Purchase Invoice","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
+"","""Sales Invoice Custom Report""","Sales Invoice Custom Report","Sales Invoice","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Custom Stock Balance - Concise""","Custom Stock Balance - Concise","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Accounts Receivable - Concise""","Accounts Receivable - Concise","Sales Invoice","Yes","Script Report",1,0,1,"","","","SF Custom Changes"
 "","""Accounts Payable - Concise""","Accounts Payable - Concise","Purchase Invoice","Yes","Script Report",1,0,1,"","","","SF Custom Changes"
