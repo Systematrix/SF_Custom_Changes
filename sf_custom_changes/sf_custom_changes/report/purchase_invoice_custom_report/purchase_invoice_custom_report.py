@@ -24,6 +24,7 @@ def get_conditions(filters):
 	conditions = ""
 	if filters.get("from_date"): conditions += " posting_date>=%(from_date)s"
 	if filters.get("to_date"): conditions += " and posting_date<=%(to_date)s"
+	if filters.get("supplier"): conditions += " and supplier=%(supplier)s"
 	
 	return conditions
 	

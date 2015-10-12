@@ -16,5 +16,11 @@ frappe.query_reports["Purchase Invoice Custom Report"] = {
 			"fieldtype": "Date",
 			"default": get_today()
 		},
+		{
+			"fieldname":"supplier",
+			"label": __("Supplier"),
+			"fieldtype": "Link",
+			"options": "Supplier"
+		},
 	]
 }
