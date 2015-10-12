@@ -45,13 +45,15 @@ def get_data():
 					"type": "report",
 					"name": "Accounts Receivable - Concise",
 					"doctype": "Sales Invoice",
-					"is_query_report": True
+					"is_query_report": True,
+                                        "description": _("Concise Report"),
 				},
 				{
 					"type": "report",
 					"name": "Accounts Payable - Concise",
 					"doctype": "Purchase Invoice",
-					"is_query_report": True
+					"is_query_report": True,
+                                        "description": _("Concise Report"),
 				},
 				
 			]
