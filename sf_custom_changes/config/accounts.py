@@ -58,4 +58,15 @@ def get_data():
 				
 			]
 		},
+                {
+			"label": _("Tools"),
+			"icon": "icon-wrench",
+			"items": [
+				{
+					"type": "doctype",
+					"name": "Custom Bank Reconciliation",
+					"description": _("Update bank payment dates with journals.")
+				},
+			]
+		},
 	]
