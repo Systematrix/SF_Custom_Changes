@@ -55,6 +55,13 @@ def get_data():
 					"is_query_report": True,
                                         "description": _("Concise Report"),
 				},
+			        {
+					"type": "report",
+					"name": "Custom Payment Period Based On Invoice Date",
+					"doctype": "Journal Voucher",
+					"is_query_report": True,
+                                        "description": _("Custom Report"),
+				},
 				
 			]
 		},
