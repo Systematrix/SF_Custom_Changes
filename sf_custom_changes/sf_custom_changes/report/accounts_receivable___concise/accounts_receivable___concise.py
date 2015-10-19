@@ -21,10 +21,12 @@ class AccountsReceivableReport(object):
 	def get_columns(self, customer_naming_by):
 		columns = [
 			_("Posting Date") + ":Date:100", _("Account") + ":Link/Account:150",
-			_("Voucher No") + ":Dynamic Link/Voucher Type:120",
+			_("Voucher Type") + "::110", _("Voucher No") + ":Dynamic Link/Voucher Type:120",
 			_("Due Date") + ":Date:80",
 			_("Invoiced Amount") + ":Currency:130", _("Paid Amount") + ":Currency:130",
-			_("Outstanding Amount") + ":Currency:138"
+			_("Outstanding Amount") + ":Currency:138", _("Age") + ":Int:50", "0-30:Currency:100",
+			"30-60:Currency:100", "60-90:Currency:100", _("90-Above") + ":Currency:100",
+			_("Customer") + ":Link/Customer:150"
 		]
 
 		if customer_naming_by == "Naming Series":
@@ -46,7 +48,7 @@ class AccountsReceivableReport(object):
 					invoiced_amount = gle.debit if (gle.debit > 0) else 0
 					payment_received = invoiced_amount - outstanding_amount
 					row = [gle.posting_date, gle.account,
-						gle.voucher_no, due_date,
+						gle.voucher_type,gle.voucher_no, due_date,
 						invoiced_amount, payment_received,
 						outstanding_amount]
 					entry_date = due_date if self.filters.ageing_based_on == "Due Date" \
