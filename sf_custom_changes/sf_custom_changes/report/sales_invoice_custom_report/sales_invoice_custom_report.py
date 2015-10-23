@@ -29,5 +29,5 @@ def get_conditions(filters):
 	
 def get_entries(filters):
 	conditions = get_conditions(filters)
-	entries =  frappe.db.sql("""select name, customer_name, po_no, grand_total_export, due_date, sp_outstanding_amount, credit_days from `tabSales Invoice` where  %s and docstatus!=2 order by name DESC""" % conditions, filters, as_list=1)
+	entries =  frappe.db.sql("""select name, customer_name, po_no, grand_total_export, due_date, outstanding_amount, credit_days from `tabSales Invoice` where  %s and docstatus!=2 order by name DESC""" % conditions, filters, as_list=1)
 	return entries
