@@ -14,7 +14,7 @@ def execute(filters=None):
 	return columns, data
 	
 def get_columns():
-	return [_("ID") + ":Link/Sales Invoice:140", _("Supplier Name") + ":Link/Supplier:140", _("Supplier Invoice No") +  ":Data:130",
+	return [_("ID") + ":Link/Purchase Invoice:140", _("Supplier Name") + ":Link/Supplier:140", _("Supplier Invoice No") +  ":Data:130",
                 _("Supplier Invoice Date") +  ":Date:140", _("Grand Total") +  ":Currency:100", _("Due Date") +  ":Date:100", 
                 _("Outstanding Amount") +  ":Currency:120",
                 _("Credit Days") +  ":Data:100"
