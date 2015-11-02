@@ -18,93 +18,92 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
-"","""Sales Invoice-sp_outstanding_amount""","Sales Invoice","Currency","Outstanding Amount","","","currency","","sp_outstanding_amount",0,0,1,0,"71","",1,"",1,0,1,0,0,0
-"","""Sales Invoice-payment_details""","Sales Invoice","Link","Commission Payment JV","","","Journal Voucher","","payment_details",0,0,0,0,"","",0,"",0,0,1,0,0,0
-"","""Sales Invoice-payments_made""","Sales Invoice","Currency","Commission Amount Paid","","","currency","","payments_made",0,0,0,0,"93","0",0,"",1,0,1,0,0,0
-"","""Sales Invoice-tracking_code""","Sales Invoice","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-shipping_terms""","Sales Invoice","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-terms_and_conditions""","Sales Invoice","Text Editor","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Lead-supplier""","Lead","Link","From Supplier","","","Supplier","","supplier",0,0,0,0,"","",0,"eval:doc.source == 'Supplier'",0,0,0,0,0,0
-"","""Purchase Order-communications""","Purchase Order","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
-"","""Purchase Order-communication_history""","Purchase Order","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Sales Invoice-sales_rep_sm""","Sales Invoice","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"72","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-communications""","Sales Invoice","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
-"","""Sales Invoice-communication_history""","Sales Invoice","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Employee-social_security_number""","Employee","Data","Social Security Number","","","","","social_security_number",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Receipt-expected_arrival_date""","Purchase Receipt","Date","Expected Arrival Date","","","","","expected_arrival_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Stock Entry Detail-warehouse_lot_id""","Stock Entry Detail","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-delivery_date""","Sales Invoice","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"81","",1,"",1,0,0,1,0,0
-"","""Sales Invoice-po_no""","Sales Invoice","Data","PO No","","","","","po_no",0,0,0,0,"82","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-lr_date""","Sales Invoice","Date","Ship Date (DN)","","","","","lr_date",0,0,1,0,"","",0,"",1,0,0,0,0,0
-"","""Sales Invoice-credit_days""","Sales Invoice","Int","Credit Days","","","customer.credit_days","","credit_days",0,0,0,0,"58","",0,"",1,0,0,0,0,0
-"","""Purchase Receipt Item-weight_uom""","Purchase Receipt Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Receipt Item-net_weight""","Purchase Receipt Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"eval:doc.uom==doc.stock_uom",0,0,0,0,0,0
-"","""Purchase Receipt Item-rate_per_weight_unit""","Purchase Receipt Item","Currency","Rate per Weight Unit","","3","","","rate_per_weight_unit",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Receipt Item-quantity_in_weight""","Purchase Receipt Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Order Item-weight_uom""","Purchase Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Order Item-net_weight""","Purchase Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Order Item-rate_per_weight_unit""","Purchase Order Item","Currency","Rate per Weight Unit","","3","","","rate_per_weight_unit",0,1,0,0,"81","",0,"",0,0,0,0,0,0
-"","""Purchase Order Item-quantity_in_weight""","Purchase Order Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note-delivery_date""","Delivery Note","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"160px","",1,"",1,0,0,1,0,0
-"","""Sales Order-sales_rep_sm""","Sales Order","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Invoice-credit_days""","Purchase Invoice","Int","Credit Days","","","supplier.credit_days","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Warehouse-fax_number""","Warehouse","Data","Fax Number","","","","","fax_number",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Warehouse-contact_name""","Warehouse","Data","Contact Name","","","","","contact_name",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Quotation Item-rate_per_weight_unit""","Quotation Item","Currency","Rate per Weight Unit","","3","","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Quotation Item-quantity_in_weight""","Quotation Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Quotation Item-weight_uom""","Quotation Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Quotation Item-net_weight""","Quotation Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Order Item-quantity_in_weight""","Sales Order Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Order Item-net_weight""","Sales Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Order Item-weight_uom""","Sales Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Invoice Item-quantity_in_weight""","Purchase Invoice Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Invoice Item-net_weight""","Purchase Invoice Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Invoice Item-weight_uom""","Purchase Invoice Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Invoice Item-stock_uom""","Purchase Invoice Item","Link","Stock UOM","","","UOM","","stock_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Order Item-rate_per_weight_unit""","Sales Order Item","Currency","Rate per Weight Unit","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Invoice Item-rate_per_weight_unit""","Purchase Invoice Item","Currency","Rate per Weight Unit","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice Item-quantity_in_weight""","Sales Invoice Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",1,0,0,0,0,0
-"","""Sales Invoice Item-rate_per_weight_unit""","Sales Invoice Item","Currency","Rate per Weight Unit ($)","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",1,0,0,0,0,0
-"","""Sales Invoice Item-net_weight""","Sales Invoice Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice Item-weight_uom""","Sales Invoice Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Batch-warehouse_lot_id""","Batch","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note Item-quantity_in_weight""","Delivery Note Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note Item-rate_per_weight_unit""","Delivery Note Item","Currency","Rate per Weight Unit","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note Item-net_weight""","Delivery Note Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note Item-weight_uom""","Delivery Note Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Taxes and Charges-tip""","Sales Taxes and Charges","Data","","","","","","tip",0,0,1,0,"","'Enter a $ amount - 10, 50 100'",0,"eval:doc.charge_type==""Actual""",1,0,0,0,0,0
-"","""Purchase Taxes and Charges-tip""","Purchase Taxes and Charges","Data","","","","","","tip",0,0,1,0,"","'Enter a $ amount - 10, 50 100'",0,"eval:doc.charge_type==""Actual""",1,0,0,0,0,0
-"","""Purchase Taxes and Charges-tip2""","Purchase Taxes and Charges","Data","","","","","","tip2",0,0,1,0,"","'Enter a percentage - 1.5, 2.5, 10.5'",0,"eval:doc.charge_type==""On Net Total""",1,0,0,0,0,0
-"","""Sales Taxes and Charges-tip2""","Sales Taxes and Charges","Data","","","","","","tip2",0,0,1,0,"","'Enter a percentage - 1.5, 2.5, 10.5'",0,"eval:doc.charge_type==""On Net Total""",1,0,0,0,0,0
-"","""Journal Voucher Detail-remark""","Journal Voucher Detail","Data","Remark","","","","","remark",0,0,0,0,"","",0,"",0,0,0,1,0,0
-"","""Purchase Receipt Item-warehouse_lot_id""","Purchase Receipt Item","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",1,0,0,0,1,0
-"","""Delivery Note Item-warehouse_lot_id""","Delivery Note Item","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",1,0,0,0,1,0
-"","""Stock Entry-trucker_name""","Stock Entry","Data","Trucker Name","","","","","trucker_name",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0
-"","""Stock Entry-expected_ship_date""","Stock Entry","Date","Expected Ship Date","","","","","expected_ship_date",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0
-"","""Supplier-supplier_code""","Supplier","Data","Supplier Code","","","","","supplier_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice Item-batch_copy""","Sales Invoice Item","Data","Product Code","","","","","batch_copy",0,0,0,0,"","",0,"",0,0,0,0,1,0
-"","""Sales Order-credit_days""","Sales Order","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Stock Entry-terms_and_conditions""","Stock Entry","Section Break","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Stock Entry-terms""","Stock Entry","Link","Terms","","","Terms and Conditions","","terms",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Stock Entry-terms_and_conditions_details""","Stock Entry","Text Editor","Terms and Conditions Details","","","","","terms_and_conditions_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note-credit_days""","Delivery Note","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",1,0,0,0,0,0
-"","""Delivery Note-sales_rep_sm""","Delivery Note","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note-shipping_terms""","Delivery Note","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note-tracking_code""","Delivery Note","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note-communication_history""","Delivery Note","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Delivery Note-communication_html""","Delivery Note","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
-"","""Delivery Note-communications""","Delivery Note","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
-"","""Sales Invoice-communication_html""","Sales Invoice","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
-"","""Purchase Order-credit_days""","Purchase Order","Int","Payment Terms (Days)","","","","","credit_days",0,0,0,0,"","",0,"",0,0,0,0,0,1
-"","""Purchase Order-is_purchase_contract""","Purchase Order","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Purchase Order-due_date""","Purchase Order","Date","Payment Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
-"","""Purchase Order-communication_html""","Purchase Order","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,1,0,0,0
-"","""Purchase Receipt-credit_days""","Purchase Receipt","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",0,0,0,0,0,0
-"","""Purchase Receipt-due_date""","Purchase Receipt","Date","Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
-"","""Purchase Receipt-is_purchase_contract""","Purchase Receipt","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,1,0,"","",0,"",1,0,0,0,0,0
-"","""Purchase Receipt-prevdoc_docname""","Purchase Receipt","Data","Purchase Contract Load Id","","","Purchase Order","","prevdoc_docname",0,0,0,0,"","",0,"is_purchase_contract",1,0,0,0,0,0
-"","""Purchase Receipt-communication_history""","Purchase Receipt","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Purchase Receipt-communication_html""","Purchase Receipt","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
 "","""Purchase Receipt-communications""","Purchase Receipt","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
-"","""Journal Voucher-address_name""","Journal Voucher","Link","Address for Check Print","","","Address","","address_name",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Purchase Receipt-communication_html""","Purchase Receipt","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
+"","""Purchase Receipt-communication_history""","Purchase Receipt","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Purchase Receipt-prevdoc_docname""","Purchase Receipt","Data","Purchase Contract Load Id","","","Purchase Order","","prevdoc_docname",0,0,0,0,"","",0,"is_purchase_contract",1,0,0,0,0,0
+"","""Purchase Receipt-is_purchase_contract""","Purchase Receipt","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,1,0,"","",0,"",1,0,0,0,0,0
 "","""Journal Voucher-address""","Journal Voucher","Small Text","Address","","","","","address",0,0,0,0,"","",1,"",1,0,0,0,0,0
+"","""Journal Voucher-address_name""","Journal Voucher","Link","Address for Check Print","","","Address","","address_name",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Purchase Receipt-due_date""","Purchase Receipt","Date","Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
+"","""Purchase Receipt-credit_days""","Purchase Receipt","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",0,0,0,0,0,0
+"","""Purchase Order-communication_html""","Purchase Order","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,1,0,0,0
+"","""Purchase Order-due_date""","Purchase Order","Date","Payment Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
+"","""Purchase Order-is_purchase_contract""","Purchase Order","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Purchase Order-credit_days""","Purchase Order","Int","Payment Terms (Days)","","","","","credit_days",0,0,0,0,"","",0,"",0,0,0,0,0,1
+"","""Sales Invoice-communication_html""","Sales Invoice","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
+"","""Delivery Note-communications""","Delivery Note","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
+"","""Delivery Note-communication_html""","Delivery Note","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
+"","""Delivery Note-communication_history""","Delivery Note","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Delivery Note-tracking_code""","Delivery Note","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Delivery Note-shipping_terms""","Delivery Note","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Delivery Note-sales_rep_sm""","Delivery Note","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Delivery Note-credit_days""","Delivery Note","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",1,0,0,0,0,0
+"","""Stock Entry-terms_and_conditions_details""","Stock Entry","Text Editor","Terms and Conditions Details","","","","","terms_and_conditions_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-terms""","Stock Entry","Link","Terms","","","Terms and Conditions","","terms",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Stock Entry-terms_and_conditions""","Stock Entry","Section Break","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Order-credit_days""","Sales Order","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Sales Invoice Item-batch_copy""","Sales Invoice Item","Data","Product Code","","","","","batch_copy",0,0,0,0,"","",0,"",0,0,0,0,1,0
+"","""Supplier-supplier_code""","Supplier","Data","Supplier Code","","","","","supplier_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-expected_ship_date""","Stock Entry","Date","Expected Ship Date","","","","","expected_ship_date",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0
+"","""Stock Entry-trucker_name""","Stock Entry","Data","Trucker Name","","","","","trucker_name",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0
+"","""Delivery Note Item-warehouse_lot_id""","Delivery Note Item","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",1,0,0,0,1,0
+"","""Purchase Receipt Item-warehouse_lot_id""","Purchase Receipt Item","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",1,0,0,0,1,0
+"","""Journal Voucher Detail-remark""","Journal Voucher Detail","Data","Remark","","","","","remark",0,0,0,0,"","",0,"",0,0,0,1,0,0
+"","""Sales Taxes and Charges-tip2""","Sales Taxes and Charges","Data","","","","","","tip2",0,0,1,0,"","'Enter a percentage - 1.5, 2.5, 10.5'",0,"eval:doc.charge_type==""On Net Total""",1,0,0,0,0,0
+"","""Purchase Taxes and Charges-tip2""","Purchase Taxes and Charges","Data","","","","","","tip2",0,0,1,0,"","'Enter a percentage - 1.5, 2.5, 10.5'",0,"eval:doc.charge_type==""On Net Total""",1,0,0,0,0,0
+"","""Purchase Taxes and Charges-tip""","Purchase Taxes and Charges","Data","","","","","","tip",0,0,1,0,"","'Enter a $ amount - 10, 50 100'",0,"eval:doc.charge_type==""Actual""",1,0,0,0,0,0
+"","""Sales Taxes and Charges-tip""","Sales Taxes and Charges","Data","","","","","","tip",0,0,1,0,"","'Enter a $ amount - 10, 50 100'",0,"eval:doc.charge_type==""Actual""",1,0,0,0,0,0
+"","""Delivery Note Item-weight_uom""","Delivery Note Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Delivery Note Item-net_weight""","Delivery Note Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Delivery Note Item-rate_per_weight_unit""","Delivery Note Item","Currency","Rate per Weight Unit","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Delivery Note Item-quantity_in_weight""","Delivery Note Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Batch-warehouse_lot_id""","Batch","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice Item-weight_uom""","Sales Invoice Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice Item-net_weight""","Sales Invoice Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice Item-rate_per_weight_unit""","Sales Invoice Item","Currency","Rate per Weight Unit ($)","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",1,0,0,0,0,0
+"","""Sales Invoice Item-quantity_in_weight""","Sales Invoice Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",1,0,0,0,0,0
+"","""Purchase Invoice Item-rate_per_weight_unit""","Purchase Invoice Item","Currency","Rate per Weight Unit","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Order Item-rate_per_weight_unit""","Sales Order Item","Currency","Rate per Weight Unit","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Invoice Item-stock_uom""","Purchase Invoice Item","Link","Stock UOM","","","UOM","","stock_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Invoice Item-weight_uom""","Purchase Invoice Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Invoice Item-net_weight""","Purchase Invoice Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Invoice Item-quantity_in_weight""","Purchase Invoice Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Order Item-weight_uom""","Sales Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Order Item-net_weight""","Sales Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Order Item-quantity_in_weight""","Sales Order Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Quotation Item-net_weight""","Quotation Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Quotation Item-weight_uom""","Quotation Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Quotation Item-quantity_in_weight""","Quotation Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Quotation Item-rate_per_weight_unit""","Quotation Item","Currency","Rate per Weight Unit","","3","","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Warehouse-contact_name""","Warehouse","Data","Contact Name","","","","","contact_name",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Warehouse-fax_number""","Warehouse","Data","Fax Number","","","","","fax_number",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Invoice-credit_days""","Purchase Invoice","Int","Credit Days","","","supplier.credit_days","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Sales Order-sales_rep_sm""","Sales Order","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Delivery Note-delivery_date""","Delivery Note","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"160px","",1,"",1,0,0,1,0,0
+"","""Purchase Order Item-quantity_in_weight""","Purchase Order Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Order Item-rate_per_weight_unit""","Purchase Order Item","Currency","Rate per Weight Unit","","3","","","rate_per_weight_unit",0,1,0,0,"81","",0,"",0,0,0,0,0,0
+"","""Purchase Order Item-net_weight""","Purchase Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Order Item-weight_uom""","Purchase Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Receipt Item-quantity_in_weight""","Purchase Receipt Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Receipt Item-rate_per_weight_unit""","Purchase Receipt Item","Currency","Rate per Weight Unit","","3","","","rate_per_weight_unit",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Receipt Item-net_weight""","Purchase Receipt Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"eval:doc.uom==doc.stock_uom",0,0,0,0,0,0
+"","""Purchase Receipt Item-weight_uom""","Purchase Receipt Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-credit_days""","Sales Invoice","Int","Credit Days","","","customer.credit_days","","credit_days",0,0,0,0,"58","",0,"",1,0,0,0,0,0
+"","""Sales Invoice-lr_date""","Sales Invoice","Date","Ship Date (DN)","","","","","lr_date",0,0,1,0,"","",0,"",1,0,0,0,0,0
+"","""Sales Invoice-po_no""","Sales Invoice","Data","PO No","","","","","po_no",0,0,0,0,"82","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-delivery_date""","Sales Invoice","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"81","",1,"",1,0,0,1,0,0
+"","""Stock Entry Detail-warehouse_lot_id""","Stock Entry Detail","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Employee-social_security_number""","Employee","Data","Social Security Number","","","","","social_security_number",0,1,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-communication_history""","Sales Invoice","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Sales Invoice-communications""","Sales Invoice","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
+"","""Sales Invoice-sales_rep_sm""","Sales Invoice","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"72","",0,"",0,0,0,0,0,0
+"","""Purchase Order-communication_history""","Purchase Order","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Purchase Order-communications""","Purchase Order","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
+"","""Lead-supplier""","Lead","Link","From Supplier","","","Supplier","","supplier",0,0,0,0,"","",0,"eval:doc.source == 'Supplier'",0,0,0,0,0,0
+"","""Sales Invoice-terms_and_conditions""","Sales Invoice","Text Editor","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-shipping_terms""","Sales Invoice","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-tracking_code""","Sales Invoice","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-payments_made""","Sales Invoice","Currency","Commission Amount Paid","","","currency","","payments_made",0,0,0,0,"93","0",0,"",1,0,1,0,0,0
+"","""Sales Invoice-payment_details""","Sales Invoice","Link","Commission Payment JV","","","Journal Voucher","","payment_details",0,0,0,0,"","",0,"",0,0,1,0,0,0
+"","""Sales Invoice-sp_outstanding_amount""","Sales Invoice","Currency","Outstanding Amount","","","currency","","sp_outstanding_amount",0,0,1,0,"71","",1,"",1,0,1,0,0,0
