@@ -14,8 +14,9 @@ def execute(filters=None):
 	return columns, data
 	
 def get_columns():
-	return [_("ID") + ":Link/Purchase Invoice:140", _("Supplier Name") + ":Link/Supplier:140", _("Supplier Invoice No") +  ":Data:130",
-                _("Supplier Invoice Date") +  ":Date:140", _("Grand Total") +  ":Currency:100", _("Due Date") +  ":Date:100", 
+	return [_("ID") + ":Link/Purchase Invoice:140", _("Date") +  ":Date:140",
+                _("Supplier Name") + ":Link/Supplier:140", _("Supplier Invoice No") +  ":Data:130",
+                _("Grand Total") +  ":Currency:100", _("Due Date") +  ":Date:100", 
                 _("Outstanding Amount") +  ":Currency:120",
                 _("Credit Days") +  ":Data:100"
 	]
@@ -30,5 +31,5 @@ def get_conditions(filters):
 	
 def get_entries(filters):
 	conditions = get_conditions(filters)
-	entries =  frappe.db.sql("""select name, supplier_name, bill_no, bill_date, grand_total_import, due_date, outstanding_amount, credit_days from `tabPurchase Invoice` where  %s and docstatus!=2 order by name DESC""" % conditions, filters, as_list=1)
+	entries =  frappe.db.sql("""select name, posting_date, supplier_name, bill_no, grand_total_import, due_date, outstanding_amount, credit_days from `tabPurchase Invoice` where  %s and docstatus!=2 order by name DESC""" % conditions, filters, as_list=1)
 	return entries
