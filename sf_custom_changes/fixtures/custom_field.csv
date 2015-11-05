@@ -18,6 +18,13 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Stock Entry-ship_to_data""","Stock Entry","Small Text","Ship To Data","","","","","ship_to_data",0,0,0,0,"","",1,"eval:doc.purpose==""Material Issue""",0,0,0,0,0,0
+"","""Stock Entry-terms_and_conditions_details""","Stock Entry","Text Editor","Terms and Conditions Details","","","","","terms_and_conditions_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-terms""","Stock Entry","Link","Terms","","","Terms and Conditions","","terms",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Stock Entry-terms_and_conditions""","Stock Entry","Section Break","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-expected_ship_date""","Stock Entry","Date","Expected Ship Date","","","","","expected_ship_date",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0
+"","""Stock Entry-ship_date""","Stock Entry","Date","Ship Date","","","","","ship_date",0,0,0,0,"","",0,"eval:doc.purpose==""Material Issue""",0,0,0,0,0,0
+"","""Stock Entry-ship_to""","Stock Entry","Link","Ship To","","","Address","","ship_to",0,0,0,0,"","",0,"eval:doc.purpose==""Material Issue""",1,0,0,0,0,0
 "","""Purchase Receipt-communications""","Purchase Receipt","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Purchase Receipt-communication_html""","Purchase Receipt","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
 "","""Purchase Receipt-communication_history""","Purchase Receipt","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
@@ -39,13 +46,9 @@
 "","""Delivery Note-shipping_terms""","Delivery Note","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note-sales_rep_sm""","Delivery Note","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note-credit_days""","Delivery Note","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",1,0,0,0,0,0
-"","""Stock Entry-terms_and_conditions_details""","Stock Entry","Text Editor","Terms and Conditions Details","","","","","terms_and_conditions_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Stock Entry-terms""","Stock Entry","Link","Terms","","","Terms and Conditions","","terms",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Stock Entry-terms_and_conditions""","Stock Entry","Section Break","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Order-credit_days""","Sales Order","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Sales Invoice Item-batch_copy""","Sales Invoice Item","Data","Product Code","","","","","batch_copy",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""Supplier-supplier_code""","Supplier","Data","Supplier Code","","","","","supplier_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Stock Entry-expected_ship_date""","Stock Entry","Date","Expected Ship Date","","","","","expected_ship_date",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0
 "","""Stock Entry-trucker_name""","Stock Entry","Data","Trucker Name","","","","","trucker_name",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0
 "","""Delivery Note Item-warehouse_lot_id""","Delivery Note Item","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",1,0,0,0,1,0
 "","""Purchase Receipt Item-warehouse_lot_id""","Purchase Receipt Item","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",1,0,0,0,1,0

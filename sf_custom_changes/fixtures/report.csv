@@ -18,76 +18,8 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
-"","""Voided Checks""","Voided Checks","Journal Voucher","No","Report Builder",0,0,1,"","","{""filters"":[],""columns"":[[""name"",""Journal Voucher""],[""pay_to_recd_from"",""Journal Voucher""],[""total_amount"",""Journal Voucher""],[""cheque_date"",""Journal Voucher""],[""cheque_no"",""Journal Voucher""]],""sort_by"":""Journal Voucher.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Hansen Filtered by Batch""","Hansen Filtered by Batch","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice"",""supplier"",""="",""Hansen Freightlines, Inc.""],[""Purchase Invoice"",""_user_tags"",""like"",""%Storage%""],[""Purchase Invoice"",""_user_tags"",""like"",""%SP-200%""],[""Purchase Invoice"",""_user_tags"",""like"",""%14P120#6%""]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""bill_no"",""Purchase Invoice""],[""grand_total_import"",""Purchase Invoice""],[""outstanding_amount"",""Purchase Invoice""],[""due_date"",""Purchase Invoice""],[""_user_tags"",""Purchase Invoice""]],""sort_by"":""Purchase Invoice.posting_date"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Custom Payment Period Based On Invoice Date""","Custom Payment Period Based On Invoice Date","Journal Voucher","Yes","Script Report",1,0,1,"","","","SF Custom Changes"
-"","""Custom Stock Qty""","Custom Stock Qty","Item","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
-"","""Custom Bank Clearance Summary""","Custom Bank Clearance Summary","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
-"","""Custom Bank Reconciliation Statement""","Custom Bank Reconciliation Statement","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
-"","""For USBank""","For USBank","GL Entry","Yes","Query Report",0,0,1,"select
-`tabGL Entry`.posting_date as ""Posting Date:Date:100"",
-`tabGL Entry`.account as ""Account:200"",
-`tabGL Entry`.debit as ""Debit:Currency:100"",
-`tabGL Entry`.credit as ""Credit:Currency:100"",
-(@rbal := @rbal - `tabGL Entry`.credit + `tabGL Entry`.debit) as ""Running Total:Currency:100"",
-`tabGL Entry`.voucher_type as ""Voucher Type:150"",
-`tabGL Entry`.voucher_no as ""Voucher Number:150"",
-`tabGL Entry`.remarks as ""Remarks:250"",
-`tabGL Entry`.against as ""Against Account:250"",
-CASE
-WHEN 1=1 then (select cheque_no from `tabJournal Voucher` where name=voucher_no)
-else "" ""
-END AS ""Check Number:200""
-from
-`tabGL Entry`
-JOIN (select @rbal := 0) B
-where
-`tabGL Entry`.account = ""USBank - SF""
-order by
-`tabGL Entry`.posting_date ASC","","","SF Custom Changes"
-"","""For SquareUP""","For SquareUP","GL Entry","Yes","Query Report",0,0,1,"select
-`tabGL Entry`.posting_date as ""Posting Date:Date:100"",
-`tabGL Entry`.account as ""Account:200"",
-`tabGL Entry`.debit as ""Debit:Currency:100"",
-`tabGL Entry`.credit as ""Credit:Currency:100"",
-(@rbal := @rbal - `tabGL Entry`.credit + `tabGL Entry`.debit) as ""Running Total:Currency:100"",
-`tabGL Entry`.voucher_type as ""Voucher Type:150"",
-`tabGL Entry`.voucher_no as ""Voucher Number:150"",
-`tabGL Entry`.remarks as ""Remarks:250"",
-`tabGL Entry`.against as ""Against Account:250"",
-CASE
-WHEN 1=1 then (select cheque_no from `tabJournal Voucher` where name=voucher_no)
-else "" ""
-END AS ""Check Number:200""
-from
-`tabGL Entry`
-JOIN (select @rbal := 0) B
-where
-`tabGL Entry`.account = ""SquareUp - SF""
-order by
-`tabGL Entry`.posting_date ASC","","","SF Custom Changes"
-"","""For Wells Fargo""","For Wells Fargo","GL Entry","Yes","Query Report",0,0,1,"select
-`tabGL Entry`.posting_date as ""Posting Date:Date:100"",
-`tabGL Entry`.account as ""Account:200"",
-`tabGL Entry`.debit as ""Debit:Currency:100"",
-`tabGL Entry`.credit as ""Credit:Currency:100"",
-(@rbal := @rbal - `tabGL Entry`.credit + `tabGL Entry`.debit) as ""Running Total:Currency:100"",
-`tabGL Entry`.voucher_type as ""Voucher Type:150"",
-`tabGL Entry`.voucher_no as ""Voucher Number:150"",
-`tabGL Entry`.remarks as ""Remarks:250"",
-`tabGL Entry`.against as ""Against Account:250"",
-CASE
-WHEN 1=1 then (select cheque_no from `tabJournal Voucher` where name=voucher_no)
-else "" ""
-END AS ""Check Number:200""
-from
-`tabGL Entry`
-JOIN (select @rbal := 0) B
-where
-`tabGL Entry`.account = ""Wells Fargo Checking - SF""
-order by
-`tabGL Entry`.posting_date ASC","","","SF Custom Changes"
-"","""Ledger Clearance Summary With Running Balance""","Ledger Clearance Summary With Running Balance","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Purchase Invoice Custom Report""","Purchase Invoice Custom Report","Purchase Invoice","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Sales Invoice Custom Report""","Sales Invoice Custom Report","Sales Invoice","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Custom Stock Balance - Concise""","Custom Stock Balance - Concise","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"

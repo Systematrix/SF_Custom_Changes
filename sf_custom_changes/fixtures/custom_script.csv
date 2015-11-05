@@ -18,6 +18,10 @@
 "Type:","Data (text)","Link","Code"
 "Info:","","Valid DocType",""
 "Start entering data below this line"
+"","""Stock Entry-Client""","Stock Entry","cur_frm.add_fetch('batch_no','warehouse_lot_id','warehouse_lot_id');
+cur_frm.cscript.ship_to=function() {
+	erpnext.utils.get_address_display(this.frm, ""ship_to"", ""ship_to_data"");
+};"
 "","""Custom Bank Reconciliation-Client""","Custom Bank Reconciliation","cur_frm.cscript.bank_account = function(doc,dt,dn) {
 	if(doc.bank_account) {
 		return frappe.call({
@@ -159,7 +163,6 @@ cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
     frappe.model.set_value(cdt, cdn, ""rate"", rate);
 };
 cur_frm.add_fetch('customer','credit_days','credit_days')"
-"","""Stock Entry-Client""","Stock Entry","cur_frm.add_fetch('batch_no','warehouse_lot_id','warehouse_lot_id');"
 "","""Journal Voucher-Client""","Journal Voucher","cur_frm.cscript.address_name=function() {
 	erpnext.utils.get_address_display(this.frm, ""address_name"", ""address"");
 };"
