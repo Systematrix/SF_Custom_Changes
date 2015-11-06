@@ -42,6 +42,6 @@ def get_entries(filters):
 	entries =  frappe.db.sql("""select jv.posting_date, jv.name, jvd.account, 
 		jvd.debit, jvd.credit, jvd.against_account, jv.cheque_no, jv.cheque_date,jv.clearance_date
 		from `tabJournal Voucher Detail` jvd, `tabJournal Voucher` jv 
-		where jvd.parent = jv.name  %s and jv.cheque_no is not null
+		where jvd.parent = jv.name  %s and jv.cheque_no is not null and jv.cheque_no REGEXP '^[0-9]+$'
 		order by jv.name DESC""" % conditions, filters, as_list=1)
 	return entries
