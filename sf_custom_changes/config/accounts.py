@@ -20,6 +20,13 @@ def get_data():
 					"doctype": "Journal Voucher",
                                         "description": _("Check Register"),
 				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Voided Check",
+					"doctype": "Journal Voucher",
+                                        "description": _("Query Report"),
+				},
                                 {
 					"type": "report",
 					"is_query_report": True,
