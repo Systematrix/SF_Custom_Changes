@@ -28,7 +28,7 @@ class CustomBankReconciliation(Document):
 			where
 				t2.parent = t1.name and t2.account = %s
 				and t1.posting_date >= %s and t1.posting_date <= %s and t1.docstatus=1
-				and ifnull(t1.is_opening, 'No') = 'No' %s order by t1.cheque_no""" %
+				and ifnull(t1.is_opening, 'No') = 'No' %s order by t1.posting_date, t1.cheque_no""" %
 				('%s', '%s', '%s', condition), (self.bank_account, self.from_date, self.to_date), as_dict=1)
 
 		self.set('entries', [])
@@ -75,7 +75,7 @@ class CustomBankReconciliation(Document):
 			where
 				t2.parent = t1.name and t2.account = %s
 				and t1.clearance_date= %s and t1.docstatus=1
-				and ifnull(t1.is_opening, 'No') = 'No' %s order by t1.cheque_no""" %
+				and ifnull(t1.is_opening, 'No') = 'No' %s order by t1.posting_date, t1.cheque_no""" %
 				('%s', '%s', condition), (self.bank_account, self.clearance_date), as_dict=1)
 
 		self.set('entries', [])
