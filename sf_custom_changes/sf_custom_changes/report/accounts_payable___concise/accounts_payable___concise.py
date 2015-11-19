@@ -66,7 +66,7 @@ def get_columns(supplier_naming_by):
 	columns = [
 		_("Posting Date") + ":Date:100", _("Account") + ":Link/Account:150",  
 		_("Voucher No") + ":Dynamic Link/Voucher Type:120", 
-                _("SIN#") + ":Data:110",_("Due Date") + ":Date:80",
+                _("Supp. Inv#") + ":Data:110",_("Due Date") + ":Date:80",
 		_("Invoiced Amount") + ":Currency:140", _("Paid Amount") + ":Currency:100", 
 		_("Outstanding Amount") + ":Currency:140", _("Voucher Type") + "::110",
                 _("Age") + ":Int:50", "0-30:Currency:100", 
