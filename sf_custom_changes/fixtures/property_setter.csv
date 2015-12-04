@@ -18,6 +18,7 @@
 "Type:","Data (text)","Select","Link","Data","Text","Data","Data","Data"
 "Info:","","One of: DocField, DocType","Valid DocType","","","","",""
 "Start entering data below this line"
+"","""Stock Entry Detail-batch_no-in_list_view""","DocField","Stock Entry Detail","in_list_view","1","batch_no","Check",""
 "","""Purchase Invoice Item-pricing_rule-depends_on""","DocField","Purchase Invoice Item","depends_on","eval:in_list([""Product""], doc.invoice_tp)","pricing_rule","Data",""
 "","""Purchase Invoice Item-discount_percentage-depends_on""","DocField","Purchase Invoice Item","depends_on","eval:in_list([""Product""], doc.invoice_tp)","discount_percentage","Data",""
 "","""Purchase Invoice Item-price_list_rate-depends_on""","DocField","Purchase Invoice Item","depends_on","eval:in_list([""Product""], doc.invoice_tp)","price_list_rate","Data",""
