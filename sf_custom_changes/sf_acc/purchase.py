@@ -28,8 +28,7 @@ def validate_mandatory(self):
 def validate_bill_no(self, method):
 		if self.bill_no:
 			# validate bill no is unique
-			bill_list = frappe.db.sql("""select name, supplier from `tabPurchase Invoice` where bill_no=%s and supplier=%s and docstatus=1 and is_recurring='0'""",
-				self.bill_no, self.supplier)
+			bill_list = frappe.db.sql("""select name, supplier from `tabPurchase Invoice` where supplier='%s' and bill_no='%s' and docstatus=1 and is_recurring='0'"""%(self.bill_no, self.supplier))
 			if len(bill_list) > 0:
 				items = [e[0] for e in bill_list if e[0]!=self.name]
 				frappe.throw(_("Supplier Invoice Number must be unique. Current Supplier Invoice Number already exists for {0}").format(comma_and(items)))
