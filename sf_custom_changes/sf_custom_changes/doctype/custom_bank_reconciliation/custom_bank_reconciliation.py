@@ -101,7 +101,7 @@ class CustomBankReconciliation(Document):
                         	self.total_reconciled_debit += flt(d.debit)
                         	self.total_reconciled_credit += flt(d.credit)
 
-                        if d.clearance_date: 
+                        if not d.clearance_date: 
                         	self.amounts_not_reflected_in_bank += flt(d.debit) - flt(d.credit)
  
                         self.expected_balance_as_per_bank = self.amounts_not_reflected_in_bank - self.system_balance
