@@ -18,6 +18,72 @@
 "Type:","Data (text)","Link","Link","Select","Select","Check","Code"
 "Info:","","Valid DocType","Valid Module Def","One of: No, Yes","One of: Server, Client","0 or 1",""
 "Start entering data below this line"
+"","""Custom Packing Slip""","Packing Slip","Stock","No","Server",0,"{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+    {%- if trigger_print -%}
+    <script>
+    window.print();
+    window.close();
+    </script>
+    {%- endif -%}
+    {% if letter_head and not no_letterhead %}
+    <div class=""letter-head"">{{ letter_head }}</div>
+    {% endif %}
+    {% if max_pages > 1 %}
+    <p class=""text-right"">{{ _(""Page #{0} of {1}"").format(page_num, max_pages) }}</p>
+    {% endif %}
+{%- endmacro -%}
+
+{{ add_header(0, 1, doc, letter_head, no_letterhead) }}
+<h4><p class=""text-center""><b>{{ _(""Packing List"") }}</b></p></h4>
+<br>
+<div class=""row"">        
+      <div class=""col-xs-6"">            
+        <div class=""row"">
+            <div class=""col-xs-5 text-right""><label>Date</label></div>
+            <div class=""col-xs-7"">{{ doc.get_formatted(""date"") or '' }}</div>
+        </div>
+		<br>
+      </div>
+      <div class=""col-xs-6"">
+        <div class=""row"">
+			<div class=""col-xs-5 text-right""><label>PO#</label></div>
+            <div class=""col-xs-7"">{{ doc.customer_po_no or '' }}</div>
+        </div>
+      </div>
+</div>
+<br>
+<table class=""table table-condensed table-hover table-bordered"">
+	<tbody>
+        <tr>
+            <th>Container No.</th>
+            <th>Product Description</th>
+            <th>Product Code</th>
+            <th>Quantity</th>
+        </tr>
+        {%- for row in doc.item_details -%}
+        <tr>
+            <td style=""width: 25%"">{{ row.container_no or '' }}</td>
+            <td style=""width: 25%"">{{ row.item_name or '' }} {{ row.item_code or '' }}</td>
+            <td style=""width: 25%"">{{ row.product_code or '' }}</td>
+	        <td style=""width: 25%; text-align: right;"">{{ row.qty }} {{ row.stock_uom }}</td>
+        </tr>
+        {%- endfor -%}
+    </tbody>
+</table>
+<table class=""table table-condensed table-hover table-bordered"">
+    <tbody>
+        <tr>
+            <td style=""width: 30%"">Total Number of Packages<br>Total Net Weight<br>Total Gross Weight<br>Net Weight per Item<br>Gross Weight per Item</td>
+            <td style=""width: 20%"">{{ doc.total_no_of_packages or '' }} {{ doc.package_uom or '' }}<br>{{ doc.net_weight_pkg or '' }} {{ doc.net_weight_uom or '' }}<br>{{ doc.gross_weight_pkg or '' }} {{ doc.gross_weight_uom or '' }}<br>{{ doc.net_weight_per_sku or '' }} {{ doc.sku_uom or '' }}<br>{{ doc.gross_weight_per_sku or '' }} {{ doc.gw_sku_uom or '' }}</td>
+            <td style=""width: 30%"">Country of Origin of Goods<br>Port of Loading<br>Port of Discharge</td>
+            <td style=""width: 20%"">{{ doc.country_of_origin_of_goods }}<br>{{ doc.port_of_loading }}<br>{{ doc.port_of_discharge }}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<div class=""row"">
+ <div class=""col-xs-12 text-left"">{{ doc.addl_description or '' }}</div>
+</div>"
 "","""Custom Cheque Printing Format""","Journal Voucher","Accounts","Yes","Server",0,"<style>
    tr {
    width: 100%;

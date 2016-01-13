@@ -18,6 +18,28 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Packing Slip-addl_description""","Packing Slip","Text Editor","","","","","","addl_description",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-gross_weight_per_sku""","Packing Slip","Float","Gross Weight per Item","","","","","gross_weight_per_sku",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-net_weight_per_sku""","Packing Slip","Float","Net Weight per Item","","","","","net_weight_per_sku",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-sku_uom""","Packing Slip","Link","","","","UOM","","sku_uom",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Order Item-weight_uom""","Sales Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"97","",0,"",0,0,0,0,0,0
+"","""Sales Order Item-net_weight""","Sales Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Order Item-rate_per_weight_unit""","Sales Order Item","Currency","Rate per Weight Unit","","4","currency","","rate_per_weight_unit",0,1,0,0,"117","",0,"",0,0,0,0,0,0
+"","""Sales Order Item-quantity_in_weight""","Sales Order Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"64","",0,"",0,0,0,0,0,0
+"","""Purchase Order Item-rate_per_weight_unit""","Purchase Order Item","Currency","Rate per Weight Unit","","4","","","rate_per_weight_unit",0,1,0,0,"81","",0,"",0,0,0,0,0,0
+"","""Packing Slip-package_uom""","Packing Slip","Link","","","","UOM","","package_uom",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-total_no_of_packages""","Packing Slip","Float","Total No of Packages","","","","","total_no_of_packages",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-customer_po_no""","Packing Slip","Data","Customer PO No","","","","","customer_po_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip Item-product_code""","Packing Slip Item","Data","Product Code","","","","","product_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip Item-container_no""","Packing Slip Item","Data","Container No","","","","","container_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-additional_description_of_goods""","Packing Slip","Section Break","Additional Description of Goods","","","","","additional_description_of_goods",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-port_of_discharge""","Packing Slip","Data","Port of Discharge","","","","","port_of_discharge",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-port_of_loading""","Packing Slip","Data","Port of Loading","","","","","port_of_loading",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-column_break5""","Packing Slip","Column Break","column_break5","","","","","column_break5",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-country_of_origin_of_goods""","Packing Slip","Link","Country of Origin of Goods","","","Country","","country_of_origin_of_goods",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-loading_details""","Packing Slip","Section Break","Loading Details","","","","","loading_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-gw_sku_uom""","Packing Slip","Link","","","","UOM","","gw_sku_uom",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Packing Slip-date""","Packing Slip","Date","Date","","","","","date",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Supplier-federal_tax_id""","Supplier","Data","Federal Tax ID","","","","","federal_tax_id",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-invoice_tp""","Purchase Invoice Item","Select","Invoice Type","","","Product
 Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
@@ -50,7 +72,6 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Purchase Receipt Item-quantity_in_weight""","Purchase Receipt Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-weight_uom""","Purchase Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-net_weight""","Purchase Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Purchase Order Item-rate_per_weight_unit""","Purchase Order Item","Currency","Rate per Weight Unit","","3","","","rate_per_weight_unit",0,1,0,0,"81","",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-quantity_in_weight""","Purchase Order Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note-delivery_date""","Delivery Note","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"160px","",1,"",1,0,0,1,0,0
 "","""Sales Order-sales_rep_sm""","Sales Order","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -61,10 +82,6 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Quotation Item-quantity_in_weight""","Quotation Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Quotation Item-weight_uom""","Quotation Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Quotation Item-net_weight""","Quotation Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Order Item-quantity_in_weight""","Sales Order Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Order Item-net_weight""","Sales Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Order Item-weight_uom""","Sales Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Order Item-rate_per_weight_unit""","Sales Order Item","Currency","Rate per Weight Unit","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice Item-quantity_in_weight""","Sales Invoice Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",1,0,0,0,0,0
 "","""Sales Invoice Item-rate_per_weight_unit""","Sales Invoice Item","Currency","Rate per Weight Unit ($)","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",1,0,0,0,0,0
 "","""Sales Invoice Item-net_weight""","Sales Invoice Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
