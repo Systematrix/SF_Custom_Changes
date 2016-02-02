@@ -42,8 +42,8 @@ def get_columns(filters):
 	columns = [_("Item") + ":Link/Item:100"] + [_("Item Name") + "::150"] + \
 	 [_("Net Weight") + ":Float:80"] +  [_("Fill") + ":Link/UOM:90"] + [_("Stock UOM") + ":Link/UOM:90"] + \
          [_("Warehouse") + ":Link/Warehouse:100"] + [_("Batch") + ":Link/Batch:150"] +[_("Warehouse Lot") + ":Data:150"] + \
-         [_("Balance Qty") + "::90"] + [_("Valuation Rate") + ":Currency:100"] + [_("Batch Value") + ":Currency:100"] + \
-         [_("Opening Qty") + "::90"] + [_("In Qty") + "::80"] + [_("Out Qty") + "::80"]
+         [_("Balance Qty") + ":Float:90"] + [_("Valuation Rate") + ":Currency:100"] + [_("Batch Value") + ":Currency:100"] + \
+         [_("Opening Qty") + ":Float:90"] + [_("In Qty") + ":Float:80"] + [_("Out Qty") + ":Float:80"]
          
 
 	return columns

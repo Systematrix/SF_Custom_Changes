@@ -18,6 +18,10 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Purchase Receipt Item-rate_per_weight_unit""","Purchase Receipt Item","Currency","Rate per Weight Unit","","4","currency","","rate_per_weight_unit",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Invoice Item-rate_per_weight_unit""","Purchase Invoice Item","Currency","Rate per Weight Unit","","4","currency","","rate_per_weight_unit",0,0,0,0,"","",0,"eval:in_list([""Product""], doc.invoice_tp)",0,0,0,0,0,0
+"","""Sales Invoice Item-rate_per_weight_unit""","Sales Invoice Item","Currency","Rate per Weight Unit ($)","","4","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",1,0,0,0,0,0
+"","""Delivery Note Item-rate_per_weight_unit""","Delivery Note Item","Currency","Rate per Weight Unit","","4","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Packing Slip-addl_description""","Packing Slip","Text Editor","","","","","","addl_description",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Packing Slip-gross_weight_per_sku""","Packing Slip","Float","Gross Weight per Item","","","","","gross_weight_per_sku",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Packing Slip-net_weight_per_sku""","Packing Slip","Float","Net Weight per Item","","","","","net_weight_per_sku",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -47,7 +51,6 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-stock_uom""","Purchase Invoice Item","Link","Stock UOM","","","UOM","","stock_uom",0,0,1,0,"","",0,"eval:in_list([""Product""], doc.invoice_tp)",0,0,0,0,0,0
 "","""Purchase Invoice Item-weight_uom""","Purchase Invoice Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"eval:in_list([""Product""], doc.invoice_tp)",0,0,0,0,0,0
 "","""Purchase Invoice Item-net_weight""","Purchase Invoice Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"eval:in_list([""Product""], doc.invoice_tp)",0,0,0,0,0,0
-"","""Purchase Invoice Item-rate_per_weight_unit""","Purchase Invoice Item","Currency","Rate per Weight Unit","","3","currency","","rate_per_weight_unit",0,0,0,0,"","",0,"eval:in_list([""Product""], doc.invoice_tp)",0,0,0,0,0,0
 "","""Purchase Invoice Item-quantity_in_weight""","Purchase Invoice Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,0,0,0,"","",0,"eval:in_list([""Product""], doc.invoice_tp)",0,0,0,0,0,0
 "","""Sales Invoice-sp_outstanding_amount""","Sales Invoice","Currency","Outstanding Amount","","","currency","","sp_outstanding_amount",0,0,1,0,"71","",1,"",1,0,1,0,0,0
 "","""Sales Invoice-payment_details""","Sales Invoice","Link","Commission Payment JV","","","Journal Voucher","","payment_details",0,0,0,0,"","",0,"",0,0,1,0,0,0
@@ -68,7 +71,6 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Sales Invoice-credit_days""","Sales Invoice","Int","Credit Days","","","customer.credit_days","","credit_days",0,0,0,0,"58","",0,"",1,0,0,0,0,0
 "","""Purchase Receipt Item-weight_uom""","Purchase Receipt Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Receipt Item-net_weight""","Purchase Receipt Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"eval:doc.uom==doc.stock_uom",0,0,0,0,0,0
-"","""Purchase Receipt Item-rate_per_weight_unit""","Purchase Receipt Item","Currency","Rate per Weight Unit","","3","","","rate_per_weight_unit",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Receipt Item-quantity_in_weight""","Purchase Receipt Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-weight_uom""","Purchase Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-net_weight""","Purchase Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
@@ -83,12 +85,10 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Quotation Item-weight_uom""","Quotation Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Quotation Item-net_weight""","Quotation Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice Item-quantity_in_weight""","Sales Invoice Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",1,0,0,0,0,0
-"","""Sales Invoice Item-rate_per_weight_unit""","Sales Invoice Item","Currency","Rate per Weight Unit ($)","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",1,0,0,0,0,0
 "","""Sales Invoice Item-net_weight""","Sales Invoice Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice Item-weight_uom""","Sales Invoice Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Batch-warehouse_lot_id""","Batch","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note Item-quantity_in_weight""","Delivery Note Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note Item-rate_per_weight_unit""","Delivery Note Item","Currency","Rate per Weight Unit","","3","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note Item-net_weight""","Delivery Note Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note Item-weight_uom""","Delivery Note Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Taxes and Charges-tip""","Sales Taxes and Charges","Data","","","","","","tip",0,0,1,0,"","'Enter a $ amount - 10, 50 100'",0,"eval:doc.charge_type==""Actual""",1,0,0,0,0,0
