@@ -37,6 +37,7 @@ class CustomBankReconciliation(Document):
 		self.total_reconciled_debit = 0.0
                 self.amounts_not_reflected_in_bank = 0.0
                 self.expected_balance_as_per_bank = 0.0
+                self.system_balance = 0.0 
 
 		for d in dl:
 			nl = self.append('entries', {})
