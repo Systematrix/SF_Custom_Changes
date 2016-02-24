@@ -18,6 +18,8 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Item Price-fill_uom""","Item Price","Link","Fill UoM","","","UOM","","fill_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Item Price-fill""","Item Price","Float","Net Weight (Fill)","","","","","fill",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Receipt Item-rate_per_weight_unit""","Purchase Receipt Item","Currency","Rate per Weight Unit","","4","currency","","rate_per_weight_unit",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-rate_per_weight_unit""","Purchase Invoice Item","Currency","Rate per Weight Unit","","4","currency","","rate_per_weight_unit",0,0,0,0,"","",0,"eval:in_list([""Product""], doc.invoice_tp)",0,0,0,0,0,0
 "","""Sales Invoice Item-rate_per_weight_unit""","Sales Invoice Item","Currency","Rate per Weight Unit ($)","","4","currency","","rate_per_weight_unit",0,1,0,0,"","",0,"",1,0,0,0,0,0

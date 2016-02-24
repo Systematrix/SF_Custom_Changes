@@ -18,6 +18,8 @@
 "Type:","Data (text)","Link","Code"
 "Info:","","Valid DocType",""
 "Start entering data below this line"
+"","""Item Price-Client""","Item Price","cur_frm.add_fetch('item_code','net_weight','fill');
+cur_frm.add_fetch('item_code','weight_uom','fill_uom');"
 "","""Journal Voucher-Client""","Journal Voucher","cur_frm.cscript.address_name=function() {
 	erpnext.utils.get_address_display(this.frm, ""address_name"", ""address"");
 };
