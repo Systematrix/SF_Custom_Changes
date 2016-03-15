@@ -18,6 +18,8 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Purchase Taxes and Charges-tip2""","Purchase Taxes and Charges","Data","","","","","","tip2",0,0,1,0,"","'Enter a percentage - 1.5, 2.5, 10.5'",0,"eval:doc.charge_type==""On Net Total""",1,0,0,0,0,0
+"","""Purchase Taxes and Charges-tip""","Purchase Taxes and Charges","Data","","","","","","tip",0,0,1,0,"","'Enter a $ amount - 10, 50 100'",0,"eval:doc.charge_type==""Actual""",1,0,0,0,0,0
 "","""Item Price-fill_uom""","Item Price","Link","Fill UoM","","","UOM","","fill_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Item Price-fill""","Item Price","Float","Net Weight (Fill)","","","","","fill",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Receipt Item-rate_per_weight_unit""","Purchase Receipt Item","Currency","Rate per Weight Unit","","4","currency","","rate_per_weight_unit",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -94,8 +96,6 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Delivery Note Item-net_weight""","Delivery Note Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note Item-weight_uom""","Delivery Note Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Taxes and Charges-tip""","Sales Taxes and Charges","Data","","","","","","tip",0,0,1,0,"","'Enter a $ amount - 10, 50 100'",0,"eval:doc.charge_type==""Actual""",1,0,0,0,0,0
-"","""Purchase Taxes and Charges-tip""","Purchase Taxes and Charges","Data","","","","","","tip",0,0,1,0,"","'Enter a $ amount - 10, 50 100'",0,"eval:doc.charge_type==""Actual""",1,0,0,0,0,0
-"","""Purchase Taxes and Charges-tip2""","Purchase Taxes and Charges","Data","","","","","","tip2",0,0,1,0,"","'Enter a percentage - 1.5, 2.5, 10.5'",0,"eval:doc.charge_type==""On Net Total""",1,0,0,0,0,0
 "","""Sales Taxes and Charges-tip2""","Sales Taxes and Charges","Data","","","","","","tip2",0,0,1,0,"","'Enter a percentage - 1.5, 2.5, 10.5'",0,"eval:doc.charge_type==""On Net Total""",1,0,0,0,0,0
 "","""Journal Voucher Detail-remark""","Journal Voucher Detail","Data","Remark","","","","","remark",0,0,0,0,"","",0,"",0,0,0,1,0,0
 "","""Purchase Receipt Item-warehouse_lot_id""","Purchase Receipt Item","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",1,0,0,0,1,0
