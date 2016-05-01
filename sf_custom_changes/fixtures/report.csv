@@ -18,6 +18,41 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
+"","""Rate per Weight (Combined)""","Rate per Weight (Combined)","Account","No","Query Report",0,0,1,"select
+      `tabPurchase Invoice`.`name` as ""Invoice:Link/Purchase Invoice:120"",
+      `tabPurchase Invoice`.`supplier` as ""Party Name:Link/Supplier:120"",
+      `tabPurchase Invoice`.`posting_date` as ""Date:Date:100"",
+      `tabPurchase Invoice Item`.`item_code` as ""Item:Link/Item:100"",
+      `tabPurchase Invoice Item`.`item_name` as ""Item Name::120"",
+      `tabPurchase Invoice Item`.`quantity_in_weight` as ""Quantity:Float:80"",
+      `tabPurchase Invoice Item`.`weight_uom` as ""UOM::80"",
+      `tabPurchase Invoice Item`.`rate_per_weight_unit` as ""Rate:Currency:80""
+from
+      `tabPurchase Invoice`, `tabPurchase Invoice Item`
+where
+      `tabPurchase Invoice Item`.`item_group` = ""Raw Material"" 
+  and `tabPurchase Invoice Item`.`parent` = `tabPurchase Invoice`.`name`
+  and `tabPurchase Invoice`.`docstatus` = 1
+
+UNION
+
+select
+      `tabSales Invoice`.`name` as ""Invoice:Link/Sales Invoice:120"",
+      `tabSales Invoice`.`customer` as ""Party Name:Link/Customer:120"",
+      `tabSales Invoice`.`posting_date` as ""Date:Date:100"",
+      `tabSales Invoice Item`.`item_code` as ""Item:Link/Item:100"",
+      `tabSales Invoice Item`.`item_name` as ""Item Name::120"",
+      `tabSales Invoice Item`.`quantity_in_weight` as ""Quantity:Float:80"",
+      `tabSales Invoice Item`.`weight_uom` as ""UOM::80"",
+      `tabSales Invoice Item`.`rate_per_weight_unit` as ""Rate:Currency:80""
+from
+      `tabSales Invoice`, `tabSales Invoice Item`
+where
+      `tabSales Invoice Item`.`item_group` = ""Raw Material""
+  and `tabSales Invoice Item`.`parent` = `tabSales Invoice`.`name`
+  and `tabSales Invoice`.`docstatus` = 1","","","Accounts"
+"","""Selling Price (per weight unit)""","Selling Price (per weight unit)","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""],[""Sales Invoice Item"",""item_group"",""="",""Raw Material""]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""posting_date"",""Sales Invoice""],[""item_code"",""Sales Invoice Item""],[""item_name"",""Sales Invoice Item""],[""quantity_in_weight"",""Sales Invoice Item""],[""weight_uom"",""Sales Invoice Item""],[""rate_per_weight_unit"",""Sales Invoice Item""]],""sort_by"":""Sales Invoice Item.item_name"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
+"","""Purchase Price (per weight unit)""","Purchase Price (per weight unit)","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice Item"",""item_group"",""="",""Raw Material""]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""item_code"",""Purchase Invoice Item""],[""item_name"",""Purchase Invoice Item""],[""quantity_in_weight"",""Purchase Invoice Item""],[""weight_uom"",""Purchase Invoice Item""],[""rate_per_weight_unit"",""Purchase Invoice Item""]],""sort_by"":""Purchase Invoice Item.item_name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Custom Sales Partners Commission""","Custom Sales Partners Commission","Sales Invoice","Yes","Query Report",1,0,1,"SELECT
     name as ""Sales Invoice:Link/Sales Invoice:130"",
     posting_date as ""Date::80"",
@@ -558,8 +593,6 @@ order by `tabSales Order`.transaction_date asc","","","Stock"
 "","""Journal Vouchers against Sales Invoices""","Journal Vouchers against Sales Invoices","Journal Voucher","No","Report Builder",0,0,1,"","","{""filters"":[[""Journal Voucher"",""docstatus"",""!="",""2""],[""Journal Voucher Detail"",""against_invoice"",""!="",""""]],""columns"":[[""name"",""Journal Voucher""],[""voucher_type"",""Journal Voucher""],[""posting_date"",""Journal Voucher""],[""cheque_no"",""Journal Voucher""],[""account"",""Journal Voucher Detail""],[""total_credit"",""Journal Voucher""],[""against_invoice"",""Journal Voucher Detail""],[""clearance_date"",""Journal Voucher""]],""sort_by"":""Journal Voucher.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Bank Vouchers against PINVs""","Bank Vouchers against PINVs","Journal Voucher","No","Report Builder",0,0,1,"","","{""filters"":[[""Journal Voucher"",""docstatus"",""!="",""2""],[""Journal Voucher Detail"",""against_voucher"",""!="",""""]],""columns"":[[""name"",""Journal Voucher""],[""voucher_type"",""Journal Voucher""],[""posting_date"",""Journal Voucher""],[""cheque_no"",""Journal Voucher""],[""account"",""Journal Voucher Detail""],[""total_debit"",""Journal Voucher""],[""against_voucher"",""Journal Voucher Detail""],[""clearance_date"",""Journal Voucher""]],""sort_by"":""Journal Voucher.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Item List Report""","Item List Report","Item","No","Report Builder",0,0,1,"","","{""filters"":[],""columns"":[[""name"",""Item""],[""item_name"",""Item""],[""item_group"",""Item""],[""description"",""Item""],[""income_account"",""Item""],[""expense_account"",""Item""],[""stock_uom"",""Item""],[""default_warehouse"",""Item""],[""net_weight"",""Item""]],""sort_by"":""Item.name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
-"","""Purchase Price (per weight unit)""","Purchase Price (per weight unit)","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice Item"",""item_name"",""!="",""Auto Expenses""],[""Purchase Invoice Item"",""item_name"",""!="",""Freight Charge""],[""Purchase Invoice Item"",""item_name"",""!="",""Professional Services""],[""Purchase Invoice Item"",""item_name"",""!="",""Processing Charge""],[""Purchase Invoice Item"",""item_name"",""!="",""Warehouse Charge""],[""Purchase Invoice Item"",""item_name"",""!="",""Utilities""],[""Purchase Invoice Item"",""item_name"",""!="",""Storage""]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""item_code"",""Purchase Invoice Item""],[""item_name"",""Purchase Invoice Item""],[""weight_uom"",""Purchase Invoice Item""],[""rate_per_weight_unit"",""Purchase Invoice Item""]],""sort_by"":""Purchase Invoice Item.item_name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
-"","""Selling Price (per weight unit)""","Selling Price (per weight unit)","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""],[""Sales Invoice Item"",""item_name"",""!="",""Freight Charge""],[""Sales Invoice Item"",""item_name"",""!="",""Storage Income""]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""item_code"",""Sales Invoice Item""],[""item_name"",""Sales Invoice Item""],[""weight_uom"",""Sales Invoice Item""],[""rate_per_weight_unit"",""Sales Invoice Item""]],""sort_by"":""Sales Invoice Item.item_name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Consolidated Banks Report""","Consolidated Banks Report","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Supplier Addresses - Remit To""","Supplier Addresses - Remit To","Address","No","Report Builder",0,0,1,"","","{""filters"":[[""Address"",""customer_name"",""="",""""],[""Address"",""address_type"",""="",""Remit To""]],""columns"":[[""name"",""Address""],[""address_title"",""Address""],[""city"",""Address""],[""state"",""Address""],[""pincode"",""Address""],[""country"",""Address""],[""fax"",""Address""],[""is_shipping_address"",""Address""],[""customer_name"",""Address""],[""supplier_name"",""Address""],[""address_type"",""Address""]],""sort_by"":""Address.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Utilities"
 "","""Accounts Payable - Concise""","Accounts Payable - Concise","Purchase Invoice","Yes","Script Report",1,0,1,"","","","SF Custom Changes"

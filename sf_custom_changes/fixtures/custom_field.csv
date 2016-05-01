@@ -18,6 +18,24 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Landed Cost Taxes and Charges-pinv_amount""","Landed Cost Taxes and Charges","Currency","Amount","","3","","","pinv_amount",0,0,1,0,"","",0,"",0,0,0,0,1,0
+"","""Landed Cost Taxes and Charges-pinv_supplier""","Landed Cost Taxes and Charges","Link","Supplier","","","Supplier","","pinv_supplier",0,0,1,0,"","",0,"",0,0,0,0,1,0
+"","""Landed Cost Taxes and Charges-pinv""","Landed Cost Taxes and Charges","Link","PINV","","","Purchase Invoice","","pinv",0,0,0,0,"","",0,"",0,0,0,0,1,0
+"","""Landed Cost Taxes and Charges-pinv_date""","Landed Cost Taxes and Charges","Date","Date","","","","","pinv_date",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Order Item-cost_center""","Purchase Order Item","Link","Cost Center","","","Cost Center","","cost_center",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Order Item-rate_per_weight_unit""","Purchase Order Item","Currency","Rate per Weight Unit","","4","","","rate_per_weight_unit",0,1,0,0,"184","",0,"",0,0,0,0,0,0
+"","""Sales Order Item-cost_center""","Sales Order Item","Link","Cost Center","","","Cost Center","","cost_center",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Order Item-weight_uom""","Sales Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"63","",0,"",0,0,0,0,0,0
+"","""Stock Entry-pinv_amount""","Stock Entry","Currency","Amount","","3","","","pinv_amount",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-pinv_date""","Stock Entry","Date","Date","","","","","pinv_date",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-pinv_supplier""","Stock Entry","Link","Supplier","","","Supplier","","pinv_supplier",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-terms_and_conditions_details""","Stock Entry","Text Editor","Terms and Conditions Details","","","","","terms_and_conditions_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-terms""","Stock Entry","Link","Terms","","","Terms and Conditions","","terms",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Stock Entry-terms_and_conditions""","Stock Entry","Section Break","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-coln""","Stock Entry","Column Break","Coln","","","","","coln",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Stock Entry-pinv""","Stock Entry","Link","PINV","","","Purchase Invoice","","pinv",0,0,0,0,"","",0,"link_pinv",0,0,0,0,0,0
+"","""Stock Entry-pinv_details""","Stock Entry","Section Break","PINV Details","","","","","pinv_details",0,0,0,0,"","",0,"link_pinv",0,0,0,0,0,0
+"","""Stock Entry-link_pinv""","Stock Entry","Check","Link PINV","","","","","link_pinv",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Taxes and Charges-tip2""","Purchase Taxes and Charges","Data","","","","","","tip2",0,0,1,0,"","'Enter a percentage - 1.5, 2.5, 10.5'",0,"eval:doc.charge_type==""On Net Total""",1,0,0,0,0,0
 "","""Purchase Taxes and Charges-tip""","Purchase Taxes and Charges","Data","","","","","","tip",0,0,1,0,"","'Enter a $ amount - 10, 50 100'",0,"eval:doc.charge_type==""Actual""",1,0,0,0,0,0
 "","""Item Price-fill_uom""","Item Price","Link","Fill UoM","","","UOM","","fill_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
@@ -30,11 +48,9 @@
 "","""Packing Slip-gross_weight_per_sku""","Packing Slip","Float","Gross Weight per Item","","","","","gross_weight_per_sku",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Packing Slip-net_weight_per_sku""","Packing Slip","Float","Net Weight per Item","","","","","net_weight_per_sku",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Packing Slip-sku_uom""","Packing Slip","Link","","","","UOM","","sku_uom",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Order Item-weight_uom""","Sales Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"97","",0,"",0,0,0,0,0,0
 "","""Sales Order Item-net_weight""","Sales Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Order Item-rate_per_weight_unit""","Sales Order Item","Currency","Rate per Weight Unit","","4","currency","","rate_per_weight_unit",0,1,0,0,"117","",0,"",0,0,0,0,0,0
 "","""Sales Order Item-quantity_in_weight""","Sales Order Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"64","",0,"",0,0,0,0,0,0
-"","""Purchase Order Item-rate_per_weight_unit""","Purchase Order Item","Currency","Rate per Weight Unit","","4","","","rate_per_weight_unit",0,1,0,0,"81","",0,"",0,0,0,0,0,0
 "","""Packing Slip-package_uom""","Packing Slip","Link","","","","UOM","","package_uom",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Packing Slip-total_no_of_packages""","Packing Slip","Float","Total No of Packages","","","","","total_no_of_packages",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Packing Slip-customer_po_no""","Packing Slip","Data","Customer PO No","","","","","customer_po_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -128,8 +144,5 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Stock Entry-ship_to""","Stock Entry","Link","Ship To","","","Address","","ship_to",0,0,0,0,"","",0,"eval:doc.purpose==""Material Issue""",1,0,0,0,0,0
 "","""Stock Entry-ship_date""","Stock Entry","Date","Ship Date","","","","","ship_date",0,0,0,0,"","",0,"eval:doc.purpose==""Material Issue""",0,0,0,0,0,0
 "","""Stock Entry-expected_ship_date""","Stock Entry","Date","Expected Ship Date","","","","","expected_ship_date",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0
-"","""Stock Entry-terms_and_conditions""","Stock Entry","Section Break","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Stock Entry-terms""","Stock Entry","Link","Terms","","","Terms and Conditions","","terms",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Stock Entry-terms_and_conditions_details""","Stock Entry","Text Editor","Terms and Conditions Details","","","","","terms_and_conditions_details",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Stock Entry-ship_to_data""","Stock Entry","Small Text","Ship To Data","","","","","ship_to_data",0,0,0,0,"","",1,"eval:doc.purpose==""Material Issue""",0,0,0,0,0,0
 "","""Purchase Receipt-expected_arrival_date""","Purchase Receipt","Date","Expected Arrival Date","","","","","expected_arrival_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
