@@ -18,8 +18,8 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Landed Cost Taxes and Charges-pinv_amount""","Landed Cost Taxes and Charges","Currency","Amount","","3","","","pinv_amount",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-batch_no""","Purchase Invoice Item","Link","Product Code","","","Batch","","batch_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Landed Cost Taxes and Charges-pinv_amount""","Landed Cost Taxes and Charges","Currency","Amount","","3","","","pinv_amount",0,0,1,0,"","",0,"",0,0,0,0,1,0
 "","""Landed Cost Taxes and Charges-pinv_supplier""","Landed Cost Taxes and Charges","Link","Supplier","","","Supplier","","pinv_supplier",0,0,1,0,"","",0,"",0,0,0,0,1,0
 "","""Landed Cost Taxes and Charges-pinv""","Landed Cost Taxes and Charges","Link","PINV","","","Purchase Invoice","","pinv",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""Landed Cost Taxes and Charges-pinv_date""","Landed Cost Taxes and Charges","Date","Date","","","","","pinv_date",0,0,1,0,"","",0,"",0,0,0,0,0,0

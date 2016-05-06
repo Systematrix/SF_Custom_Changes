@@ -20,7 +20,17 @@
 "Start entering data below this line"
 "","""Landed Cost Voucher-Client""","Landed Cost Voucher","cur_frm.add_fetch('pinv','supplier','pinv_supplier');
 cur_frm.add_fetch('pinv','posting_date','pinv_date');
-cur_frm.add_fetch('pinv','grand_total_import','pinv_amount');"
+cur_frm.add_fetch('pinv','grand_total_import','pinv_amount');
+
+frappe.ui.form.on(""Landed Cost Voucher"", ""onload"", function(frm) {
+    cur_frm.set_query(""pinv"", ""landed_cost_taxes_and_charges"", function() {
+        return {
+            ""filters"": {
+                ""docstatus"": 1
+            }
+        };
+    });
+});"
 "","""Stock Entry-Client""","Stock Entry","cur_frm.add_fetch('terms', 'terms', 'terms_and_conditions_details');
 cur_frm.add_fetch('batch_no','warehouse_lot_id','warehouse_lot_id');
 cur_frm.cscript.ship_to=function() {

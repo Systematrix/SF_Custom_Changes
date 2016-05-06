@@ -18,6 +18,7 @@
 "Type:","Data (text)","Select","Link","Data","Text","Data","Data","Data"
 "Info:","","One of: DocField, DocType","Valid DocType","","","","",""
 "Start entering data below this line"
+"","""Landed Cost Item-purchase_receipt_item-width""","DocField","Landed Cost Item","width","197","purchase_receipt_item","",""
 "","""Purchase Invoice-against_expense_account-width""","DocField","Purchase Invoice","width","102","against_expense_account","",""
 "","""Purchase Invoice-due_date-width""","DocField","Purchase Invoice","width","80","due_date","",""
 "","""Purchase Invoice Item-rm_supp_cost-idx""","DocField","Purchase Invoice Item","idx","46","rm_supp_cost","Int",""
