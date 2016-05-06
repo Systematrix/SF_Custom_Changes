@@ -18,15 +18,13 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
-"","""Credit Card entries with Description""","Credit Card entries with Description","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice"",""supplier_name"",""like"",""%Visa%""]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""item_code"",""Purchase Invoice Item""],[""description"",""Purchase Invoice Item""],[""expense_account"",""Purchase Invoice Item""],[""amount"",""Purchase Invoice Item""]],""sort_by"":""Purchase Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
-"","""Credit Card Entries (Taxes & Charges) with Description""","Credit Card Entries (Taxes & Charges) with Description","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice"",""supplier_name"",""like"",""%visa%""]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""description"",""Purchase Taxes and Charges""],[""account_head"",""Purchase Taxes and Charges""],[""tax_amount"",""Purchase Taxes and Charges""]],""sort_by"":""Purchase Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Rate per Weight (Combined)""","Rate per Weight (Combined)","Account","No","Query Report",0,0,1,"select
       `tabSales Invoice`.`name` as ""Invoice::120"",
       `tabSales Invoice`.`customer` as ""Party Name::120"",
       `tabSales Invoice`.`posting_date` as ""Date:Date:100"",
       `tabSales Invoice Item`.`item_code` as ""Item:Link/Item:100"",
       `tabSales Invoice Item`.`item_name` as ""Item Name::120"",
-      `tabSales Invoice Item`.`batch_no` as ""Product Code::100"",
+      `tabSales Invoice Item`.`batch_no` as ""Product Code:Link/Batch:100"",
       `tabSales Invoice Item`.`quantity_in_weight` as ""Quantity:Float:80"",
       `tabSales Invoice Item`.`weight_uom` as ""UOM::80"",
       `tabSales Invoice Item`.`rate_per_weight_unit` as ""Rate:Currency:80""
@@ -45,7 +43,7 @@ select
       `tabPurchase Invoice`.`posting_date` as ""Date:Date:100"",
       `tabPurchase Invoice Item`.`item_code` as ""Item:Link/Item:100"",
       `tabPurchase Invoice Item`.`item_name` as ""Item Name::120"",
-      `tabPurchase Invoice Item`.`batch_no` as ""Product Code::100"",
+      `tabPurchase Invoice Item`.`batch_no` as ""Product Code:Link/Batch:100"",
       `tabPurchase Invoice Item`.`quantity_in_weight` as ""Quantity:Float:80"",
       `tabPurchase Invoice Item`.`weight_uom` as ""UOM::80"",
       `tabPurchase Invoice Item`.`rate_per_weight_unit` as ""Rate:Currency:80""
@@ -54,8 +52,9 @@ from
 where
       `tabPurchase Invoice Item`.`item_group` = ""Raw Material"" 
   and `tabPurchase Invoice Item`.`parent` = `tabPurchase Invoice`.`name`
-  and `tabPurchase Invoice`.`docstatus` = 1
-","","","Accounts"
+  and `tabPurchase Invoice`.`docstatus` = 1","","","Accounts"
+"","""Credit Card entries with Description""","Credit Card entries with Description","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice"",""supplier_name"",""like"",""%Visa%""]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""item_code"",""Purchase Invoice Item""],[""description"",""Purchase Invoice Item""],[""expense_account"",""Purchase Invoice Item""],[""amount"",""Purchase Invoice Item""]],""sort_by"":""Purchase Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
+"","""Credit Card Entries (Taxes & Charges) with Description""","Credit Card Entries (Taxes & Charges) with Description","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice"",""supplier_name"",""like"",""%visa%""]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""description"",""Purchase Taxes and Charges""],[""account_head"",""Purchase Taxes and Charges""],[""tax_amount"",""Purchase Taxes and Charges""]],""sort_by"":""Purchase Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Custom Sales Partners Commission""","Custom Sales Partners Commission","Sales Invoice","Yes","Query Report",1,0,1,"SELECT
     name as ""Sales Invoice:Link/Sales Invoice:130"",
     posting_date as ""Date::80"",
