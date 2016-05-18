@@ -18,6 +18,12 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Sales Invoice Item-pinv""","Sales Invoice Item","Link","PINV","","","Purchase Invoice","","pinv",0,0,0,0,"","",0,"link_pinv",0,0,0,0,1,0
+"","""Sales Invoice Item-pinv_amount""","Sales Invoice Item","Currency","Amount","","2","","","pinv_amount",0,0,1,0,"","",0,"link_pinv",0,0,0,0,0,0
+"","""Sales Invoice Item-pinv_date""","Sales Invoice Item","Date","Date","","","","","pinv_date",0,0,1,0,"","",0,"link_pinv",0,0,0,0,0,0
+"","""Sales Invoice Item-pinv_supplier""","Sales Invoice Item","Link","Supplier","","","Supplier","","pinv_supplier",0,0,1,0,"","",0,"link_pinv",0,0,0,0,0,0
+"","""Sales Invoice Item-batch_copy""","Sales Invoice Item","Data","Product Code","","","","","batch_copy",0,0,0,0,"","",0,"",0,0,0,0,1,0
+"","""Sales Invoice Item-link_pinv""","Sales Invoice Item","Check","Link PINV","","","","","link_pinv",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Landed Cost Taxes and Charges-pinv_amount""","Landed Cost Taxes and Charges","Currency","Amount","","3","","","pinv_amount",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-batch_no""","Purchase Invoice Item","Link","Product Code","","","Batch","","batch_no",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Landed Cost Taxes and Charges-pinv_supplier""","Landed Cost Taxes and Charges","Link","Supplier","","","Supplier","","pinv_supplier",0,0,1,0,"","",0,"",0,0,0,0,1,0
@@ -119,7 +125,6 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Delivery Note Item-warehouse_lot_id""","Delivery Note Item","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",1,0,0,0,1,0
 "","""Stock Entry-trucker_name""","Stock Entry","Data","Trucker Name","","","","","trucker_name",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0
 "","""Supplier-supplier_code""","Supplier","Data","Supplier Code","","","","","supplier_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice Item-batch_copy""","Sales Invoice Item","Data","Product Code","","","","","batch_copy",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""Sales Order-credit_days""","Sales Order","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Delivery Note-credit_days""","Delivery Note","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Delivery Note-sales_rep_sm""","Delivery Note","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
