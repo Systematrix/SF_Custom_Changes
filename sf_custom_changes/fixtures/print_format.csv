@@ -118,12 +118,8 @@
       <div style=""position: relative; top: 19.535cm; left: 0.5cm;"">
          <div class=""row"">
             <div class=""col-xs-4 text-right"">{{ doc.pay_to_recd_from }}</div>
-            <div class=""col-xs-2 "">{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
-            {%- for row in doc.entries -%}
-            {%- if row.credit -%}
-            <div class=""col-xs-6 "">{{ row.account }} CK# {{ doc.cheque_no }} {{ doc.name }}</div>
-            {%- endif -%}
-            {%- endfor -%}
+            <div class=""col-xs-4 "">{{ frappe.utils.formatdate(doc.cheque_date) }}</div>
+            <div class=""col-xs-4 "">{{ doc.name }}</div>
          </div>
          <div class=""row"" style=""position: absolute; left: 0.1cm; width: 98%;"">
             <table class=""table table-condensed table-hover"">
