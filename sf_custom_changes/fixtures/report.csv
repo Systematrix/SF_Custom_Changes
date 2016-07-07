@@ -18,6 +18,50 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
+"","""Stock Ledger""","Stock Ledger","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","Stock"
+"","""Batch Value""","Batch Value","Stock Ledger Entry","No","Query Report",1,0,1,"SELECT DISTINCT
+`tabStock Ledger Entry`.`item_code` as ""Item:Link/Item:100"",
+`tabStock Ledger Entry`.`batch_no` as ""Batch:Link/Batch:100"",
+`tabStock Ledger Entry`.`warehouse` as ""Warehouse:Link/Warehouse:120"",
+`tabStock Ledger Entry`.`qty_after_transaction` as ""Available Qty:Float:80"",
+`tabStock Ledger Entry`.`stock_uom` as ""UOM:Link/UOM:80"",
+`tabStock Ledger Entry`.`valuation_rate` as ""Valuation Rate:Currency:80"",
+`tabStock Ledger Entry`.`incoming_rate` as ""Incoming Rate:Currency:80"",
+`tabStock Ledger Entry`.`stock_value` as ""Batch Value:Currency:80"",
+`tabStock Ledger Entry`.`posting_date` as ""Posting Date:Date:80""
+
+FROM
+   `tabStock Ledger Entry`
+
+WHERE
+   `tabStock Ledger Entry`.docstatus=1 and
+   `tabStock Ledger Entry`.`posting_date` >= %(from_date)s and
+   `tabStock Ledger Entry`.`posting_date` <= %(to_date)s
+
+GROUP BY
+   `tabStock Ledger Entry`.`batch_no`","frappe.query_reports[""Batch Value""] = {
+	""filters"": [
+		{
+			""fieldname"":""from_date"",
+			""label"": __(""From Date""),
+			""fieldtype"": ""Date"",
+			""width"": ""80"",
+			""default"": sys_defaults.year_start_date,
+                        ""reqd"" : 1
+		},
+		{
+			""fieldname"":""to_date"",
+			""label"": __(""To Date""),
+			""fieldtype"": ""Date"",
+			""width"": ""80"",
+			""default"": frappe.datetime.get_today(),
+                        ""reqd"" : 1
+		}
+	]
+}","","Stock"
+"","""Custom Stock Balance""","Stock Balance","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","SF Custom Changes"
+"","""Stock Balance""","Stock Balance","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","Stock"
+"","""Batch Report with Lot Ctn & BOL#""","Batch Report with Lot Ctn & BOL#","Batch","No","Report Builder",0,0,1,"","","{""filters"":[],""columns"":[[""name"",""Batch""],[""item"",""Batch""],[""description"",""Batch""],[""warehouse_lot_id"",""Batch""],[""container"",""Batch""],[""master_bol"",""Batch""],[""expiry_date"",""Batch""]],""sort_by"":""Batch.item"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
 "","""Rate per Weight (Combined)""","Rate per Weight (Combined)","Account","No","Query Report",0,0,1,"select
       `tabSales Invoice`.`name` as ""Invoice::120"",
       `tabSales Invoice`.`customer` as ""Party Name::120"",
@@ -96,7 +140,6 @@ ORDER BY attached_to_doctype","","","Core"
 "","""Daily Dispatch""","Daily Dispatch","Delivery Note","Yes","Query Report",1,0,1,"select count(*), posting_date from `tabDelivery Note` group by posting_date;","","","Selling"
 "","""Sales Invoices Open""","Sales Invoices Open","Sales Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Invoice"",""docstatus"",""!="",""2""],[""Sales Invoice"",""outstanding_amount"",""!="",0]],""columns"":[[""name"",""Sales Invoice""],[""customer_name"",""Sales Invoice""],[""posting_date"",""Sales Invoice""],[""docstatus"",""Sales Invoice""],[""po_no"",""Sales Invoice""],[""due_date"",""Sales Invoice""],[""credit_days"",""Sales Invoice""],[""grand_total"",""Sales Invoice""],[""outstanding_amount"",""Sales Invoice""],[""delivery_date"",""Sales Invoice""],[""sales_rep_sm"",""Sales Invoice""],[""_user_tags"",""Sales Invoice""]],""sort_by"":""Sales Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Purchase Invoices Unpaid""","Purchase Invoices Unpaid","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice"",""outstanding_amount"",""!="",0]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""bill_no"",""Purchase Invoice""],[""bill_date"",""Purchase Invoice""],[""grand_total_import"",""Purchase Invoice""],[""outstanding_amount"",""Purchase Invoice""],[""due_date"",""Purchase Invoice""],[""docstatus"",""Purchase Invoice""]],""sort_by"":""Purchase Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
-"","""Custom Stock Balance""","Stock Balance","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Sales Order Report""","Sales Order Report","Sales Order","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Order"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Sales Order""],[""customer"",""Sales Order""],[""transaction_date"",""Sales Order""],[""delivery_date"",""Sales Order""],[""status"",""Sales Order""],[""per_delivered"",""Sales Order""],[""per_billed"",""Sales Order""],[""delivery_status"",""Sales Order""],[""sales_partner"",""Sales Order""],[""_user_tags"",""Sales Order""]],""sort_by"":""Sales Order.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Selling"
 "","""Purchase Order Report""","Purchase Order Report","Purchase Order","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Order"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Purchase Order""],[""supplier"",""Purchase Order""],[""transaction_date"",""Purchase Order""],[""grand_total_import"",""Purchase Order""],[""status"",""Purchase Order""],[""per_received"",""Purchase Order""],[""per_billed"",""Purchase Order""],[""_user_tags"",""Purchase Order""],[""item_code"",""Purchase Order Item""],[""stock_qty"",""Purchase Order Item""],[""rate_per_weight_unit"",""Purchase Order Item""],[""warehouse"",""Purchase Order Item""]],""sort_by"":""Purchase Order.transaction_date"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Buying"
 "","""Accounts Payable""","Accounts Payable","Purchase Invoice","Yes","Report Builder",1,0,1,"","","","Accounts"
@@ -429,7 +472,6 @@ ORDER BY
 "","""Serial No Status""","Serial No Status","Serial No","Yes","Report Builder",0,0,1,"","","{""sort_by"": ""Serial No.name"", ""sort_order"": ""desc"", ""sort_by_next"": """", ""filters"": [], ""sort_order_next"": ""desc"", ""columns"": [[""name"", ""Serial No""], [""item_code"", ""Serial No""], [""warehouse"", ""Serial No""], [""status"", ""Serial No""], [""item_name"", ""Serial No""], [""description"", ""Serial No""], [""item_group"", ""Serial No""], [""brand"", ""Serial No""], [""purchase_document_no"", ""Serial No""], [""purchase_date"", ""Serial No""], [""customer"", ""Serial No""], [""customer_name"", ""Serial No""], [""purchase_rate"", ""Serial No""], [""delivery_document_no"", ""Serial No""], [""delivery_date"", ""Serial No""], [""supplier"", ""Serial No""], [""supplier_name"", ""Serial No""]]}","Stock"
 "","""Serial No Warranty Expiry""","Serial No Warranty Expiry","Serial No","Yes","Report Builder",0,0,1,"","","{""filters"":[[""Serial No"",""status"",""="",""Delivered""]],""columns"":[[""name"",""Serial No""],[""item_code"",""Serial No""],[""warranty_expiry_date"",""Serial No""],[""warranty_period"",""Serial No""],[""maintenance_status"",""Serial No""],[""purchase_document_no"",""Serial No""],[""purchase_date"",""Serial No""],[""supplier"",""Serial No""],[""supplier_name"",""Serial No""],[""delivery_document_no"",""Serial No""],[""delivery_date"",""Serial No""],[""customer"",""Serial No""],[""customer_name"",""Serial No""],[""item_name"",""Serial No""],[""description"",""Serial No""],[""item_group"",""Serial No""],[""brand"",""Serial No""]],""sort_by"":""Serial No.warranty_expiry_date"",""sort_order"":""asc"",""sort_by_next"":"""",""sort_order_next"":""asc""}","Stock"
 "","""Stock Ageing""","Stock Ageing","Item","Yes","Script Report",0,0,1,"","","","Stock"
-"","""Stock Ledger""","Stock Ledger","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","Stock"
 "","""Stock Projected Qty""","Stock Projected Qty","Item","Yes","Script Report",1,0,1,"","","","Stock"
 "","""Supplier Account Head""","Supplier Account Head","Account","Yes","Script Report",0,0,1,"","","","Accounts"
 "","""Supplier-Wise Sales Analytics""","Supplier-Wise Sales Analytics","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","Stock"
@@ -564,7 +606,6 @@ where
 	and ste.production_order = pro.name and ste.docstatus = 1 
 	and ste.purpose = 'Manufacture' or 'Repack'
 order by ste.posting_date, ste.production_order, ste_item.item_code","","","Manufacturing"
-"","""Stock Balance""","Stock Balance","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","Stock"
 "","""Ordered Items To Be Delivered""","Ordered Items To Be Delivered","Delivery Note","Yes","Query Report",0,0,1,"select 
  `tabSales Order`.`name` as ""Sales Order:Link/Sales Order:120"",
  `tabSales Order`.`customer` as ""Customer:Link/Customer:120"",
