@@ -18,6 +18,7 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
+"","""Items on ERP""","Items on ERP","Item","No","Report Builder",0,0,1,"","","{""filters"":[[""Item"",""name"",""like"",""sp%""]],""columns"":[[""name"",""Item""],[""item_name"",""Item""],[""item_group"",""Item""],[""description"",""Item""],[""has_serial_no"",""Item""],[""is_sales_item"",""Item""],[""is_service_item"",""Item""],[""customer_code"",""Item""]],""sort_by"":""Item.barcode"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
 "","""Stock Ledger""","Stock Ledger","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","Stock"
 "","""Batch Value""","Batch Value","Stock Ledger Entry","No","Query Report",1,0,1,"SELECT DISTINCT
 `tabStock Ledger Entry`.`item_code` as ""Item:Link/Item:100"",
