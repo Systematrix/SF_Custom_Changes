@@ -18,29 +18,29 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
-"","""Items on ERP""","Items on ERP","Item","No","Report Builder",0,0,1,"","","{""filters"":[[""Item"",""name"",""like"",""sp%""]],""columns"":[[""name"",""Item""],[""item_name"",""Item""],[""item_group"",""Item""],[""description"",""Item""],[""has_serial_no"",""Item""],[""is_sales_item"",""Item""],[""is_service_item"",""Item""],[""customer_code"",""Item""]],""sort_by"":""Item.barcode"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
-"","""Stock Ledger""","Stock Ledger","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","Stock"
-"","""Batch Value""","Batch Value","Stock Ledger Entry","No","Query Report",1,0,1,"SELECT DISTINCT
-`tabStock Ledger Entry`.`item_code` as ""Item:Link/Item:100"",
+"","""Batch Value""","Batch Value","Stock Ledger Entry","No","Query Report",0,0,1,"SELECT
+`tabStock Ledger Entry`.`item_code` as ""Item Name::100"",
+`tabStock Ledger Entry`.`stock_uom` as ""UOM:Link/UOM:80"",
 `tabStock Ledger Entry`.`batch_no` as ""Batch:Link/Batch:100"",
 `tabStock Ledger Entry`.`warehouse` as ""Warehouse:Link/Warehouse:120"",
-`tabStock Ledger Entry`.`qty_after_transaction` as ""Available Qty:Float:80"",
-`tabStock Ledger Entry`.`stock_uom` as ""UOM:Link/UOM:80"",
-`tabStock Ledger Entry`.`valuation_rate` as ""Valuation Rate:Currency:80"",
-`tabStock Ledger Entry`.`incoming_rate` as ""Incoming Rate:Currency:80"",
-`tabStock Ledger Entry`.`stock_value` as ""Batch Value:Currency:80"",
+`tabStock Ledger Entry`.`voucher_no` as ""Transaction::80"",
+`tabStock Ledger Entry`.`actual_qty` as ""Transaction Quantity:Float:80"",
+`tabStock Ledger Entry`.`stock_value_difference` as ""Stock Value Difference:Currency:80"",
+`tabStock Ledger Entry`.`stock_value_difference`/`tabStock Ledger Entry`.`actual_qty` as ""Valuation Rate (Batch):Currency:80"",
+`tabStock Ledger Entry`.`valuation_rate` as ""Valuation Rate (Item):Currency:80"",
 `tabStock Ledger Entry`.`posting_date` as ""Posting Date:Date:80""
 
 FROM
    `tabStock Ledger Entry`
 
 WHERE
-   `tabStock Ledger Entry`.docstatus=1 and
+   `tabStock Ledger Entry`.`item_code` = %(item_code)s and
+   `tabStock Ledger Entry`.docstatus = 1 and
    `tabStock Ledger Entry`.`posting_date` >= %(from_date)s and
    `tabStock Ledger Entry`.`posting_date` <= %(to_date)s
 
-GROUP BY
-   `tabStock Ledger Entry`.`batch_no`","frappe.query_reports[""Batch Value""] = {
+ORDER BY
+   `tabStock Ledger Entry`.`posting_date` ASC","frappe.query_reports[""Batch Value""] = {
 	""filters"": [
 		{
 			""fieldname"":""from_date"",
@@ -57,9 +57,170 @@ GROUP BY
 			""width"": ""80"",
 			""default"": frappe.datetime.get_today(),
                         ""reqd"" : 1
+		},
+		{
+			""fieldname"":""item_code"",
+			""label"": __(""Item""),
+			""fieldtype"": ""Link"",
+			""options"": ""Item"",
+                        ""reqd"" : 1
 		}
 	]
 }","","Stock"
+"","""File No-Attachments Report""","File No-Attachments Report","File Data","No","Query Report",0,0,1,"SELECT
+  name as ""Doc ID::200""
+FROM
+  `tabSales Order`
+WHERE
+name NOT IN (SELECT attached_to_name FROM `tabFile Data`) and
+docstatus = 1
+
+UNION
+
+SELECT
+  name as ""Doc ID::80""
+FROM
+  `tabDelivery Note`
+WHERE
+name NOT IN (SELECT attached_to_name FROM `tabFile Data`) and
+docstatus = 1
+
+UNION
+
+SELECT
+  name as ""Doc ID::80""
+FROM
+  `tabSales Invoice`
+WHERE
+name NOT IN (SELECT attached_to_name FROM `tabFile Data`) and
+docstatus = 1
+
+UNION
+
+SELECT
+  name as ""Doc ID::80""
+FROM
+  `tabPurchase Order`
+WHERE
+name NOT IN (SELECT attached_to_name FROM `tabFile Data`) and
+docstatus = 1
+
+UNION
+
+SELECT
+  name as ""Doc ID::80""
+FROM
+  `tabPurchase Receipt`
+WHERE
+name NOT IN (SELECT attached_to_name FROM `tabFile Data`) and
+docstatus = 1
+
+UNION
+
+SELECT
+  name as ""Doc ID::80""
+FROM
+  `tabPurchase Invoice`
+WHERE
+name NOT IN (SELECT attached_to_name FROM `tabFile Data`) and
+docstatus = 1
+
+UNION
+
+SELECT
+  name as ""Doc ID::80""
+FROM
+  `tabBatch`
+WHERE
+name NOT IN (SELECT attached_to_name FROM `tabFile Data`) and
+docstatus = 0","","","Core"
+"","""File Attachments Report""","File Attachments Report","File Data","No","Query Report",0,0,1,"SELECT
+    creation as ""Created On::90"",
+    owner as ""Owner::150"",
+    file_name as ""Document Name::250"",
+    attached_to_doctype as ""Attached On::200"",
+    attached_to_name as ""Attached To:Dynamic Link/Attached On:150""
+FROM `tabFile Data`
+ORDER BY attached_to_doctype","","","Core"
+"","""Check Register with Pay To (1)""","Check Register with Pay To (1)","Journal Voucher","No","Query Report",0,0,1,"SELECT
+`tabJournal Voucher`.`cheque_no` as ""Reference::80"",
+`tabJournal Voucher`.`posting_date` as ""Posting Date:Date:80"",
+`tabJournal Voucher`.`pay_to_recd_from` as ""Pay-To-Recd-Frm::200"",
+`tabJournal Voucher`.`name` as ""JV#:Link/Journal Voucher:80"",
+`tabJournal Voucher`.`remark` as ""Remark::400"",
+`tabJournal Voucher`.`total_amount` as ""Amount:Currency:80"",
+`tabJournal Voucher Detail`.`balance` as ""Account Balance:Currency:80""
+
+FROM
+     `tabJournal Voucher`, `tabJournal Voucher Detail`
+
+WHERE
+  `tabJournal Voucher Detail`.`account` = %(account)s and
+  `tabJournal Voucher Detail`.`parent` = `tabJournal Voucher`.`name` and
+  `tabJournal Voucher`.`docstatus` = 1","frappe.query_reports[""Check Register with Pay To (1)""] = {
+	""filters"": [
+                 {
+			""fieldname"":""company"",
+			""label"": __(""Company""),
+			""fieldtype"": ""Link"",
+			""options"": ""Company"",
+			""default"": frappe.defaults.get_user_default(""company""),
+			""reqd"": 1
+		},
+		{
+			""fieldname"":""from_date"",
+			""label"": __(""From Date""),
+			""fieldtype"": ""Date"",
+			""default"": frappe.defaults.get_user_default(""year_start_date""),
+			""width"": ""80""
+		},
+		{
+			""fieldname"":""to_date"",
+			""label"": __(""To Date""),
+			""fieldtype"": ""Date"",
+			""default"": get_today()
+		},
+		{
+			""fieldname"":""account"",
+			""label"": __(""Bank Account""),
+			""fieldtype"": ""Link"",
+			""options"": ""Account"",
+                        ""default"": ""Wells Fargo Checking - SF"",
+			""get_query"": function() {
+				return {
+					""query"": ""erpnext.controllers.queries.get_account_list"", 
+					""filters"": [
+						['Account', 'account_type', 'in', 'Bank, Cash'],
+						['Account', 'group_or_ledger', '=', 'Ledger'],
+					]
+				}
+			}
+		},
+	]
+}","","Accounts"
+"","""Custom Sales Partners Commission""","Custom Sales Partners Commission","Sales Invoice","No","Query Report",1,0,1,"SELECT
+    name as ""Sales Invoice:Link/Sales Invoice:130"",
+    posting_date as ""Date::80"",
+    customer ""Customer:Link/Customer:150"",
+    po_no as ""PO#:Data:80"",
+    sales_rep_sm as ""SM#:Data:100"",
+    sales_partner as ""Sales Partner:Link/Sales Partner:140"",
+	sum(net_total) as ""Amount:Currency:90"",
+	sum(total_commission) as ""Commission:Currency:60"",
+	sum(total_commission)*100/sum(net_total) as ""Rate:Float:50"",
+        payments_made as ""Pmts:Currency:90"",
+        payment_details as ""Pmt JV:Link/Journal Voucher:80"",
+        sum(total_commission) - sum(payments_made) as ""Comm Due:Currency:60"" 
+FROM
+	`tabSales Invoice`
+WHERE
+	docstatus = 1 and ifnull(net_total, 0) > 0 and ifnull(total_commission, 0) > 0 and outstanding_amount = 0.00
+GROUP BY
+	name
+ORDER BY
+	""Total Commission:Currency:120""","","","SF Custom Changes"
+"","""Items on ERP""","Items on ERP","Item","No","Report Builder",0,0,1,"","","{""filters"":[[""Item"",""name"",""like"",""sp%""]],""columns"":[[""name"",""Item""],[""item_name"",""Item""],[""item_group"",""Item""],[""description"",""Item""],[""has_serial_no"",""Item""],[""is_sales_item"",""Item""],[""is_service_item"",""Item""],[""customer_code"",""Item""]],""sort_by"":""Item.barcode"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
+"","""Stock Ledger""","Stock Ledger","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","Stock"
 "","""Custom Stock Balance""","Stock Balance","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","SF Custom Changes"
 "","""Stock Balance""","Stock Balance","Stock Ledger Entry","Yes","Script Report",1,0,1,"","","","Stock"
 "","""Batch Report with Lot Ctn & BOL#""","Batch Report with Lot Ctn & BOL#","Batch","No","Report Builder",0,0,1,"","","{""filters"":[],""columns"":[[""name"",""Batch""],[""item"",""Batch""],[""description"",""Batch""],[""warehouse_lot_id"",""Batch""],[""container"",""Batch""],[""master_bol"",""Batch""],[""expiry_date"",""Batch""]],""sort_by"":""Batch.item"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
@@ -100,27 +261,6 @@ where
   and `tabPurchase Invoice`.`docstatus` = 1","","","Accounts"
 "","""Credit Card entries with Description""","Credit Card entries with Description","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice"",""supplier_name"",""like"",""%Visa%""]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""item_code"",""Purchase Invoice Item""],[""description"",""Purchase Invoice Item""],[""expense_account"",""Purchase Invoice Item""],[""amount"",""Purchase Invoice Item""]],""sort_by"":""Purchase Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
 "","""Credit Card Entries (Taxes & Charges) with Description""","Credit Card Entries (Taxes & Charges) with Description","Purchase Invoice","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Invoice"",""docstatus"",""!="",""2""],[""Purchase Invoice"",""supplier_name"",""like"",""%visa%""]],""columns"":[[""name"",""Purchase Invoice""],[""supplier_name"",""Purchase Invoice""],[""posting_date"",""Purchase Invoice""],[""description"",""Purchase Taxes and Charges""],[""account_head"",""Purchase Taxes and Charges""],[""tax_amount"",""Purchase Taxes and Charges""]],""sort_by"":""Purchase Invoice.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Accounts"
-"","""Custom Sales Partners Commission""","Custom Sales Partners Commission","Sales Invoice","Yes","Query Report",1,0,1,"SELECT
-    name as ""Sales Invoice:Link/Sales Invoice:130"",
-    posting_date as ""Date::80"",
-    customer ""Customer:Link/Customer:150"",
-    po_no as ""PO#:Data:80"",
-    sales_rep_sm as ""SM#:Data:100"",
-    sales_partner as ""Sales Partner:Link/Sales Partner:140"",
-	sum(net_total) as ""Amount:Currency:90"",
-	sum(total_commission) as ""Commission:Currency:60"",
-	sum(total_commission)*100/sum(net_total) as ""Rate:Float:50"",
-        payments_made as ""Pmts:Currency:90"",
-        payment_details as ""Pmt JV:Link/Journal Voucher:80"",
-        (sum(total_commission) - payments_made) as ""Comm Due:Currency:60"" 
-FROM
-	`tabSales Invoice`
-WHERE
-	docstatus = 1 and ifnull(net_total, 0) > 0 and ifnull(total_commission, 0) > 0 and outstanding_amount = 0.00
-GROUP BY
-	name
-ORDER BY
-	""Total Commission:Currency:120""","","","SF Custom Changes"
 "","""Customer-wise Price""","Customer-wise Price","Sales Order","No","Report Builder",0,0,1,"","","{""filters"":[[""Sales Order"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Sales Order""],[""transaction_date"",""Sales Order""],[""customer"",""Sales Order""],[""item_code"",""Sales Order Item""],[""item_name"",""Sales Order Item""],[""qty"",""Sales Order Item""],[""quantity_in_weight"",""Sales Order Item""],[""weight_uom"",""Sales Order Item""],[""rate_per_weight_unit"",""Sales Order Item""]],""sort_by"":""Sales Order.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Selling"
 "","""Gross Profit""","Gross Profit","Sales Invoice","Yes","Script Report",1,0,1,"","","","Accounts"
 "","""Voided Check""","Voided Check","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
@@ -128,14 +268,6 @@ ORDER BY
 "","""Batch-Wise Balance History Report""","Batch-Wise Balance History Report","Stock Ledger Entry","Yes","Script Report",0,1,1,"","","","SF Custom Changes"
 "","""Supplier-wise Price""","Supplier-wise Price","Purchase Order","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Order"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Purchase Order""],[""transaction_date"",""Purchase Order""],[""supplier"",""Purchase Order""],[""item_code"",""Purchase Order Item""],[""item_name"",""Purchase Order Item""],[""quantity_in_weight"",""Purchase Order Item""],[""weight_uom"",""Purchase Order Item""],[""rate_per_weight_unit"",""Purchase Order Item""]],""sort_by"":""Purchase Order.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Buying"
 "","""Running Balance""","Running Balance","Journal Voucher","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
-"","""File Attachments Report""","File Attachments Report","File Data","Yes","Query Report",0,0,1,"SELECT
-    creation as ""Created On::90"",
-    owner as ""Owner::150"",
-    file_name as ""Document Name::250"",
-    attached_to_doctype as ""Attached On::200"",
-    attached_to_name as ""Attached To:Dynamic Link/Attached On:150""
-FROM `tabFile Data`
-ORDER BY attached_to_doctype","","","Core"
 "","""Stock Balance by Batch""","Stock Balance by Batch","Stock Ledger Entry","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Custom Stock Projected Qty""","Custom Stock Projected Qty","Item","Yes","Script Report",0,0,1,"","","","SF Custom Changes"
 "","""Daily Dispatch""","Daily Dispatch","Delivery Note","Yes","Query Report",1,0,1,"select count(*), posting_date from `tabDelivery Note` group by posting_date;","","","Selling"

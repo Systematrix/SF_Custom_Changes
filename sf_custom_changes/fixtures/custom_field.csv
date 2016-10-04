@@ -18,6 +18,15 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Delivery Note-mode_of_payment""","Delivery Note","Link","Mode of Payment","","","Mode of Payment","","mode_of_payment",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Delivery Note-communications""","Delivery Note","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
+"","""Delivery Note-communication_html""","Delivery Note","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
+"","""Delivery Note-communication_history""","Delivery Note","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Delivery Note-delivery_date""","Delivery Note","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"87","",1,"",1,0,0,1,0,0
+"","""Delivery Note-tracking_code""","Delivery Note","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Delivery Note-shipping_terms""","Delivery Note","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Order-mode_of_payment""","Sales Order","Link","Mode of Payment","","","Mode of Payment","","mode_of_payment",0,0,1,0,"","",0,"",0,0,0,0,0,0
+"","""Customer-mode_of_payment""","Customer","Link","Mode of Payment","","","Mode of Payment","","mode_of_payment",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice-credit_days""","Purchase Invoice","Int","Credit Days","","","supplier.credit_days","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Sales Invoice-credit_days""","Sales Invoice","Int","Credit Days","","","customer.credit_days","","credit_days",0,0,0,0,"58","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-payment_days""","Sales Invoice","Data","Payment Days","","","","","payment_days",0,0,0,0,"","",1,"",0,0,0,0,0,0
@@ -109,7 +118,6 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-weight_uom""","Purchase Order Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-net_weight""","Purchase Order Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order Item-quantity_in_weight""","Purchase Order Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,1,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note-delivery_date""","Delivery Note","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"160px","",1,"",1,0,0,1,0,0
 "","""Sales Order-sales_rep_sm""","Sales Order","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Warehouse-fax_number""","Warehouse","Data","Fax Number","","","","","fax_number",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Warehouse-contact_name""","Warehouse","Data","Contact Name","","","","","contact_name",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -133,11 +141,6 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Sales Order-credit_days""","Sales Order","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Delivery Note-credit_days""","Delivery Note","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Delivery Note-sales_rep_sm""","Delivery Note","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note-shipping_terms""","Delivery Note","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note-tracking_code""","Delivery Note","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Delivery Note-communication_history""","Delivery Note","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Delivery Note-communication_html""","Delivery Note","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
-"","""Delivery Note-communications""","Delivery Note","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Purchase Order-credit_days""","Purchase Order","Int","Payment Terms (Days)","","","","","credit_days",0,0,0,0,"","",0,"",0,0,0,0,0,1
 "","""Purchase Order-is_purchase_contract""","Purchase Order","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Purchase Order-due_date""","Purchase Order","Date","Payment Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
