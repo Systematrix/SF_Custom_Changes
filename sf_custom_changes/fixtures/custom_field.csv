@@ -18,6 +18,10 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Sales Invoice-payment_days""","Sales Invoice","Data","Credit Days","","","","","payment_days",0,0,0,0,"","",1,"",0,0,0,0,0,0
+"","""Sales Invoice-lr_date""","Sales Invoice","Date","Ship Date (DN)","","","","","lr_date",0,0,1,0,"","",0,"",1,0,0,0,0,0
+"","""Sales Invoice-sales_rep_sm""","Sales Invoice","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"72","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-credit_days""","Sales Invoice","Int","Credit Days","","","customer.credit_days","","credit_days",0,0,0,0,"58","",0,"",1,0,0,0,0,0
 "","""Delivery Note-mode_of_payment""","Delivery Note","Link","Mode of Payment","","","Mode of Payment","","mode_of_payment",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note-communications""","Delivery Note","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Delivery Note-communication_html""","Delivery Note","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
@@ -28,8 +32,6 @@
 "","""Sales Order-mode_of_payment""","Sales Order","Link","Mode of Payment","","","Mode of Payment","","mode_of_payment",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Customer-mode_of_payment""","Customer","Link","Mode of Payment","","","Mode of Payment","","mode_of_payment",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice-credit_days""","Purchase Invoice","Int","Credit Days","","","supplier.credit_days","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Sales Invoice-credit_days""","Sales Invoice","Int","Credit Days","","","customer.credit_days","","credit_days",0,0,0,0,"58","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-payment_days""","Sales Invoice","Data","Payment Days","","","","","payment_days",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Sales Invoice-communications""","Sales Invoice","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Sales Invoice-communication_html""","Sales Invoice","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
 "","""Sales Invoice-communication_history""","Sales Invoice","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
@@ -41,8 +43,6 @@
 "","""Sales Invoice-shipping_terms""","Sales Invoice","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-terms_and_conditions""","Sales Invoice","Text Editor","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-po_no""","Sales Invoice","Data","PO No","","","","","po_no",0,0,0,0,"82","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-lr_date""","Sales Invoice","Date","Ship Date (DN)","","","","","lr_date",0,0,1,0,"","",0,"",1,0,0,0,0,0
-"","""Sales Invoice-sales_rep_sm""","Sales Invoice","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"72","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-batch_no""","Purchase Invoice Item","Link","Product Code","","","Batch","","batch_no",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""Batch-column_break_n1""","Batch","Column Break","column break n1","","","","","column_break_n1",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Batch-master_bol""","Batch","Data","Master BoL#","","","","","master_bol",0,0,0,0,"","",0,"",0,0,0,0,0,0

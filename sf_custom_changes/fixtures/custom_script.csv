@@ -19,7 +19,7 @@
 "Info:","","Valid DocType",""
 "Start entering data below this line"
 "","""Stock Entry-Client""","Stock Entry","cur_frm.add_fetch('terms', 'terms', 'terms_and_conditions_details');
-cur_frm.add_fetch('batch_no','warehouse_lo','warehouse_lot_id');
+cur_frm.add_fetch('batch_no','warehouse_lot_id','warehouse_lot_id');
 cur_frm.cscript.ship_to=function() {
 	erpnext.utils.get_address_display(this.frm, ""ship_to"", ""ship_to_data"");
 };
