@@ -18,6 +18,18 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Purchase Receipt-is_purchase_contract""","Purchase Receipt","Check","Part of Purchase Contract","","","","","is_purchase_contract",0,0,1,0,"","",0,"",1,0,0,0,0,0
+"","""Purchase Receipt-linked_pc""","Purchase Receipt","Link","Linked PC","","","Purchase Order","","linked_pc",0,0,1,0,"","",0,"is_purchase_contract",0,0,0,0,0,0
+"","""Purchase Receipt-communications""","Purchase Receipt","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
+"","""Purchase Receipt-communication_html""","Purchase Receipt","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
+"","""Purchase Receipt-communication_history""","Purchase Receipt","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Purchase Receipt-expected_arrival_date""","Purchase Receipt","Date","Expected Arrival Date","","","","","expected_arrival_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Purchase Order-linked_pc""","Purchase Order","Link","Linked PC","","","Purchase Order","","linked_pc",0,0,0,0,"","",0,"is_purchase_contract",0,0,0,0,0,0
+"","""Purchase Order-communications""","Purchase Order","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
+"","""Purchase Order-communication_html""","Purchase Order","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,1,0,0,0
+"","""Purchase Order-communication_history""","Purchase Order","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Purchase Order-due_date""","Purchase Order","Date","Payment Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
+"","""Purchase Order-is_purchase_contract""","Purchase Order","Check","Part of Purchase Contract","","","","","is_purchase_contract",0,0,0,0,"","",0,"eval:doc.naming_series=='PO-'",1,0,0,0,0,0
 "","""Stock Entry Detail-weight_uom""","Stock Entry Detail","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Stock Entry Detail-item_weight""","Stock Entry Detail","Float","Item Weight","","3","","","item_weight",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Stock Entry Detail-warehouse_lot_id""","Stock Entry Detail","Data","Warehouse Lot Id","","","","","warehouse_lot_id",0,0,1,0,"","",0,"",0,0,0,0,0,0
@@ -111,8 +123,6 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-net_weight""","Purchase Invoice Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"eval:in_list([""Product""], doc.invoice_tp)",0,0,0,0,0,0
 "","""Purchase Invoice Item-quantity_in_weight""","Purchase Invoice Item","Float","Quantity in Weight","","","","","quantity_in_weight",0,0,0,0,"","",0,"eval:in_list([""Product""], doc.invoice_tp)",0,0,0,0,0,0
 "","""Lead-supplier""","Lead","Link","From Supplier","","","Supplier","","supplier",0,0,0,0,"","",0,"eval:doc.source == 'Supplier'",0,0,0,0,0,0
-"","""Purchase Order-communications""","Purchase Order","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
-"","""Purchase Order-communication_history""","Purchase Order","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Employee-social_security_number""","Employee","Data","Social Security Number","","","","","social_security_number",0,1,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Receipt Item-weight_uom""","Purchase Receipt Item","Link","Weight UOM","","","UOM","","weight_uom",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Receipt Item-net_weight""","Purchase Receipt Item","Float","Net Weight","","","","","net_weight",0,0,1,0,"","",0,"eval:doc.uom==doc.stock_uom",0,0,0,0,0,0
@@ -144,20 +154,12 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Delivery Note-credit_days""","Delivery Note","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Delivery Note-sales_rep_sm""","Delivery Note","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order-credit_days""","Purchase Order","Int","Payment Terms (Days)","","","","","credit_days",0,0,0,0,"","",0,"",0,0,0,0,0,1
-"","""Purchase Order-is_purchase_contract""","Purchase Order","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Purchase Order-due_date""","Purchase Order","Date","Payment Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
-"","""Purchase Order-communication_html""","Purchase Order","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,1,0,0,0
 "","""Purchase Receipt-credit_days""","Purchase Receipt","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Purchase Receipt-due_date""","Purchase Receipt","Date","Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Journal Voucher-address_name""","Journal Voucher","Link","Address for Check Print","","","Address","","address_name",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Journal Voucher-address""","Journal Voucher","Small Text","Address","","","","","address",0,0,0,0,"","",1,"",1,0,0,0,0,0
-"","""Purchase Receipt-is_purchase_contract""","Purchase Receipt","Check","Is Purchase Contract","","","","","is_purchase_contract",0,0,1,0,"","",0,"",1,0,0,0,0,0
 "","""Purchase Receipt-prevdoc_docname""","Purchase Receipt","Data","Purchase Contract Load Id","","","Purchase Order","","prevdoc_docname",0,0,0,0,"","",0,"is_purchase_contract",1,0,0,0,0,0
-"","""Purchase Receipt-communication_history""","Purchase Receipt","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Purchase Receipt-communication_html""","Purchase Receipt","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
-"","""Purchase Receipt-communications""","Purchase Receipt","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Stock Entry-ship_to""","Stock Entry","Link","Ship To","","","Address","","ship_to",0,0,0,0,"","",0,"eval:doc.purpose==""Material Issue""",1,0,0,0,0,0
 "","""Stock Entry-ship_date""","Stock Entry","Date","Ship Date","","","","","ship_date",0,0,0,0,"","",0,"eval:doc.purpose==""Material Issue""",0,0,0,0,0,0
 "","""Stock Entry-expected_ship_date""","Stock Entry","Date","Expected Ship Date","","","","","expected_ship_date",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0
 "","""Stock Entry-ship_to_data""","Stock Entry","Small Text","Ship To Data","","","","","ship_to_data",0,0,0,0,"","",1,"eval:doc.purpose==""Material Issue""",0,0,0,0,0,0
-"","""Purchase Receipt-expected_arrival_date""","Purchase Receipt","Date","Expected Arrival Date","","","","","expected_arrival_date",0,0,0,0,"","",0,"",0,0,0,0,0,0

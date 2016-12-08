@@ -18,6 +18,39 @@
 "Type:","Data (text)","Link","Code"
 "Info:","","Valid DocType",""
 "Start entering data below this line"
+"","""Purchase Order-Client""","Purchase Order","cur_frm.add_fetch('item_code','net_weight','net_weight');
+cur_frm.add_fetch('item_code','weight_uom','weight_uom');
+cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
+    var item = frappe.get_doc(cdt, cdn);
+    var qty = item.net_weight ? flt(item.quantity_in_weight) / flt(item.net_weight) : 0.0;
+    frappe.model.set_value(cdt, cdn, ""qty"", qty);
+};
+cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
+    var item = frappe.get_doc(cdt, cdn);
+    var rate = item.rate_per_weight_unit * item.quantity_in_weight / item.qty;
+    frappe.model.set_value(cdt, cdn, ""rate"", rate);
+};
+cur_frm.add_fetch('supplier','credit_days','credit_days')
+frappe.ui.form.on(""Purchase Order"", ""credit_days"", function(frm) {
+    var nos = frm.doc.credit_days* 1;
+    var ddate = frappe.datetime.add_days(frm.doc.transaction_date,nos);
+    cur_frm.set_value(""due_date"", ddate);
+});
+cur_frm.communication_view = new frappe.views.CommunicationList({
+                list: frappe.get_list(""Communication"", {""parent"": cur_frm.doc.name, ""parenttype"": ""Purchase Order""}),
+                parent: cur_frm.fields_dict.communication_html.wrapper,
+                doc: cur_frm.doc,
+                recipients: cur_frm.doc.contact_email
+            });
+frappe.ui.form.on(""Purchase Order"", ""onload"", function(frm) {
+    cur_frm.set_query(""linked_pc"", function() {
+        return {
+            ""filters"": {
+                ""docstatus"": 1
+            }
+        };
+    });
+})"
 "","""Stock Entry-Client""","Stock Entry","cur_frm.add_fetch('terms', 'terms', 'terms_and_conditions_details');
 cur_frm.add_fetch('batch_no','warehouse_lot_id','warehouse_lot_id');
 cur_frm.add_fetch('item_code','net_weight','item_weight');
@@ -193,30 +226,6 @@ cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
 cur_frm.add_fetch('customer','credit_days','credit_days');
 cur_frm.communication_view = new frappe.views.CommunicationList({
                 list: frappe.get_list(""Communication"", {""parent"": cur_frm.doc.name, ""parenttype"": ""Delivery Note""}),
-                parent: cur_frm.fields_dict.communication_html.wrapper,
-                doc: cur_frm.doc,
-                recipients: cur_frm.doc.contact_email
-            });"
-"","""Purchase Order-Client""","Purchase Order","cur_frm.add_fetch('item_code','net_weight','net_weight');
-cur_frm.add_fetch('item_code','weight_uom','weight_uom');
-cur_frm.cscript.quantity_in_weight = function(doc, cdt, cdn) {
-    var item = frappe.get_doc(cdt, cdn);
-    var qty = item.net_weight ? flt(item.quantity_in_weight) / flt(item.net_weight) : 0.0;
-    frappe.model.set_value(cdt, cdn, ""qty"", qty);
-};
-cur_frm.cscript.rate_per_weight_unit = function(doc, cdt, cdn) {
-    var item = frappe.get_doc(cdt, cdn);
-    var rate = item.rate_per_weight_unit * item.quantity_in_weight / item.qty;
-    frappe.model.set_value(cdt, cdn, ""rate"", rate);
-};
-cur_frm.add_fetch('supplier','credit_days','credit_days')
-frappe.ui.form.on(""Purchase Order"", ""credit_days"", function(frm) {
-    var nos = frm.doc.credit_days* 1;
-    var ddate = frappe.datetime.add_days(frm.doc.transaction_date,nos);
-    cur_frm.set_value(""due_date"", ddate);
-});
-cur_frm.communication_view = new frappe.views.CommunicationList({
-                list: frappe.get_list(""Communication"", {""parent"": cur_frm.doc.name, ""parenttype"": ""Purchase Order""}),
                 parent: cur_frm.fields_dict.communication_html.wrapper,
                 doc: cur_frm.doc,
                 recipients: cur_frm.doc.contact_email
