@@ -18,6 +18,28 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
+"","""Purchase Receipt Report""","Purchase Receipt Report","Purchase Receipt","No","Query Report",0,0,1,"SELECT
+`tabPurchase Receipt`.`name` as ""PR ID:Link/Purchase Receipt:150"",
+`tabPurchase Receipt`.`supplier` as ""Supplier:Link/Supplier:250"",
+`tabPurchase Receipt`.`posting_date` as ""Posting Date:Date:80"",
+`tabPurchase Receipt`.`status` as ""PR Status::80"",
+`tabPurchase Receipt`.`prevdoc_docname` as ""PC Load Id::80"",
+`tabPurchase Receipt`.`grand_total` as ""Grand Total:Currency:80"",
+`tabPurchase Receipt`.`linked_pc` as ""Linked to PC:Link/Purchase Order:80"",
+`tabPurchase Receipt`.`is_purchase_contract` as ""Part of PC:Int:80"",
+`tabPurchase Receipt`.`transporter_name` as ""Transporter Name::80"",
+`tabPurchase Receipt`.`_user_tags` as ""Tags::250""
+
+FROM
+`tabPurchase Receipt`
+
+WHERE
+`tabPurchase Receipt`.`docstatus` != 2
+
+ORDER BY
+`tabPurchase Receipt`.`posting_date` DESC","","","Stock"
+"","""LCV Customized Rpt PS""","LCV Customized Rpt PS","Landed Cost Voucher","No","Report Builder",0,0,1,"","","{""filters"":[[""Landed Cost Voucher"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Landed Cost Voucher""],[""pinv"",""Landed Cost Taxes and Charges""],[""docstatus"",""Landed Cost Voucher""],[""total_taxes_and_charges"",""Landed Cost Voucher""],[""purchase_receipt"",""Landed Cost Item""],[""pinv_supplier"",""Landed Cost Taxes and Charges""],[""amount"",""Landed Cost Taxes and Charges""],[""item_code"",""Landed Cost Item""],[""_user_tags"",""Landed Cost Voucher""]],""sort_by"":""Landed Cost Voucher.name"",""sort_order"":""asc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
+"","""Purchase Receipt Customized PS""","Purchase Receipt Customized PS","Purchase Receipt","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Receipt"",""docstatus"",""!="",""2""]],""columns"":[[""name"",""Purchase Receipt""],[""supplier"",""Purchase Receipt""],[""posting_date"",""Purchase Receipt""],[""status"",""Purchase Receipt""],[""prevdoc_docname"",""Purchase Receipt""],[""grand_total_import"",""Purchase Receipt""],[""expected_arrival_date"",""Purchase Receipt""],[""linked_pc"",""Purchase Receipt""],[""is_purchase_contract"",""Purchase Receipt""],[""transporter_name"",""Purchase Receipt""],[""_user_tags"",""Purchase Receipt""]],""sort_by"":""Purchase Receipt.modified"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
 "","""Batch Value 1""","Batch Value 1","Stock Ledger Entry","No","Query Report",0,0,1,"SELECT
 `tabStock Ledger Entry`.`item_code` as ""Item Name::100"",
 `tabStock Ledger Entry`.`stock_uom` as ""UOM:Link/UOM:80"",
