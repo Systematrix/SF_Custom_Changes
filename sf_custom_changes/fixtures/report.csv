@@ -25,7 +25,7 @@
 `tabPurchase Receipt`.`status` as ""PR Status::80"",
 `tabPurchase Receipt`.`prevdoc_docname` as ""PC Load Id::80"",
 `tabPurchase Receipt`.`grand_total` as ""Grand Total:Currency:80"",
-`tabPurchase Receipt`.`linked_pc` as ""Linked to PC:Link/Purchase Order:80"",
+`tabPurchase Receipt`.`linked_pc` as ""Linked to PC:Link/Purchase Order:150"",
 `tabPurchase Receipt`.`is_purchase_contract` as ""Part of PC:Int:80"",
 `tabPurchase Receipt`.`transporter_name` as ""Transporter Name::80"",
 `tabPurchase Receipt`.`_user_tags` as ""Tags::250""
