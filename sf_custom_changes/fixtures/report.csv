@@ -18,6 +18,44 @@
 "Type:","Data (text)","Data","Link","Select","Select","Check","Check","Check","Code","Code","Text","Link"
 "Info:","","","Valid DocType","One of: No, Yes","One of: Report Builder, Query Report, Script Report","0 or 1","0 or 1","0 or 1","","","","Valid Module Def"
 "Start entering data below this line"
+"","""1099 Report""","1099 Report","Journal Voucher","No","Query Report",0,0,1,"SELECT
+`tabJournal Voucher`.`name` as ""JV:Link/Journal Voucher:150"",
+(`tabJournal Voucher Detail`.`account` where `tabJournal Voucher`.`docstatus` = 1 and `tabJournal Voucher Detail`.`parent` = `tabJournal Voucher`.`name` and `tabAccount`.`master_type` = ""Supplier"" and `tabSupplier`.`supplier_code` = ""1099"", 0) as ""Supplier:Link/Account:150"",
+`tabJournal Voucher`.`posting_date` as ""Posting Date:Date:150"",
+`tabJournal Voucher Detail`.`against_voucher` as ""PINV:Link/Purchase Invoice:150"",
+`tabJournal Voucher Detail`.`credit` as ""Credit Amount:Currency:150"",
+`tabJournal Voucher Detail`.`debit` as ""Debit Amount:Currency:150"",
+`tabJournal Voucher`.`cheque_no` as ""Check#::100"",
+`tabJournal Voucher`.`cheque_date` as ""Check Date:Date:150"",
+`tabJournal Voucher`.`remark` as ""Remark::250""
+
+FROM
+`tabJournal Voucher`, `tabJournal Voucher Detail`, `tabAccount`, `tabSupplier`
+
+WHERE
+`tabJournal Voucher`.`docstatus` = 1 and
+`tabJournal Voucher Detail`.`parent` = `tabJournal Voucher`.`name`","frappe.query_reports[""1066 Report""] = {
+	""filters"": [
+		{
+			""fieldname"":""from_date"",
+			""label"": __(""From Date""),
+			""fieldtype"": ""Date"",
+			""width"": ""80"",
+			""default"": sys_defaults.year_start_date,
+                        ""reqd"" : 1
+		},
+		{
+			""fieldname"":""to_date"",
+			""label"": __(""To Date""),
+			""fieldtype"": ""Date"",
+			""width"": ""80"",
+			""default"": frappe.datetime.get_today(),
+                        ""reqd"" : 1
+		}
+
+	]
+}","","Accounts"
+"","""Open Exotic Fruits Orders (not delivered yet)""","Open Exotic Fruits Orders (not delivered yet)","Purchase Receipt","No","Report Builder",0,0,1,"","","{""filters"":[[""Purchase Receipt"",""docstatus"",""!="",""2""],[""Purchase Receipt"",""supplier"",""="",""Exotic Fruits""],[""Purchase Receipt"",""status"",""="",""Draft""]],""columns"":[[""name"",""Purchase Receipt""],[""prevdoc_docname"",""Purchase Receipt Item""],[""supplier"",""Purchase Receipt""],[""item_code"",""Purchase Receipt Item""],[""posting_date"",""Purchase Receipt""],[""status"",""Purchase Receipt""],[""company"",""Purchase Receipt""],[""due_date"",""Purchase Receipt""],[""_user_tags"",""Purchase Receipt""]],""sort_by"":""Purchase Receipt._user_tags"",""sort_order"":""desc"",""sort_by_next"":null,""sort_order_next"":""desc""}","Stock"
 "","""Purchase Receipt Report""","Purchase Receipt Report","Purchase Receipt","No","Query Report",0,0,1,"SELECT
 `tabPurchase Receipt`.`name` as ""PR ID:Link/Purchase Receipt:150"",
 `tabPurchase Receipt`.`supplier` as ""Supplier:Link/Supplier:250"",
