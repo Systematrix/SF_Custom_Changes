@@ -18,6 +18,19 @@
 "Type:","Data (text)","Select","Link","Data","Text","Data","Data","Data"
 "Info:","","One of: DocField, DocType","Valid DocType","","","","",""
 "Start entering data below this line"
+"","""Journal Voucher-voucher_type-options""","DocField","Journal Voucher","options","Journal Entry
+Bank Voucher
+Check
+Payment Received
+Cash Voucher
+Credit Card Voucher
+Debit Note
+Credit Note
+Deposit
+EFT
+Write Off Voucher
+Opening Entry","voucher_type","Text",""
+"","""Journal Voucher-read_only_onload""","DocType","Journal Voucher","read_only_onload","","","Check",""
 "","""Sales Invoice-grand_total-width""","DocField","Sales Invoice","width","133","grand_total","",""
 "","""Sales Invoice-outstanding_amount-width""","DocField","Sales Invoice","width","179","outstanding_amount","",""
 "","""Sales Invoice-due_date-width""","DocField","Sales Invoice","width","142","due_date","",""
@@ -603,7 +616,6 @@ PC-","naming_series","Text",""
 "","""Delivery Note Item-item_code-width""","DocField","Delivery Note Item","width","83","item_code","",""
 "","""Delivery Note-delivery_date-width""","DocField","Delivery Note","width","87","delivery_date","",""
 "","""Delivery Note-per_installed-width""","DocField","Delivery Note","width","119","per_installed","",""
-"","""Journal Voucher-read_only_onload""","DocType","Journal Voucher","read_only_onload","","","Check",""
 "","""Item-item_code-reqd""","DocField","Item","reqd","1","item_code","Check",""
 "","""Item-item_code-hidden""","DocField","Item","hidden","0","item_code","Check",""
 "","""Item-naming_series-hidden""","DocField","Item","hidden","1","naming_series","Check",""
