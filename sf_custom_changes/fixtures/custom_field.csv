@@ -18,6 +18,9 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Purchase Invoice Item-batch_no""","Purchase Invoice Item","Link","Product Code","","","Batch","","batch_no",0,0,0,0,"","",0,"",0,0,1,0,1,0
+"","""Purchase Invoice Item-custom_po""","Purchase Invoice Item","Link","Custom PO","","","Purchase Order","","custom_po",0,0,0,0,"","",0,"",0,0,1,0,0,0
+"","""Purchase Invoice Item-custom_pr""","Purchase Invoice Item","Link","Custom PR","","","Purchase Receipt","","custom_pr",0,0,0,0,"","",0,"",0,0,1,0,0,0
 "","""Journal Voucher Detail-remark""","Journal Voucher Detail","Data","Remark","","","","","remark",0,0,0,0,"268","",0,"",0,0,0,1,0,0
 "","""Journal Voucher Detail-against_project""","Journal Voucher Detail","Link","Against Project","","","Project","","against_project",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Receipt-is_purchase_contract""","Purchase Receipt","Check","Part of Purchase Contract","","","","","is_purchase_contract",0,0,1,0,"","",0,"",1,0,0,0,0,0
@@ -61,7 +64,6 @@
 "","""Sales Invoice-shipping_terms""","Sales Invoice","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-terms_and_conditions""","Sales Invoice","Text Editor","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-po_no""","Sales Invoice","Data","PO No","","","","","po_no",0,0,0,0,"82","",0,"",0,0,0,0,0,0
-"","""Purchase Invoice Item-batch_no""","Purchase Invoice Item","Link","Product Code","","","Batch","","batch_no",0,0,0,0,"","",0,"",0,0,0,0,1,0
 "","""Batch-column_break_n1""","Batch","Column Break","column break n1","","","","","column_break_n1",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Batch-master_bol""","Batch","Data","Master BoL#","","","","","master_bol",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Batch-container""","Batch","Data","Container#","","","","","container",0,0,0,0,"","",0,"",0,0,0,0,0,0
