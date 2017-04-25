@@ -18,17 +18,28 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
+"","""Purchase Receipt-linked_pc""","Purchase Receipt","Link","Linked PC","","","Purchase Order","","linked_pc",0,0,1,0,"80","",0,"is_purchase_contract",0,0,0,0,0,0
+"","""Purchase Receipt-expected_arrival_date""","Purchase Receipt","Date","Expected Arrival Date","","","","","expected_arrival_date",0,0,0,0,"198","",0,"",0,0,0,0,0,0
+"","""Purchase Receipt-prevdoc_docname""","Purchase Receipt","Data","Purchase Contract Load Id","","","Purchase Order","","prevdoc_docname",0,0,0,0,"188","",0,"is_purchase_contract",1,0,0,0,0,0
+"","""Purchase Receipt-due_date""","Purchase Receipt","Date","Due Date","","","","","due_date",0,0,0,0,"30","",1,"",0,0,0,0,0,0
+"","""Sales Invoice-note""","Sales Invoice","Text Editor","Note","terms","","","","note",0,0,1,0,"","Note: Past due invoices will be charged a 1.5% monthly (0.05% daily) late fee.",1,"",0,0,0,0,0,0
+"","""Sales Invoice-communications""","Sales Invoice","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
+"","""Sales Invoice-communication_html""","Sales Invoice","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
+"","""Sales Invoice-communication_history""","Sales Invoice","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
+"","""Sales Invoice-delivery_date""","Sales Invoice","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"116","",1,"",1,0,0,1,0,0
+"","""Sales Invoice-sp_outstanding_amount""","Sales Invoice","Currency","Outstanding Amount","","","currency","","sp_outstanding_amount",0,0,1,0,"169","",1,"",1,0,1,0,0,0
+"","""Sales Invoice-payment_details""","Sales Invoice","Link","Commission Payment JV","","","Journal Voucher","","payment_details",0,0,0,0,"","",0,"",0,0,1,0,0,0
+"","""Sales Invoice-payments_made""","Sales Invoice","Currency","Commission Amount Paid","","","currency","","payments_made",0,0,0,0,"93","0",0,"",1,0,1,0,0,0
+"","""Sales Invoice-tracking_code""","Sales Invoice","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-shipping_terms""","Sales Invoice","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
+"","""Sales Invoice-sales_rep_sm""","Sales Invoice","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"144","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice Item-batch_no""","Purchase Invoice Item","Link","Product Code","","","Batch","","batch_no",0,0,0,0,"","",0,"",0,0,1,0,1,0
-"","""Purchase Invoice Item-custom_po""","Purchase Invoice Item","Link","Custom PO","","","Purchase Order","","custom_po",0,0,0,0,"","",0,"",0,0,1,0,0,0
-"","""Purchase Invoice Item-custom_pr""","Purchase Invoice Item","Link","Custom PR","","","Purchase Receipt","","custom_pr",0,0,0,0,"","",0,"",0,0,1,0,0,0
 "","""Journal Voucher Detail-remark""","Journal Voucher Detail","Data","Remark","","","","","remark",0,0,0,0,"268","",0,"",0,0,0,1,0,0
 "","""Journal Voucher Detail-against_project""","Journal Voucher Detail","Link","Against Project","","","Project","","against_project",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Receipt-is_purchase_contract""","Purchase Receipt","Check","Part of Purchase Contract","","","","","is_purchase_contract",0,0,1,0,"","",0,"",1,0,0,0,0,0
-"","""Purchase Receipt-linked_pc""","Purchase Receipt","Link","Linked PC","","","Purchase Order","","linked_pc",0,0,1,0,"","",0,"is_purchase_contract",0,0,0,0,0,0
 "","""Purchase Receipt-communications""","Purchase Receipt","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Purchase Receipt-communication_html""","Purchase Receipt","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
 "","""Purchase Receipt-communication_history""","Purchase Receipt","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Purchase Receipt-expected_arrival_date""","Purchase Receipt","Date","Expected Arrival Date","","","","","expected_arrival_date",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order-linked_pc""","Purchase Order","Link","Linked PC","","","Purchase Order","","linked_pc",0,0,0,0,"","",0,"is_purchase_contract",0,0,0,0,0,0
 "","""Purchase Order-communications""","Purchase Order","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Purchase Order-communication_html""","Purchase Order","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"","",0,"eval:!doc.__islocal",0,0,1,0,0,0
@@ -41,7 +52,6 @@
 "","""Stock Entry-link_pinv""","Stock Entry","Check","Link PINV","","","","","link_pinv",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Sales Invoice-payment_days""","Sales Invoice","Data","Credit Days","","","","","payment_days",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Sales Invoice-lr_date""","Sales Invoice","Date","Ship Date (DN)","","","","","lr_date",0,0,1,0,"","",0,"",1,0,0,0,0,0
-"","""Sales Invoice-sales_rep_sm""","Sales Invoice","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"72","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-credit_days""","Sales Invoice","Int","Credit Days","","","customer.credit_days","","credit_days",0,0,0,0,"58","",0,"",1,0,0,0,0,0
 "","""Delivery Note-mode_of_payment""","Delivery Note","Link","Mode of Payment","","","Mode of Payment","","mode_of_payment",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Delivery Note-communications""","Delivery Note","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
@@ -53,15 +63,6 @@
 "","""Sales Order-mode_of_payment""","Sales Order","Link","Mode of Payment","","","Mode of Payment","","mode_of_payment",0,0,1,0,"","",0,"",0,0,0,0,0,0
 "","""Customer-mode_of_payment""","Customer","Link","Mode of Payment","","","Mode of Payment","","mode_of_payment",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Invoice-credit_days""","Purchase Invoice","Int","Credit Days","","","supplier.credit_days","","credit_days",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Sales Invoice-communications""","Sales Invoice","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
-"","""Sales Invoice-communication_html""","Sales Invoice","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
-"","""Sales Invoice-communication_history""","Sales Invoice","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
-"","""Sales Invoice-delivery_date""","Sales Invoice","Date","Delivery Date","","","","","delivery_date",0,0,0,0,"116","",1,"",1,0,0,1,0,0
-"","""Sales Invoice-sp_outstanding_amount""","Sales Invoice","Currency","Outstanding Amount","","","currency","","sp_outstanding_amount",0,0,1,0,"71","",1,"",1,0,1,0,0,0
-"","""Sales Invoice-payment_details""","Sales Invoice","Link","Commission Payment JV","","","Journal Voucher","","payment_details",0,0,0,0,"","",0,"",0,0,1,0,0,0
-"","""Sales Invoice-payments_made""","Sales Invoice","Currency","Commission Amount Paid","","","currency","","payments_made",0,0,0,0,"93","0",0,"",1,0,1,0,0,0
-"","""Sales Invoice-tracking_code""","Sales Invoice","Data","Tracking Code","","","","","tracking_code",0,0,0,0,"","",0,"",0,0,0,0,0,0
-"","""Sales Invoice-shipping_terms""","Sales Invoice","Data","Shipping Terms","","","","","shipping_terms",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-terms_and_conditions""","Sales Invoice","Text Editor","Terms and Conditions","","","","","terms_and_conditions",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Sales Invoice-po_no""","Sales Invoice","Data","PO No","","","","","po_no",0,0,0,0,"82","",0,"",0,0,0,0,0,0
 "","""Batch-column_break_n1""","Batch","Column Break","column break n1","","","","","column_break_n1",0,0,0,0,"","",0,"",0,0,0,0,0,0
@@ -158,10 +159,8 @@ Expense","","invoice_tp",0,0,0,0,"","Product",0,"",0,0,0,0,0,0
 "","""Delivery Note-sales_rep_sm""","Delivery Note","Data","Sales Rep SM","","","","","sales_rep_sm",0,0,0,0,"","",0,"",0,0,0,0,0,0
 "","""Purchase Order-credit_days""","Purchase Order","Int","Payment Terms (Days)","","","","","credit_days",0,0,0,0,"","",0,"",0,0,0,0,0,1
 "","""Purchase Receipt-credit_days""","Purchase Receipt","Int","Credit Days","","","","","credit_days",0,0,0,0,"","",1,"",0,0,0,0,0,0
-"","""Purchase Receipt-due_date""","Purchase Receipt","Date","Due Date","","","","","due_date",0,0,0,0,"","",1,"",0,0,0,0,0,0
 "","""Journal Voucher-address_name""","Journal Voucher","Link","Address for Check Print","","","Address","","address_name",0,0,0,0,"","",0,"",1,0,0,0,0,0
 "","""Journal Voucher-address""","Journal Voucher","Small Text","Address","","","","","address",0,0,0,0,"","",1,"",1,0,0,0,0,0
-"","""Purchase Receipt-prevdoc_docname""","Purchase Receipt","Data","Purchase Contract Load Id","","","Purchase Order","","prevdoc_docname",0,0,0,0,"","",0,"is_purchase_contract",1,0,0,0,0,0
 "","""Stock Entry-ship_to""","Stock Entry","Link","Ship To","","","Address","","ship_to",0,0,0,0,"","",0,"eval:doc.purpose==""Material Issue""",1,0,0,0,0,0
 "","""Stock Entry-ship_date""","Stock Entry","Date","Ship Date","","","","","ship_date",0,0,0,0,"","",0,"eval:doc.purpose==""Material Issue""",0,0,0,0,0,0
 "","""Stock Entry-expected_ship_date""","Stock Entry","Date","Expected Ship Date","","","","","expected_ship_date",0,0,0,0,"","",0,"eval:doc.purpose=='Material Transfer'",0,0,0,0,0,0

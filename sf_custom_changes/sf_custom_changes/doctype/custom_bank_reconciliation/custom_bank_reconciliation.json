@@ -146,7 +146,8 @@
    "label": "Set Clearance Date", 
    "options": "set_clearance_date", 
    "permlevel": 0, 
-   "precision": ""
+   "precision": "",
+   "read_only": 1
   }, 
   {
    "fieldname": "get_clearance_details", 

@@ -40,24 +40,6 @@ frappe.ui.form.on(""Purchase Invoice"", ""posting_date"", function(frm) {
     var nos = frm.doc.credit_days* 1;
     var ddate = frappe.datetime.add_days(frm.doc.posting_date,nos);
     cur_frm.set_value(""due_date"", ddate);
-});
-frappe.ui.form.on(""Purchase Invoice"", ""onload"", function(frm) {
-    cur_frm.set_query(""custom_po"", ""entries"", function() {
-        return {
-            ""filters"": {
-                ""docstatus"": 1
-            }
-        };
-    });
-});
-frappe.ui.form.on(""Purchase Invoice"", ""onload"", function(frm) {
-    cur_frm.set_query(""custom_pr"", ""entries"", function() {
-        return {
-            ""filters"": {
-                ""docstatus"": 1
-            }
-        };
-    });
 });"
 "","""Purchase Order-Client""","Purchase Order","cur_frm.add_fetch('item_code','net_weight','net_weight');
 cur_frm.add_fetch('item_code','weight_uom','weight_uom');
