@@ -18,11 +18,11 @@
 "Type:","Data (text)","Link","Select","Data","Select","Select","Text","Text","Data","Int","Check","Check","Check","Data","Text","Check","Data","Check","Check","Check","Check","Check","Check"
 "Info:","","Valid DocType","One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Dynamic Link, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time","","","One of: 1, 2, 3, 4, 5, 6, 7, 8, 9","","","","Integer","0 or 1","0 or 1","0 or 1","","","0 or 1","","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1","0 or 1"
 "Start entering data below this line"
-"","""Purchase Receipt-linked_pc""","Purchase Receipt","Link","Linked PC","","","Purchase Order","","linked_pc",0,0,1,0,"80","",0,"is_purchase_contract",0,0,0,0,0,0
+"","""Sales Invoice-note""","Sales Invoice","Text Editor","Note","terms","","","","note",0,0,1,0,"","Past due invoices will be charged a 1.5% monthly (0.05% daily) late fee.",0,"",0,0,0,0,0,0
+"","""Purchase Receipt-linked_pc""","Purchase Receipt","Data","Linked PC","","","","","linked_pc",0,0,1,0,"80","",0,"is_purchase_contract",0,0,0,0,0,0
 "","""Purchase Receipt-expected_arrival_date""","Purchase Receipt","Date","Expected Arrival Date","","","","","expected_arrival_date",0,0,0,0,"198","",0,"",0,0,0,0,0,0
 "","""Purchase Receipt-prevdoc_docname""","Purchase Receipt","Data","Purchase Contract Load Id","","","Purchase Order","","prevdoc_docname",0,0,0,0,"188","",0,"is_purchase_contract",1,0,0,0,0,0
 "","""Purchase Receipt-due_date""","Purchase Receipt","Date","Due Date","","","","","due_date",0,0,0,0,"30","",1,"",0,0,0,0,0,0
-"","""Sales Invoice-note""","Sales Invoice","Text Editor","Note","terms","","","","note",0,0,1,0,"","Note: Past due invoices will be charged a 1.5% monthly (0.05% daily) late fee.",1,"",0,0,0,0,0,0
 "","""Sales Invoice-communications""","Sales Invoice","Table","Communications","","","Communication","","communications",0,0,0,0,"","",1,"",1,0,0,0,0,0
 "","""Sales Invoice-communication_html""","Sales Invoice","HTML","Communication HTML","","","","","communication_html",0,0,0,0,"40px","",0,"eval:!doc.__islocal",1,0,1,0,0,0
 "","""Sales Invoice-communication_history""","Sales Invoice","Section Break","Communication History","","","icon-comments","","communication_history",0,0,0,0,"","",0,"",1,0,0,0,0,0
